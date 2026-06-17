@@ -1,0 +1,1091 @@
+/* Security Management — flexbox only, px units */
+
+body.lei-page-security {
+    --lei-sec-bg: #f8f9fa;
+    --lei-sec-navy: #0b1727;
+    --lei-sec-primary: #3b82f6;
+    --lei-sec-green: #10b981;
+    --lei-sec-red: #dc3545;
+    --lei-sec-orange: #fd7e14;
+    --lei-sec-yellow: #ffc107;
+    --lei-sec-blue: #17a2b8;
+    --lei-sec-text: #1a1a1a;
+    --lei-sec-muted: #6c757d;
+    --lei-sec-border: #e0e0e0;
+    --lei-sec-white: #ffffff;
+}
+
+body.lei-page-security .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-sec-bg);
+    padding: 24px 28px 32px;
+}
+
+body.lei-page-security .lei-sec-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-security .lei-sec-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-sec-navy);
+    color: var(--lei-sec-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-security .lei-sec-empty {
+    padding: 32px;
+    background: var(--lei-sec-white);
+    border: 1px solid var(--lei-sec-border);
+    border-radius: 10px;
+}
+
+body.lei-page-security .lei-sec-card {
+    background: var(--lei-sec-white);
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+/* Page header */
+body.lei-page-security .lei-sec-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+body.lei-page-security .lei-sec-head-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: #0b1727;
+}
+
+body.lei-page-security .lei-sec-head-text p {
+    font-size: 13px;
+    margin: 0;
+    color: var(--lei-sec-muted);
+    max-width: 520px;
+}
+
+body.lei-page-security .lei-sec-head-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body.lei-page-security .lei-sec-btn-outline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sec-text);
+    background: var(--lei-sec-white);
+    border: 1px solid var(--lei-sec-text);
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+body.lei-page-security .lei-sec-btn-primary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sec-white);
+    background: var(--lei-sec-navy);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Top row */
+body.lei-page-security .lei-sec-top-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-security .lei-sec-stats-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex: 0 0 360px;
+    width: 360px;
+    gap: 14px;
+    align-content: stretch;
+}
+
+body.lei-page-security .lei-sec-stat-card {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 1 calc(50% - 7px);
+    min-width: 155px;
+    min-height: 88px;
+    padding: 16px 14px;
+    background: var(--lei-sec-white);
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+    position: relative;
+}
+
+body.lei-page-security .lei-sec-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+body.lei-page-security .lei-sec-stat-icon--red {
+    background: #fde8e8;
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-stat-icon--blue {
+    background: #e8f0fd;
+    color: var(--lei-sec-primary);
+}
+
+body.lei-page-security .lei-sec-stat-icon--slate {
+    background: #f1f3f5;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-stat-icon--orange {
+    background: #fff3e0;
+    color: var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-stat-body strong {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lei-sec-text);
+    line-height: 1.1;
+}
+
+body.lei-page-security .lei-sec-stat-body span {
+    font-size: 12px;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-stat-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+body.lei-page-security .lei-sec-stat-badge--up {
+    color: var(--lei-sec-green);
+}
+
+body.lei-page-security .lei-sec-stat-badge--down {
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-stat-badge--muted {
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-stat-badge--critical {
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-threat-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 20px;
+}
+
+body.lei-page-security .lei-sec-threat-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+body.lei-page-security .lei-sec-threat-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-threat-title h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+}
+
+body.lei-page-security .lei-sec-threat-badges {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body.lei-page-security .lei-sec-count {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 12px;
+}
+
+body.lei-page-security .lei-sec-count--critical {
+    background: #fde8e8;
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-count--warning {
+    background: #fff3e0;
+    color: var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-threat-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 18px;
+    flex: 1 1 auto;
+    align-items: stretch;
+}
+
+body.lei-page-security .lei-sec-threat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1 1 62%;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-threat-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #fafbfc;
+    border-radius: 8px;
+    border: 1px solid #f1f3f5;
+}
+
+body.lei-page-security .lei-sec-threat-item--critical {
+    border-left: 4px solid var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-threat-item--warning {
+    border-left: 4px solid var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-threat-item--info {
+    border-left: 4px solid var(--lei-sec-blue);
+}
+
+body.lei-page-security .lei-sec-threat-item-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-level {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+body.lei-page-security .lei-sec-threat-item--critical .lei-sec-level {
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-threat-item--warning .lei-sec-level {
+    color: var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-threat-item--info .lei-sec-level {
+    color: var(--lei-sec-blue);
+}
+
+body.lei-page-security .lei-sec-threat-item strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-threat-item p {
+    font-size: 11px;
+    color: var(--lei-sec-muted);
+    margin: 0;
+    line-height: 16px;
+}
+
+body.lei-page-security .lei-sec-threat-time {
+    font-size: 11px;
+    color: #9ca3af;
+    flex-shrink: 0;
+    white-space: nowrap;
+    padding-top: 2px;
+}
+
+body.lei-page-security .lei-sec-overlay {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 38%;
+    width: 38%;
+    min-width: 200px;
+    max-width: 280px;
+    padding: 24px 20px;
+    background: #061626;
+    border-radius: 10px;
+    text-align: center;
+}
+
+body.lei-page-security .lei-sec-overlay-globe {
+    position: relative;
+    color: #5a7a9a;
+    margin-bottom: 12px;
+}
+
+body.lei-page-security .lei-sec-overlay-dot {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    width: 10px;
+    height: 10px;
+    background: var(--lei-sec-red);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(220, 53, 69, 0.8);
+}
+
+body.lei-page-security .lei-sec-overlay-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lei-sec-white);
+    margin: 0 0 6px;
+}
+
+body.lei-page-security .lei-sec-overlay-meta {
+    font-size: 10px;
+    color: #8b9cb3;
+    margin: 0;
+}
+
+/* Mid row */
+body.lei-page-security .lei-sec-mid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-security .lei-sec-access-card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 380px;
+    width: 380px;
+    gap: 0;
+}
+
+body.lei-page-security .lei-sec-ip-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--lei-sec-muted);
+    margin-bottom: 16px;
+}
+
+body.lei-page-security .lei-sec-access-card .lei-sec-card-title {
+    margin-bottom: 8px;
+}
+
+body.lei-page-security .lei-sec-card-title h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-policy-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f3f5;
+    font-size: 13px;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-policy-row--toggle {
+    align-items: flex-start;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+body.lei-page-security .lei-sec-policy-row--toggle div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+body.lei-page-security .lei-sec-policy-row--toggle strong {
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-policy-row--toggle span {
+    font-size: 11px;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-policy-row:not(.lei-sec-policy-row--toggle) > span {
+    color: var(--lei-sec-text);
+    font-weight: 500;
+}
+
+body.lei-page-security .lei-sec-policy-row > strong {
+    color: var(--lei-sec-text);
+    font-weight: 600;
+}
+
+body.lei-page-security .lei-sec-input-inline {
+    width: 100px;
+    padding: 4px 0;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: right;
+    color: var(--lei-sec-text);
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+body.lei-page-security .lei-sec-input-inline:focus {
+    border-bottom: 1px solid var(--lei-sec-primary);
+}
+
+body.lei-page-security .lei-sec-overlay-sync {
+    font-size: 10px;
+    color: #6b8aab;
+    margin: 6px 0 0;
+}
+
+body.lei-page-security .lei-sec-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+
+body.lei-page-security .lei-sec-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+body.lei-page-security .lei-sec-toggle span {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ced4da;
+    border-radius: 24px;
+    transition: background 0.2s;
+}
+
+body.lei-page-security .lei-sec-toggle span::before {
+    position: absolute;
+    content: '';
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--lei-sec-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+body.lei-page-security .lei-sec-toggle input:checked + span {
+    background: #3b82f6;
+}
+
+body.lei-page-security .lei-sec-toggle input:checked + span::before {
+    transform: translateX(20px);
+}
+
+body.lei-page-security .lei-sec-btn-policy {
+    width: 100%;
+    margin-top: 16px;
+    padding: 13px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sec-text);
+    background: #f1f3f5;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-security .lei-sec-btn-policy:hover {
+    background: #e9ecef;
+}
+
+body.lei-page-security .lei-sec-btn-new-range {
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-sec-primary);
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-security .lei-sec-ip-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+body.lei-page-security .lei-sec-ip-head .lei-sec-card-title {
+    margin-bottom: 0;
+}
+
+body.lei-page-security .lei-sec-clear-link {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-sec-muted);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0 4px;
+}
+
+body.lei-page-security .lei-sec-clear-link:hover {
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-ip-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.lei-page-security .lei-sec-ip-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+body.lei-page-security .lei-sec-ip-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-ip-row > span:last-child {
+    flex: 0 0 40px;
+    text-align: center;
+}
+
+body.lei-page-security .lei-sec-ip-row--head {
+    background: #f9fafb;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-ip-row:last-child {
+    border-bottom: none;
+}
+
+body.lei-page-security .lei-sec-ip-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    border-radius: 12px;
+}
+
+body.lei-page-security .lei-sec-ip-pill--whitelist {
+    background: #d1fae5;
+    color: #047857;
+}
+
+body.lei-page-security .lei-sec-ip-pill--blacklist {
+    background: #fde8e8;
+    color: #b71c1c;
+}
+
+body.lei-page-security .lei-sec-trash {
+    background: transparent;
+    border: none;
+    color: var(--lei-sec-muted);
+    cursor: pointer;
+    padding: 4px;
+}
+
+body.lei-page-security .lei-sec-mono {
+    font-family: ui-monospace, monospace;
+    font-weight: 600;
+}
+
+/* Incidents */
+body.lei-page-security .lei-sec-incidents-card {
+    padding: 22px;
+}
+
+body.lei-page-security .lei-sec-incidents-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+body.lei-page-security .lei-sec-incidents-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sec-text);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+body.lei-page-security .lei-sec-bang {
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-incidents-filters {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+body.lei-page-security .lei-sec-select {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid var(--lei-sec-border);
+    border-radius: 8px;
+    background: var(--lei-sec-white);
+}
+
+body.lei-page-security .lei-sec-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border: 1px solid var(--lei-sec-border);
+    border-radius: 8px;
+    background: var(--lei-sec-white);
+    cursor: pointer;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-inc-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.lei-page-security .lei-sec-inc-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 10px;
+    font-size: 12px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+body.lei-page-security .lei-sec-inc-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-security .lei-sec-inc-row > span:nth-child(2) {
+    flex: 1.4 1 0;
+}
+
+body.lei-page-security .lei-sec-inc-row > span:last-child {
+    flex: 0 0 100px;
+}
+
+body.lei-page-security .lei-sec-inc-row strong {
+    display: block;
+    font-size: 13px;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-inc-row small {
+    display: block;
+    font-size: 11px;
+    color: var(--lei-sec-muted);
+    margin-top: 2px;
+}
+
+body.lei-page-security .lei-sec-inc-row--head {
+    background: #f9fafb;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-inc-row--head strong,
+body.lei-page-security .lei-sec-inc-row--head small {
+    display: none;
+}
+
+body.lei-page-security .lei-sec-sev {
+    display: inline-block;
+    padding: 4px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 12px;
+    color: var(--lei-sec-white);
+}
+
+body.lei-page-security .lei-sec-sev--critical {
+    background: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-sev--high {
+    background: var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-sev--info {
+    background: #9ca3af;
+}
+
+body.lei-page-security .lei-sec-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+body.lei-page-security .lei-sec-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+body.lei-page-security .lei-sec-dot--red {
+    background: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-dot--orange {
+    background: var(--lei-sec-orange);
+}
+
+body.lei-page-security .lei-sec-dot--grey {
+    background: #9ca3af;
+}
+
+body.lei-page-security .lei-sec-assignee {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+body.lei-page-security .lei-sec-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #e9ecef;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--lei-sec-text);
+    flex-shrink: 0;
+}
+
+body.lei-page-security .lei-sec-inc-btn {
+    padding: 8px 14px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+body.lei-page-security .lei-sec-inc-btn--manage {
+    color: var(--lei-sec-white);
+    background: var(--lei-sec-text);
+    border: none;
+}
+
+body.lei-page-security .lei-sec-inc-btn--view,
+body.lei-page-security .lei-sec-inc-btn--audit {
+    color: var(--lei-sec-text);
+    background: var(--lei-sec-white);
+    border: 1px solid var(--lei-sec-text);
+}
+
+/* Footer summary */
+body.lei-page-security .lei-sec-footer-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+body.lei-page-security .lei-sec-summary {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 20px 22px;
+    border: 1px solid #e5e7eb;
+    border-left-width: 4px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+body.lei-page-security .lei-sec-summary--yellow {
+    border-left-color: #f59e0b;
+    background: #fffbeb;
+}
+
+body.lei-page-security .lei-sec-summary--blue {
+    border-left-color: var(--lei-sec-primary);
+    background: #eff6ff;
+}
+
+body.lei-page-security .lei-sec-summary--red {
+    border-left-color: var(--lei-sec-red);
+    background: #fef2f2;
+}
+
+body.lei-page-security .lei-sec-summary-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+body.lei-page-security .lei-sec-summary-icon--yellow {
+    background: #fff8e1;
+    color: #f9a825;
+}
+
+body.lei-page-security .lei-sec-summary-icon--blue {
+    background: #e8f0fd;
+    color: var(--lei-sec-primary);
+}
+
+body.lei-page-security .lei-sec-summary-icon--red {
+    background: #fde8e8;
+    color: var(--lei-sec-red);
+}
+
+body.lei-page-security .lei-sec-summary-label {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-sec-muted);
+    margin-bottom: 4px;
+}
+
+body.lei-page-security .lei-sec-summary strong {
+    display: block;
+    font-size: 14px;
+    color: var(--lei-sec-text);
+    margin-bottom: 4px;
+}
+
+body.lei-page-security .lei-sec-summary p {
+    font-size: 12px;
+    color: var(--lei-sec-muted);
+    margin: 0;
+}
+
+body.lei-page-security .lei-sec-table-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--lei-sec-muted);
+    font-size: 13px;
+}
+
+body.lei-page-security .lei-sec-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.lei-page-security .lei-sec-modal[hidden] {
+    display: none;
+}
+
+body.lei-page-security .lei-sec-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+body.lei-page-security .lei-sec-modal-panel {
+    position: relative;
+    width: 400px;
+    max-width: 90%;
+    padding: 24px;
+    background: var(--lei-sec-white);
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+body.lei-page-security .lei-sec-modal-panel h3 {
+    margin: 0 0 18px;
+    font-size: 18px;
+    color: var(--lei-sec-text);
+}
+
+body.lei-page-security .lei-sec-modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+body.lei-page-security .lei-sec-modal-form label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--lei-sec-muted);
+}
+
+body.lei-page-security .lei-sec-modal-form input,
+body.lei-page-security .lei-sec-modal-form select {
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1px solid var(--lei-sec-border);
+    border-radius: 6px;
+}
+
+body.lei-page-security .lei-sec-modal-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+@media (max-width: 1200px) {
+    body.lei-page-security .lei-sec-top-row,
+    body.lei-page-security .lei-sec-mid-row,
+    body.lei-page-security .lei-sec-footer-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-security .lei-sec-stats-grid,
+    body.lei-page-security .lei-sec-threat-card,
+    body.lei-page-security .lei-sec-access-card,
+    body.lei-page-security .lei-sec-ip-card {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+    }
+
+    body.lei-page-security .lei-sec-threat-body {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-security .lei-sec-overlay {
+        flex: 1 1 100%;
+        width: 100%;
+        max-width: none;
+    }
+
+    body.lei-page-security .lei-sec-summary {
+        flex: 1 1 280px;
+        min-width: 260px;
+    }
+}

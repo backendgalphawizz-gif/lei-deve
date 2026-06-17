@@ -1,0 +1,665 @@
+/* Notification Management — flexbox, px */
+
+body.lei-page-nm {
+    --lei-nm-navy: #0f172a;
+    --lei-nm-gold: #8b6b3f;
+    --lei-nm-gold-hover: #7a5e36;
+    --lei-nm-bg: #f4f7f6;
+    --lei-nm-white: #ffffff;
+    --lei-nm-border: #e2e8f0;
+    --lei-nm-text: #1e293b;
+    --lei-nm-muted: #64748b;
+    --lei-nm-green: #10b981;
+}
+
+body.lei-page-nm .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-nm-bg);
+    padding: 20px 24px 32px;
+}
+
+body.lei-page-nm .lei-nm-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-nm .lei-nm-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-nm-navy);
+    color: var(--lei-nm-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-nm .lei-nm-empty {
+    padding: 32px;
+    background: var(--lei-nm-white);
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 10px;
+}
+
+body.lei-page-nm .lei-nm-page-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+body.lei-page-nm .lei-nm-page-head h1 {
+    margin: 0 0 6px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--lei-nm-navy);
+}
+
+body.lei-page-nm .lei-nm-page-head p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-btn-broadcast {
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-nm-white);
+    background: var(--lei-nm-navy);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-stats-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+body.lei-page-nm .lei-nm-stat-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 18px 20px;
+    background: var(--lei-nm-white);
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+body.lei-page-nm .lei-nm-stat-icon {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-stat-icon--blue { background: #eff6ff; color: #3b82f6; }
+body.lei-page-nm .lei-nm-stat-icon--orange { background: #fff7ed; color: #f97316; }
+body.lei-page-nm .lei-nm-stat-icon--purple { background: #f5f3ff; color: #8b5cf6; }
+body.lei-page-nm .lei-nm-stat-icon--red { background: #fef2f2; color: #ef4444; }
+
+body.lei-page-nm .lei-nm-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+body.lei-page-nm .lei-nm-stat-body span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-stat-body strong {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-workspace {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+body.lei-page-nm .lei-nm-main-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-width: 0;
+    gap: 18px;
+}
+
+body.lei-page-nm .lei-nm-side-col {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 320px;
+    width: 320px;
+    gap: 16px;
+}
+
+body.lei-page-nm .lei-nm-card {
+    background: var(--lei-nm-white);
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+    padding: 0 0 16px;
+}
+
+body.lei-page-nm .lei-nm-card--compact {
+    padding: 16px 18px;
+}
+
+body.lei-page-nm .lei-nm-card--compact h3 {
+    margin: 0 0 14px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-card-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--lei-nm-border);
+}
+
+body.lei-page-nm .lei-nm-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-card-title h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+body.lei-page-nm .lei-nm-channel-toggle {
+    display: flex;
+    flex-direction: row;
+    background: #f1f5f9;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 3px;
+}
+
+body.lei-page-nm .lei-nm-channel-btn {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--lei-nm-muted);
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-channel-btn--active {
+    background: var(--lei-nm-navy);
+    color: var(--lei-nm-white);
+}
+
+body.lei-page-nm .lei-nm-template-table {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+body.lei-page-nm .lei-nm-tpl-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--lei-nm-border);
+    font-size: 13px;
+    gap: 8px;
+}
+
+body.lei-page-nm .lei-nm-tpl-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-nm .lei-nm-tpl-row--head {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-tpl-row--head span:last-child {
+    flex: 0 0 48px;
+    text-align: center;
+}
+
+body.lei-page-nm .lei-nm-tpl-name {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1.6 1 0;
+}
+
+body.lei-page-nm .lei-nm-tpl-name strong {
+    font-weight: 600;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-tpl-name small {
+    font-size: 12px;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-cat-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 6px;
+}
+
+body.lei-page-nm .lei-nm-status {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+body.lei-page-nm .lei-nm-status i {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+body.lei-page-nm .lei-nm-status--active {
+    color: #047857;
+}
+
+body.lei-page-nm .lei-nm-status--active i {
+    background: var(--lei-nm-green);
+}
+
+body.lei-page-nm .lei-nm-status--draft {
+    color: #64748b;
+}
+
+body.lei-page-nm .lei-nm-status--draft i {
+    background: #94a3b8;
+}
+
+body.lei-page-nm .lei-nm-date {
+    color: var(--lei-nm-muted);
+    font-size: 12px;
+}
+
+body.lei-page-nm .lei-nm-btn-edit {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 8px;
+    background: var(--lei-nm-white);
+    color: var(--lei-nm-muted);
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-tpl-row > span:last-child {
+    flex: 0 0 48px;
+    display: flex;
+    justify-content: center;
+}
+
+body.lei-page-nm .lei-nm-btn-create {
+    display: flex;
+    width: calc(100% - 40px);
+    margin: 16px 20px 0;
+    padding: 12px;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-nm-muted);
+    background: #fafafa;
+    border: 1px dashed var(--lei-nm-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-broadcast-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 16px 20px 0;
+}
+
+body.lei-page-nm .lei-nm-broadcast-row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+body.lei-page-nm .lei-nm-broadcast-row label,
+body.lei-page-nm .lei-nm-msg-label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-broadcast-form select,
+body.lei-page-nm .lei-nm-broadcast-form textarea,
+body.lei-page-nm .lei-nm-otp-form input {
+    padding: 10px 12px;
+    font-size: 13px;
+    font-family: inherit;
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 8px;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-broadcast-hint {
+    margin: 0;
+    font-size: 12px;
+    color: var(--lei-nm-muted);
+}
+
+body.lei-page-nm .lei-nm-broadcast-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+body.lei-page-nm .lei-nm-btn-outline {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-nm-gold);
+    background: var(--lei-nm-white);
+    border: 1px solid var(--lei-nm-gold);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-btn-outline--full {
+    width: 100%;
+    margin-top: 0;
+}
+
+body.lei-page-nm .lei-nm-btn-gold {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-nm-white);
+    background: var(--lei-nm-gold);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-btn-gold:hover {
+    background: var(--lei-nm-gold-hover);
+}
+
+body.lei-page-nm .lei-nm-trigger-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+body.lei-page-nm .lei-nm-switch {
+    position: relative;
+    width: 44px;
+    height: 24px;
+}
+
+body.lei-page-nm .lei-nm-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+body.lei-page-nm .lei-nm-switch-slider {
+    position: absolute;
+    inset: 0;
+    background: #cbd5e1;
+    border-radius: 24px;
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-switch-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--lei-nm-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+body.lei-page-nm .lei-nm-switch input:checked + .lei-nm-switch-slider {
+    background: var(--lei-nm-navy);
+}
+
+body.lei-page-nm .lei-nm-switch input:checked + .lei-nm-switch-slider::before {
+    transform: translateX(20px);
+}
+
+body.lei-page-nm .lei-nm-code-title,
+body.lei-page-nm .lei-nm-shield-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+}
+
+body.lei-page-nm .lei-nm-placeholder-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+body.lei-page-nm .lei-nm-ph-chip {
+    display: block;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-family: ui-monospace, monospace;
+    background: #f8fafc;
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 6px;
+    color: #475569;
+    cursor: pointer;
+}
+
+body.lei-page-nm .lei-nm-otp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+body.lei-page-nm .lei-nm-otp-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.lei-page-nm .lei-nm-otp-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+    cursor: default;
+}
+
+body.lei-page-nm .lei-nm-otp-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lei-nm-text);
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-stepper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    width: fit-content;
+    max-width: 100%;
+    border: 1px solid var(--lei-nm-border);
+    border-radius: 8px;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-stepper button {
+    width: 32px;
+    height: 36px;
+    border: none;
+    background: #f8fafc;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+body.lei-page-nm .lei-nm-stepper input {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    flex: 0 0 48px;
+    text-align: center;
+    border: none;
+    border-left: 1px solid var(--lei-nm-border);
+    border-right: 1px solid var(--lei-nm-border);
+    border-radius: 0;
+    padding: 8px 4px;
+    box-sizing: border-box;
+}
+
+body.lei-page-nm .lei-nm-otp-field input[type="number"] {
+    width: 72px;
+    height: 36px;
+    padding: 8px 10px;
+    text-align: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-delivery-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+body.lei-page-nm .lei-nm-live {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--lei-nm-green);
+}
+
+body.lei-page-nm .lei-nm-live i {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lei-nm-green);
+}
+
+body.lei-page-nm .lei-nm-delivery-item {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+body.lei-page-nm .lei-nm-delivery-icon {
+    display: flex;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+body.lei-page-nm .lei-nm-delivery-item--delivered .lei-nm-delivery-icon {
+    background: #d1fae5;
+    color: var(--lei-nm-green);
+}
+
+body.lei-page-nm .lei-nm-delivery-item--pending .lei-nm-delivery-icon {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+body.lei-page-nm .lei-nm-delivery-item--failed .lei-nm-delivery-icon {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+body.lei-page-nm .lei-nm-delivery-item strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-nm-text);
+}
+
+body.lei-page-nm .lei-nm-delivery-time {
+    font-size: 11px;
+    color: var(--lei-nm-muted);
+    margin-left: 6px;
+}
+
+body.lei-page-nm .lei-nm-delivery-item p {
+    margin: 4px 0 0;
+    font-size: 11px;
+    color: var(--lei-nm-muted);
+}

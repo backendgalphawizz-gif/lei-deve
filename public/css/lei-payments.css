@@ -1,0 +1,833 @@
+/* Financial / Payments — flexbox only, px units only */
+
+body.lei-page-payments .lei-content {
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f8;
+  padding: 16px 24px 32px;
+}
+
+.lei-pay-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: stretch;
+}
+
+.lei-pay-toast {
+  position: fixed;
+  top: 72px;
+  right: 24px;
+  z-index: 1000;
+  background: #0d1b2a;
+  color: #ffffff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.lei-pay-page-head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lei-pay-page-title h1 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.lei-pay-page-title p {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0;
+}
+
+.lei-pay-page-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.lei-pay-btn-outline {
+  display: flex;
+  align-items: center;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0d1b2a;
+  background: #ffffff;
+  border: 1px solid #d1d9e6;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lei-pay-btn-primary {
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  background: #0d1b2a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.lei-pay-btn-primary:hover {
+  background: #1a3352;
+}
+
+/* Metrics */
+.lei-pay-metrics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lei-pay-metric-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 200px;
+  min-width: 180px;
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  padding: 20px;
+  min-height: 96px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+.lei-pay-metric-card:last-child {
+  background-color: #000d22;
+}
+.lei-pay-metric-card:last-child .lei-pay-metric-label,
+.lei-pay-metric-card:last-child .lei-pay-metric-sub {
+  color: #fff;
+}
+
+.lei-pay-metric-card:last-child .lei-pay-metric-value {
+  color: #ffdea9;
+}
+.lei-pay-metric-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.lei-pay-metric-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #8b95a5;
+}
+
+.lei-pay-metric-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.lei-pay-metric-badge--green {
+  color: #16a34a;
+  background: #ecfdf5;
+}
+.lei-pay-metric-badge--red {
+  color: #dc2626;
+  background: #fef2f2;
+}
+
+.lei-pay-metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 28px;
+}
+
+.lei-pay-metric-sub {
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.lei-pay-sparkline {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 3px;
+  margin-top: 10px;
+  height: 28px;
+}
+
+.lei-pay-sparkline span {
+  display: block;
+  width: 6px;
+  background: #22c55e;
+  border-radius: 2px;
+  min-height: 4px;
+}
+
+/* Workspace */
+.lei-pay-workspace {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.lei-pay-main-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 520px;
+  gap: 20px;
+  min-width: 320px;
+}
+
+.lei-pay-side-col {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 320px;
+  gap: 16px;
+  min-width: 280px;
+}
+
+/* Transaction panel */
+.lei-pay-panel {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+}
+
+.lei-pay-panel-head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid #eef1f5;
+}
+
+.lei-pay-panel-head h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 4px;
+}
+
+.lei-pay-panel-head p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+}
+
+.lei-pay-filters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lei-pay-filters select {
+  font-size: 13px;
+  padding: 8px 12px;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #334155;
+  min-width: 130px;
+}
+
+.lei-pay-table-head {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid #eef1f5;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: #8b95a5;
+}
+
+.lei-pay-th {
+  flex: 1 1 80px;
+}
+
+.lei-pay-th--entity {
+  flex: 2 1 180px;
+}
+.lei-pay-th--action {
+  flex: 0 0 48px;
+  text-align: center;
+}
+
+.lei-pay-table-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+}
+
+.lei-pay-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 20px;
+  border-bottom: 1px solid #f1f4f8;
+  min-height: 56px;
+}
+
+.lei-pay-row:hover {
+  background: #f8fafc;
+}
+
+.lei-pay-td {
+  flex: 1 1 80px;
+  font-size: 13px;
+  color: #334155;
+}
+
+.lei-pay-td--id {
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.lei-pay-td--entity {
+  flex: 2 1 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lei-pay-td--entity strong {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.lei-pay-td--entity span {
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+.lei-pay-td--amount {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.lei-pay-td--action {
+  flex: 0 0 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.lei-pay-status {
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.lei-pay-status--success {
+  background: #dcfce7;
+  color: #15803d;
+}
+.lei-pay-status--failed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+.lei-pay-status--pending {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.lei-pay-menu-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.lei-pay-panel-footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  font-size: 12px;
+  color: #64748b;
+  gap: 12px;
+}
+
+.lei-pay-pager {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+}
+
+.lei-pay-pager a,
+.lei-pay-pager span {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #475569;
+}
+
+.lei-pay-pager .active {
+  background: #0d1b2a;
+  color: #ffffff;
+}
+
+.lei-pay-pager .disabled {
+  color: #cbd5e1;
+}
+
+.lei-pay-empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* Bottom tabs — Invoices / Tax Reports (mockup) */
+.lei-pay-bottom {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.lei-pay-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0 24px;
+  gap: 8px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.lei-pay-tab {
+  padding: 16px 4px;
+  margin-bottom: -1px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #757575;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+
+.lei-pay-tab.active {
+  color: #1a1a1a;
+  font-weight: 700;
+  border-bottom-color: #1a1a1a;
+}
+
+.lei-pay-tab-panels {
+  padding: 24px;
+}
+
+.lei-pay-section-head {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.lei-pay-section-head h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+  line-height: 24px;
+}
+
+.lei-pay-tax-calendar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #967b4c;
+  text-decoration: none;
+}
+
+.lei-pay-tax-calendar:hover {
+  color: #7a6340;
+}
+
+.lei-pay-tax-calendar svg {
+  flex-shrink: 0;
+}
+
+.lei-pay-tax-cards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.lei-pay-tax-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1 1 280px;
+  min-width: 260px;
+  max-width: 420px;
+  gap: 14px;
+  padding: 14px 16px;
+  background: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.lei-pay-tax-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.lei-pay-tax-icon--pdf {
+  background: #fde8e8;
+  color: #c62828;
+}
+
+.lei-pay-tax-icon--xlsx {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+.lei-pay-tax-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 4px;
+  min-width: 0;
+}
+
+.lei-pay-tax-info strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 20px;
+  word-break: break-all;
+}
+
+.lei-pay-tax-info span {
+  font-size: 12px;
+  color: #757575;
+  line-height: 16px;
+}
+
+.lei-pay-tax-dl-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  color: #757575;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.lei-pay-tax-dl-btn:hover {
+  color: #1a1a1a;
+  border-color: #bdbdbd;
+}
+
+.lei-pay-tab-note {
+  font-size: 13px;
+  color: #64748b;
+  margin: 0 0 12px;
+}
+
+.lei-pay-config-list {
+  margin: 0;
+  padding: 0 0 0 18px;
+  font-size: 13px;
+  color: #334155;
+  line-height: 24px;
+}
+
+/* Sidebar */
+.lei-pay-refund-panel {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.lei-pay-refund-head {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.lei-pay-refund-head h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+}
+
+.lei-pay-priority-badge {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #dc2626;
+  background: #fef2f2;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.lei-pay-refund-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lei-pay-refund-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #eef1f5;
+  border-radius: 8px;
+}
+
+.lei-pay-refund-card-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.lei-pay-refund-code {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.lei-pay-refund-amt {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-pay-refund-card strong {
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.lei-pay-refund-card p {
+  font-size: 12px;
+  color: #64748b;
+  margin: 0;
+  line-height: 18px;
+}
+
+.lei-pay-refund-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.lei-pay-btn-approve {
+  flex: 1 1 auto;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #0d1b2a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.lei-pay-btn-reject {
+  flex: 1 1 auto;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #d1d9e6;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.lei-pay-refund-empty {
+  font-size: 13px;
+  color: #94a3b8;
+  padding: 12px 0;
+}
+
+/* Gateway panel — dark */
+.lei-pay-gateway-panel {
+  display: flex;
+  flex-direction: column;
+  background: #0d1b2a;
+  border-radius: 8px;
+  padding: 16px;
+  color: #e2e8f0;
+}
+
+.lei-pay-gateway-panel h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.lei-pay-gateway-sub {
+  font-size: 11px;
+  color: #94a3b8;
+  margin: 0 0 16px;
+}
+
+.lei-pay-gateway-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.lei-pay-gateway-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.lei-pay-gateway-ms {
+  color: #94a3b8;
+}
+
+.lei-pay-gateway-bar {
+  display: flex;
+  flex-direction: row;
+  height: 6px;
+  background: #1e3a5f;
+  border-radius: 4px;
+  overflow: hidden;
+  width: 200px;
+  max-width: 100%;
+}
+
+.lei-pay-gateway-fill {
+  display: block;
+  height: 6px;
+  border-radius: 4px;
+  min-width: 8px;
+}
+
+.lei-pay-gateway-fill--healthy {
+  background: #22c55e;
+}
+.lei-pay-gateway-fill--warning {
+  background: #eab308;
+}
+.lei-pay-gateway-fill--critical {
+  background: #ef4444;
+}
+
+.lei-pay-gateway-refresh {
+  font-size: 11px;
+  color: #64748b;
+  margin: 8px 0 0;
+}
+
+/* Audit */
+.lei-pay-audit-panel {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e8ecf0;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.lei-pay-audit-panel h2 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 12px;
+}
+
+.lei-pay-audit-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lei-pay-audit-list li {
+  font-size: 12px;
+  color: #475569;
+  line-height: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f4f8;
+}
+
+.lei-pay-audit-list li:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.lei-pay-audit-list strong {
+  color: #0f172a;
+}
+
+.lei-pay-audit-list time {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}

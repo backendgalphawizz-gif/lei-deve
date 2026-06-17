@@ -1,0 +1,764 @@
+/* Application Management — flexbox only, px units only */
+
+body.lei-page-applications .lei-content {
+  display: flex;
+  flex-direction: column;
+  background: #f8f9fa;
+  padding: 20px 24px 32px;
+}
+
+.lei-app-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-self: stretch;
+}
+
+/* Metric cards row */
+.lei-app-metrics {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lei-app-metric-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1 1 160px;
+  min-width: 150px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 16px;
+  min-height: 88px;
+  box-shadow: 0 1px 3px rgba(0, 21, 41, 0.04);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+
+.lei-app-metric-card:hover {
+  border-color: #3498db;
+}
+
+.lei-app-metric-card.active {
+  border-color: #3498db;
+  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.25);
+}
+
+.lei-app-metric-top {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; */
+  margin-bottom: 8px;
+}
+
+.lei-app-metric-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #8b95a5;
+}
+
+.lei-app-metric-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 32px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.lei-app-metric-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.lei-app-metric-badge--green {
+  color: #16a34a;
+}
+.lei-app-metric-badge--red {
+  color: #dc2626;
+}
+.lei-app-metric-badge--orange {
+  color: #d97706;
+  background: #fff7ed;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.lei-app-metric-badge--muted {
+  color: #9aa5b5;
+}
+
+.lei-app-metric-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lei-app-metric-icon--ok {
+  color: #16a34a;
+}
+.lei-app-metric-icon--bad {
+  color: #dc2626;
+}
+
+/* Filters */
+.lei-app-filters-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 21, 41, 0.04);
+}
+
+.lei-app-filters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.lei-app-filter-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lei-app-filter-field label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #5c6678;
+}
+
+.lei-app-filter-field select,
+.lei-app-filter-input input {
+  height: 40px;
+  min-width: 180px;
+  padding: 0 12px;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #f8f9fa;
+  color: #0f172a;
+}
+
+.lei-app-filter-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.lei-app-filter-input--icon input {
+  padding-left: 38px;
+  min-width: 260px;
+}
+
+.lei-app-filter-input--icon svg {
+  position: absolute;
+  left: 12px;
+  top: 12px;
+  color: #8b95a5;
+}
+
+.lei-app-priority-group {
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lei-app-priority-btn {
+  height: 40px;
+  padding: 0 16px;
+  border: none;
+  background: #ffffff;
+  font-size: 12px;
+  font-weight: 700;
+  color: #5c6678;
+  cursor: pointer;
+  border-right: 1px solid #dce3ec;
+}
+
+.lei-app-priority-btn:last-child {
+  border-right: none;
+}
+
+.lei-app-priority-btn.active {
+  background: #f0f2f6;
+  color: #0f172a;
+}
+
+.lei-app-priority-btn.active.high,
+.lei-app-priority-btn.high.active {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.lei-app-btn-apply {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 20px;
+  background: #001529;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  /* margin-left: auto; */
+}
+
+.lei-app-btn-apply:hover {
+  background: #0a2540;
+}
+
+/* Workspace split */
+.lei-app-workspace {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.lei-app-pool-card {
+  display: flex;
+  flex-direction: column;
+  flex: 2 1 640px;
+  min-width: 0;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 21, 41, 0.04);
+}
+
+.lei-app-detail-card {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 360px;
+  width: 360px;
+  min-width: 320px;
+  background: #ffffff;
+  border: 1px solid #e8e8e8;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 21, 41, 0.04);
+}
+
+@media (max-width: 1100px) {
+  .lei-app-workspace {
+    flex-direction: column;
+  }
+
+  .lei-app-detail-card {
+    width: auto;
+    align-self: stretch;
+  }
+}
+
+.lei-app-pool-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.lei-app-pool-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.lei-app-pool-title h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-app-pool-badge {
+  font-size: 11px;
+  font-weight: 700;
+  color: #1a5fad;
+  background: #e8f1fb;
+  padding: 4px 10px;
+  border-radius: 6px;
+  letter-spacing: 0;
+}
+
+.lei-app-pool-actions {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.lei-app-icon-btn {
+  width: 36px;
+  height: 36px;
+  border: 1px solid #e2e7ef;
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #5c6678;
+}
+
+/* Table flex rows */
+.lei-app-table-head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 10px 16px;
+  background: #f8fafc;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.lei-app-th {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #9aa5b5;
+  flex: 0 0 90px;
+}
+
+.lei-app-th--check {
+  flex: 0 0 40px;
+}
+.lei-app-th--entity {
+  flex: 1 1 180px;
+  min-width: 120px;
+}
+
+.lei-app-table-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.lei-app-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eef2f6;
+  color: inherit;
+  cursor: pointer;
+  outline: none;
+}
+
+.lei-app-row:hover {
+  background: #fafbfc;
+}
+
+.lei-app-row.active {
+  background: #eef6fc;
+  border-left: 3px solid #1890ff;
+  padding-left: 13px;
+}
+
+.lei-app-td {
+  font-size: 13px;
+  color: #334155;
+  flex: 0 0 90px;
+}
+
+.lei-app-td--check {
+  flex: 0 0 40px;
+  display: flex;
+  align-items: center;
+}
+
+.lei-app-td--id {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-app-td--entity {
+  flex: 1 1 180px;
+  min-width: 120px;
+}
+
+.lei-app-status {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.lei-app-status .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.lei-app-status--orange {
+  background: #fff7ed;
+  color: #c2410c;
+}
+.lei-app-status--orange .dot {
+  background: #f59e0b;
+}
+
+.lei-app-status--red {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+.lei-app-status--red .dot {
+  background: #ef4444;
+}
+
+.lei-app-status--blue {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+.lei-app-status--blue .dot {
+  background: #3b82f6;
+}
+
+.lei-app-status--green {
+  background: #ecfdf3;
+  color: #166534;
+}
+.lei-app-status--green .dot {
+  background: #22c55e;
+}
+
+.lei-app-status--gray {
+  background: #f1f5f9;
+  color: #64748b;
+}
+.lei-app-status--gray .dot {
+  background: #94a3b8;
+}
+
+.lei-app-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #9aa5b5;
+  font-size: 14px;
+}
+
+.lei-app-pool-footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  font-size: 12px;
+  color: #5c6678;
+  border-top: 1px solid #eef2f6;
+}
+
+.lei-app-pager {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.lei-app-pager a,
+.lei-app-pager span {
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  font-size: 13px;
+  text-decoration: none;
+  color: #5c6678;
+  padding: 0 8px;
+}
+
+.lei-app-pager .active {
+  background: #001529;
+  color: #fff;
+  font-weight: 600;
+}
+
+.lei-app-pager .disabled {
+  opacity: 0.4;
+}
+
+/* Detail panel */
+.lei-app-detail-inner {
+  display: flex;
+  flex-direction: column;
+  /* padding: 20px; */
+  gap: 20px;
+}
+
+.lei-app-detail-empty {
+  padding: 40px 20px;
+  text-align: center;
+  color: #9aa5b5;
+  font-size: 14px;
+}
+
+.lei-app-detail-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.lei-app-detail-head h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-app-detail-id {
+  font-size: 12px;
+  color: #8b95a5;
+}
+
+.lei-app-detail-meta {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #eef2f6;
+}
+
+.lei-app-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lei-app-meta-item .label {
+  font-size: 11px;
+  color: #9aa5b5;
+  font-weight: 600;
+}
+
+.lei-app-meta-item .value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+.lei-app-audit{
+    padding: 0 20px;
+}
+.lei-app-audit h4 {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9aa5b5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.lei-app-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 8px;
+}
+
+.lei-app-timeline-item {
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  padding-bottom: 20px;
+  position: relative;
+}
+
+.lei-app-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 14px;
+  bottom: 0;
+  width: 2px;
+  background: #e2e7ef;
+}
+
+.lei-app-timeline-item:last-child::before {
+  display: none;
+}
+
+.lei-app-timeline-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  background: #cbd5e1;
+  flex-shrink: 0;
+  margin-top: 4px;
+  z-index: 1;
+}
+
+.lei-app-timeline-item.highlight .lei-app-timeline-dot {
+  background: #0f172a;
+  box-shadow: 0 0 0 3px #e2e8f0;
+}
+
+.lei-app-timeline-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.lei-app-timeline-body .time {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-app-timeline-body p {
+  font-size: 12px;
+  color: #5c6678;
+  line-height: 18px;
+}
+
+.lei-app-detail-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 20px;
+  margin-top: auto;
+  padding-top: 8px;
+  padding-bottom: 20px;
+}
+
+.lei-app-btn-final {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  background: #001529;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.lei-app-btn-final:hover {
+  background: #0a2540;
+}
+
+.lei-app-btn-row {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.lei-app-btn-secondary {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  background: #fff;
+  border: 1px solid #dce3ec;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+  cursor: pointer;
+}
+
+.lei-app-clear-filters {
+  font-size: 13px;
+  color: #1a5fad;
+  text-decoration: none;
+  padding-bottom: 10px;
+  align-self: flex-end;
+}
+
+.lei-app-clear-filters:hover {
+  text-decoration: underline;
+}
+
+.lei-app-toast {
+  position: fixed;
+  top: 80px;
+  right: 24px;
+  z-index: 200;
+  padding: 14px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.lei-app-toast--success {
+  background: #ecfdf3;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.lei-app-toast--error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.lei-app-detail-loading {
+  padding: 40px 20px;
+  text-align: center;
+  color: #9aa5b5;
+  font-size: 14px;
+}
+
+.lei-app-btn-final:disabled,
+.lei-app-btn-reject:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lei-app-btn-reject {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  background: #fff;
+  border: 2px solid #fecaca;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #dc2626;
+  cursor: pointer;
+}

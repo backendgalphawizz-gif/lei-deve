@@ -1,0 +1,628 @@
+/* SLA Metrics — flexbox only, px units */
+
+body.lei-page-sla {
+    --lei-sla-bg: #f4f7fa;
+    --lei-sla-navy: #0b1a32;
+    --lei-sla-gold: #b89650;
+    --lei-sla-gold-btn: #a68942;
+    --lei-sla-green: #28a745;
+    --lei-sla-orange: #fd7e14;
+    --lei-sla-red: #dc3545;
+    --lei-sla-text: #1a1a1a;
+    --lei-sla-muted: #6c757d;
+    --lei-sla-border: #e5e7eb;
+    --lei-sla-white: #ffffff;
+}
+
+body.lei-page-sla .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-sla-bg);
+    padding: 24px 28px 32px;
+}
+
+body.lei-page-sla .lei-sla-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-sla .lei-sla-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-sla-navy);
+    color: var(--lei-sla-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-sla .lei-sla-empty {
+    padding: 32px;
+    background: var(--lei-sla-white);
+    border: 1px solid var(--lei-sla-border);
+    border-radius: 10px;
+}
+
+body.lei-page-sla .lei-sla-card {
+    background: var(--lei-sla-white);
+    border: 1px solid var(--lei-sla-border);
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.04);
+}
+
+/* Status row */
+body.lei-page-sla .lei-sla-status-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+body.lei-page-sla .lei-sla-status-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 18px 20px;
+    background: var(--lei-sla-white);
+    border: 1px solid var(--lei-sla-border);
+    border-radius: 10px;
+    border-left-width: 4px;
+    gap: 10px;
+}
+
+body.lei-page-sla .lei-sla-status-card--green {
+    border-left-color: var(--lei-sla-green);
+}
+
+body.lei-page-sla .lei-sla-status-card--orange {
+    border-left-color: var(--lei-sla-orange);
+}
+
+body.lei-page-sla .lei-sla-status-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+body.lei-page-sla .lei-sla-status-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-status-label {
+    font-size: 12px;
+    font-weight: 700;
+}
+
+body.lei-page-sla .lei-sla-status-label--green {
+    color: var(--lei-sla-green);
+}
+
+body.lei-page-sla .lei-sla-status-label--orange {
+    color: var(--lei-sla-orange);
+}
+
+body.lei-page-sla .lei-sla-status-metric {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 8px;
+}
+
+body.lei-page-sla .lei-sla-status-metric strong {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-status-metric span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-sla-muted);
+}
+
+/* Mid row */
+body.lei-page-sla .lei-sla-mid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-sla .lei-sla-chart-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 22px;
+}
+
+body.lei-page-sla .lei-sla-chart-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+body.lei-page-sla .lei-sla-chart-head h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-chart-legend {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--lei-sla-muted);
+}
+
+body.lei-page-sla .lei-sla-chart-legend span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+body.lei-page-sla .lei-sla-legend-sq {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+}
+
+body.lei-page-sla .lei-sla-legend-sq--cpu {
+    background: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-legend-sq--ram {
+    background: #c4b5a0;
+}
+
+body.lei-page-sla .lei-sla-chart-body {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    flex: 1 1 auto;
+    min-height: 220px;
+    align-items: stretch;
+}
+
+body.lei-page-sla .lei-sla-chart-y {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--lei-sla-muted);
+    padding: 4px 0 28px;
+    width: 36px;
+    flex-shrink: 0;
+}
+
+body.lei-page-sla .lei-sla-chart-bars {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    flex: 1 1 auto;
+    gap: 8px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+body.lei-page-sla .lei-sla-bar-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex: 1 1 0;
+    min-width: 0;
+    height: 100%;
+}
+
+body.lei-page-sla .lei-sla-bar {
+    width: 100%;
+    background: #e2e8f0;
+    border-radius: 4px 4px 0 0;
+    min-height: 8px;
+    position: relative;
+}
+
+body.lei-page-sla .lei-sla-bar--alert::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background: var(--lei-sla-red);
+    border-radius: 4px 4px 0 0;
+}
+
+body.lei-page-sla .lei-sla-side-col {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 320px;
+    width: 320px;
+    gap: 16px;
+}
+
+body.lei-page-sla .lei-sla-thresholds-card {
+    background: var(--lei-sla-navy);
+    border: none;
+    color: var(--lei-sla-white);
+    padding: 22px;
+    flex: 1 1 auto;
+}
+
+body.lei-page-sla .lei-sla-thresholds-card h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0 0 18px;
+    color: var(--lei-sla-white);
+}
+
+body.lei-page-sla .lei-sla-threshold-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+body.lei-page-sla .lei-sla-threshold-meta {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 8px;
+    color: #b8c5d6;
+}
+
+body.lei-page-sla .lei-sla-threshold-meta strong {
+    color: var(--lei-sla-white);
+    font-weight: 700;
+}
+
+body.lei-page-sla .lei-sla-threshold-track {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+body.lei-page-sla .lei-sla-threshold-track span {
+    display: block;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+}
+
+body.lei-page-sla .lei-sla-btn-gold {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-sla-white);
+    background: var(--lei-sla-gold-btn);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-sla .lei-sla-btn-gold:hover {
+    background: #8f7538;
+}
+
+body.lei-page-sla .lei-sla-backup-card {
+    padding: 20px;
+}
+
+body.lei-page-sla .lei-sla-backup-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    color: var(--lei-sla-muted);
+}
+
+body.lei-page-sla .lei-sla-backup-head h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-backup-card p {
+    font-size: 13px;
+    color: var(--lei-sla-muted);
+    margin: 0 0 6px;
+}
+
+body.lei-page-sla .lei-sla-backup-card p strong {
+    color: var(--lei-sla-text);
+    font-weight: 600;
+}
+
+body.lei-page-sla .lei-sla-btn-outline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 12px;
+    padding: 11px 16px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-sla-text);
+    background: var(--lei-sla-white);
+    border: 1px solid var(--lei-sla-text);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Health row */
+body.lei-page-sla .lei-sla-health-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+
+body.lei-page-sla .lei-sla-health-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 14px;
+}
+
+body.lei-page-sla .lei-sla-health-card h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-health-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+}
+
+body.lei-page-sla .lei-sla-health-stats div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+body.lei-page-sla .lei-sla-health-stats strong {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-health-stats .lei-sla-err {
+    color: var(--lei-sla-red);
+}
+
+body.lei-page-sla .lei-sla-health-stats span {
+    font-size: 11px;
+    color: var(--lei-sla-muted);
+}
+
+body.lei-page-sla .lei-sla-api-track {
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: auto;
+}
+
+body.lei-page-sla .lei-sla-api-track span {
+    display: block;
+    height: 6px;
+    background: var(--lei-sla-gold);
+    border-radius: 6px;
+}
+
+body.lei-page-sla .lei-sla-db-segments {
+    display: flex;
+    flex-direction: row;
+    height: 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: auto;
+    gap: 2px;
+}
+
+body.lei-page-sla .lei-sla-seg--green {
+    background: var(--lei-sla-green);
+}
+
+body.lei-page-sla .lei-sla-seg--orange {
+    background: var(--lei-sla-orange);
+}
+
+body.lei-page-sla .lei-sla-seg--red {
+    background: var(--lei-sla-red);
+}
+
+/* Incidents table */
+body.lei-page-sla .lei-sla-incidents-card {
+    padding: 22px;
+}
+
+body.lei-page-sla .lei-sla-incidents-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+body.lei-page-sla .lei-sla-incidents-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-sla-text);
+}
+
+body.lei-page-sla .lei-sla-incidents-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body.lei-page-sla .lei-sla-btn-export {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sla-text);
+    background: var(--lei-sla-white);
+    border: 1px solid var(--lei-sla-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-sla .lei-sla-btn-dark {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-sla-white);
+    background: var(--lei-sla-text);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-sla .lei-sla-table-wrap {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.lei-page-sla .lei-sla-table-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    color: #374151;
+}
+
+body.lei-page-sla .lei-sla-table-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-sla .lei-sla-table-row--head {
+    background: #f9fafb;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-sla-muted);
+}
+
+body.lei-page-sla .lei-sla-table-row:last-child {
+    border-bottom: none;
+}
+
+body.lei-page-sla .lei-sla-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    border-radius: 4px;
+    color: var(--lei-sla-white);
+}
+
+body.lei-page-sla .lei-sla-pill--critical {
+    background: var(--lei-sla-red);
+}
+
+body.lei-page-sla .lei-sla-pill--high {
+    background: var(--lei-sla-orange);
+}
+
+body.lei-page-sla .lei-sla-pill--info {
+    background: #9ca3af;
+}
+
+body.lei-page-sla .lei-sla-mono {
+    font-family: ui-monospace, monospace;
+    font-weight: 600;
+}
+
+body.lei-page-sla .lei-sla-action-btn {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--lei-sla-text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+body.lei-page-sla .lei-sla-action-btn:hover {
+    text-decoration: underline;
+}
+
+body.lei-page-sla .lei-sla-table-empty {
+    padding: 24px;
+    text-align: center;
+    color: var(--lei-sla-muted);
+    font-size: 13px;
+}
+
+@media (max-width: 1200px) {
+    body.lei-page-sla .lei-sla-status-row,
+    body.lei-page-sla .lei-sla-mid-row,
+    body.lei-page-sla .lei-sla-health-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-sla .lei-sla-status-card {
+        flex: 1 1 220px;
+        min-width: 200px;
+    }
+
+    body.lei-page-sla .lei-sla-chart-card,
+    body.lei-page-sla .lei-sla-side-col {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+
+    body.lei-page-sla .lei-sla-health-card {
+        flex: 1 1 280px;
+        min-width: 260px;
+    }
+}

@@ -1,0 +1,14 @@
+[04-Jun-2026 10:17:15 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 8.0.30. in /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/platform_check.php:22
+Stack trace:
+#0 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/autoload_real.php(25): require()
+#1 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/autoload.php(22): ComposerAutoloaderInit53b5d56b3b7e3cbac1713e68c8850f6c::getLoader()
+#2 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/artisan(10): require('/home/developme...')
+#3 {main}
+  thrown in /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/platform_check.php on line 22
+[04-Jun-2026 10:20:57 UTC] PHP Fatal error:  Uncaught RuntimeException: Composer detected issues in your platform: Your Composer dependencies require a PHP version ">= 8.2.0". You are running 8.0.30. in /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/platform_check.php:22
+Stack trace:
+#0 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/autoload_real.php(25): require()
+#1 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/autoload.php(22): ComposerAutoloaderInit53b5d56b3b7e3cbac1713e68c8850f6c::getLoader()
+#2 /home/developmentalpha/public_html/lei.developmentalphawizzz.com/artisan(10): require('/home/developme...')
+#3 {main}
+  thrown in /home/developmentalpha/public_html/lei.developmentalphawizzz.com/vendor/composer/platform_check.php on line 22

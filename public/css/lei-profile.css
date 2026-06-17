@@ -1,0 +1,212 @@
+/* My Profile — flexbox, px */
+
+body.lei-page-profile .lei-content {
+    background: #f4f7f9;
+}
+
+.lei-profile-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lei-profile-hero {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 20px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    border-top: 4px solid var(--lei-blue, #1a5fad);
+}
+
+.lei-profile-hero-photo img {
+    width: 88px;
+    height: 88px;
+    border-radius: 44px;
+    object-fit: cover;
+    border: 3px solid #e2e8f0;
+}
+
+.lei-profile-hero-info h2 {
+    margin: 0 0 6px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #0b162c;
+}
+
+.lei-profile-hero-info p {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: #64748b;
+}
+
+.lei-profile-badges {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.lei-profile-badge {
+    padding: 4px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #0b162c;
+    background: #e8f0f8;
+    border-radius: 20px;
+}
+
+.lei-profile-badge--muted {
+    color: #475569;
+    background: #f1f5f9;
+}
+
+.lei-profile-errors {
+    padding: 14px;
+    background: #fef2f2;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    color: #991b1b;
+    font-size: 13px;
+}
+
+.lei-profile-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.lei-profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1 1 360px;
+    min-width: 300px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.lei-profile-card--side {
+    flex: 0 0 280px;
+    max-width: 320px;
+}
+
+.lei-profile-card h3 {
+    margin: 0;
+    padding-bottom: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0b162c;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.lei-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lei-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.lei-profile-field span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #475569;
+}
+
+.lei-profile-field input {
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    font-family: inherit;
+}
+
+.lei-profile-check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: #64748b;
+}
+
+.lei-profile-btn-primary {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: var(--lei-navy, #0b162c);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.lei-profile-btn-outline {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-navy, #0b162c);
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.lei-profile-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+}
+
+.lei-profile-meta dt {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.lei-profile-meta dd {
+    margin: 0 0 4px;
+    font-size: 13px;
+    color: #0b162c;
+}
+
+.lei-profile-status {
+    display: inline-block;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 12px;
+}
+
+.lei-profile-status--active {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.lei-profile-status--locked {
+    color: #b91c1c;
+    background: #fee2e2;
+}
+
+.lei-profile-status--pending {
+    color: #b45309;
+    background: #fef3c7;
+}

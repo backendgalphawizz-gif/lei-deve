@@ -1,0 +1,999 @@
+/* Backup & DR — flexbox only, px units — mockup palette */
+
+body.lei-page-backup {
+    --lei-bkp-bg: #f8f9fa;
+    --lei-bkp-navy: #0b1b35;
+    --lei-bkp-navy-deep: #0a192f;
+    --lei-bkp-gold: #a67c52;
+    --lei-bkp-gold-bright: #b8860b;
+    --lei-bkp-cream: #fdf8ee;
+    --lei-bkp-cream-dark: #f5f0e6;
+    --lei-bkp-title-cream: #e5d5b7;
+    --lei-bkp-red: #c02424;
+    --lei-bkp-text: #1a1a1a;
+    --lei-bkp-muted: #6c757d;
+    --lei-bkp-border: #e5e7eb;
+    --lei-bkp-white: #ffffff;
+}
+
+body.lei-page-backup .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-bkp-bg);
+    padding: 24px 28px 32px;
+}
+
+body.lei-page-backup .lei-bkp-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-backup .lei-bkp-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-backup .lei-bkp-empty {
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+/* KPI row */
+body.lei-page-backup .lei-bkp-kpi-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+body.lei-page-backup .lei-bkp-kpi {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 20px;
+    background: var(--lei-bkp-white);
+    border: 1px solid var(--lei-bkp-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.04);
+    position: relative;
+    gap: 4px;
+}
+
+body.lei-page-backup .lei-bkp-kpi-icon {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    color: var(--lei-bkp-gold);
+}
+
+body.lei-page-backup .lei-bkp-kpi-icon--gold {
+    color: var(--lei-bkp-gold);
+}
+
+body.lei-page-backup .lei-bkp-kpi-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-kpi-value {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lei-bkp-text);
+    margin-top: 4px;
+}
+
+body.lei-page-backup .lei-bkp-kpi-sub {
+    font-size: 12px;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-kpi-rto-foot {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 4px;
+    width: 100%;
+}
+
+body.lei-page-backup .lei-bkp-kpi-exceed {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lei-bkp-gold);
+}
+
+body.lei-page-backup .lei-bkp-kpi-sub--dot {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+body.lei-page-backup .lei-bkp-kpi-badge {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 5px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    border-radius: 4px;
+    align-self: flex-start;
+}
+
+body.lei-page-backup .lei-bkp-kpi-badge--gold {
+    background: var(--lei-bkp-cream);
+    color: var(--lei-bkp-gold);
+    border: 1px solid #e8dcc8;
+}
+
+body.lei-page-backup .lei-bkp-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-dot--green {
+    background: #22c55e;
+}
+
+body.lei-page-backup .lei-bkp-dot--gold {
+    background: var(--lei-bkp-gold-bright);
+}
+
+body.lei-page-backup .lei-bkp-progress {
+    width: 100%;
+    height: 6px;
+    background: #e9ecef;
+    border-radius: 6px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+body.lei-page-backup .lei-bkp-progress span {
+    display: block;
+    height: 6px;
+    background: var(--lei-bkp-gold-bright);
+    border-radius: 6px;
+}
+
+/* Mid row — ~2:1 failover : schedule */
+body.lei-page-backup .lei-bkp-mid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-backup .lei-bkp-mid-row > .lei-bkp-failover-card {
+    flex: 1 1 0;
+    min-width: 560px;
+}
+
+body.lei-page-backup .lei-bkp-mid-row > .lei-bkp-schedule-card {
+    flex: 0 0 380px;
+    width: 380px;
+    min-width: 340px;
+    max-width: 380px;
+}
+
+body.lei-page-backup .lei-bkp-card.lei-bkp-card--dark {
+    background: var(--lei-bkp-navy);
+    color: var(--lei-bkp-white);
+    border: none;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 6px 24px rgba(11, 27, 53, 0.35);
+}
+
+body.lei-page-backup .lei-bkp-card:not(.lei-bkp-card--dark) {
+    background: var(--lei-bkp-white);
+    border: 1px solid var(--lei-bkp-border);
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(26, 26, 26, 0.04);
+}
+
+body.lei-page-backup .lei-bkp-card-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+body.lei-page-backup .lei-bkp-card-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: #111827;
+}
+
+body.lei-page-backup .lei-bkp-card-head p {
+    font-size: 12px;
+    margin: 0;
+    color: #6b7280;
+}
+
+body.lei-page-backup .lei-bkp-side-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #94a3b8;
+}
+
+body.lei-page-backup .lei-bkp-schedule .lei-bkp-side-label {
+    color: #9ca3af;
+}
+
+/* Global Failover Control — mockup */
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-head-text h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: var(--lei-bkp-title-cream);
+    letter-spacing: 0.2px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-head-text p {
+    font-size: 12px;
+    margin: 0;
+    color: #8b9cb3;
+    line-height: 18px;
+    max-width: 340px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-status {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-sync-badge {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(166, 124, 82, 0.4);
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: var(--lei-bkp-title-cream);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-sync-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--lei-bkp-gold-bright);
+    box-shadow: 0 0 8px rgba(184, 134, 11, 0.8);
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-primary {
+    font-size: 11px;
+    font-weight: 500;
+    color: #8b9cb3;
+    letter-spacing: 0.3px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+    align-items: stretch;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-diagram {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex: 1 1 50%;
+    min-width: 240px;
+    padding: 32px 24px;
+    background: rgba(0, 0, 0, 0.28);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    min-height: 200px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node--primary span {
+    color: var(--lei-bkp-title-cream);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node--standby span {
+    color: #8b9cb3;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node-icon {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 76px;
+    height: 76px;
+    border-radius: 10px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node--primary .lei-bkp-fo-node-icon {
+    background: rgba(166, 124, 82, 0.15);
+    color: var(--lei-bkp-gold-bright);
+    border: 2px solid var(--lei-bkp-gold-bright);
+    box-shadow: 0 0 22px rgba(184, 134, 11, 0.45);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-node--standby .lei-bkp-fo-node-icon {
+    background: rgba(11, 27, 53, 0.6);
+    color: #8b9cb3;
+    border: 1px solid #3d4f6f;
+    box-shadow: none;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1 1 72px;
+    min-width: 72px;
+    max-width: 160px;
+    position: relative;
+    height: 24px;
+    margin: 0 8px;
+    align-self: center;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-link-line {
+    display: block;
+    width: 100%;
+    height: 0;
+    border-top: 2px dashed #475569;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-link-dot {
+    position: absolute;
+    left: 28%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-left: -6px;
+    border-radius: 50%;
+    background: var(--lei-bkp-gold-bright);
+    box-shadow: 0 0 12px rgba(184, 134, 11, 0.85);
+    border: 2px solid var(--lei-bkp-navy);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 50%;
+    min-width: 260px;
+    gap: 12px;
+    justify-content: center;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-health-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.22);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-health-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-health-head > span:first-child {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: var(--lei-bkp-title-cream);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-latency {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--lei-bkp-title-cream);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-health-bars {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-bar {
+    flex: 1 1 0;
+    height: 10px;
+    border-radius: 2px;
+    min-width: 0;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-bar--full {
+    background: var(--lei-bkp-gold-bright);
+    box-shadow: 0 0 6px rgba(184, 134, 11, 0.4);
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-bar--mid {
+    background: #8b6914;
+    border: 1px solid #a67c52;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-bar--empty {
+    background: #1a2d4a;
+    border: 1px solid #2a3f5f;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-sync-note {
+    font-size: 11px;
+    font-style: italic;
+    color: #8b9cb3;
+    margin: 0;
+    line-height: 16px;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-btn-failover {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 15px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    color: var(--lei-bkp-white);
+    background: var(--lei-bkp-red);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-btn-failover:hover {
+    background: #a01e1e;
+}
+
+body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-warning {
+    font-size: 10px;
+    color: #c4a574;
+    line-height: 15px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Backup Schedule card */
+body.lei-page-backup .lei-bkp-schedule-card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 12px;
+}
+
+body.lei-page-backup .lei-bkp-sch-head {
+    margin-bottom: 8px;
+}
+
+body.lei-page-backup .lei-bkp-sch-head h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--lei-bkp-text);
+}
+
+body.lei-page-backup .lei-bkp-sch-head p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-sch-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+}
+
+body.lei-page-backup .lei-bkp-sch-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px 0;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+body.lei-page-backup .lei-bkp-sch-row--timer {
+    border-bottom: none;
+    padding-bottom: 8px;
+}
+
+body.lei-page-backup .lei-bkp-sch-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-sch-ret-head {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+body.lei-page-backup .lei-bkp-sch-ret-box {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 14px 16px;
+    background: #f3f4f6;
+    border: 1px solid var(--lei-bkp-border);
+    border-radius: 8px;
+}
+
+body.lei-page-backup .lei-bkp-sch-ret-box strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-bkp-text);
+}
+
+body.lei-page-backup .lei-bkp-sch-ret-box > span {
+    font-size: 11px;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-sch-freq-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 16px;
+    background: #f8f9fa;
+    border: 1px solid var(--lei-bkp-border);
+    border-radius: 8px;
+}
+
+body.lei-page-backup .lei-bkp-sch-freq-box strong {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-bkp-text);
+}
+
+body.lei-page-backup .lei-bkp-sch-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+body.lei-page-backup .lei-bkp-sch-immutable {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    padding: 4px 8px;
+    background: var(--lei-bkp-text);
+    color: var(--lei-bkp-white);
+    border-radius: 4px;
+}
+
+body.lei-page-backup .lei-bkp-sch-timers {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body.lei-page-backup .lei-bkp-sch-timer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 14px 12px;
+    background: var(--lei-bkp-cream);
+    border: 1px solid #e8dcc8;
+    border-radius: 8px;
+    gap: 4px;
+}
+
+body.lei-page-backup .lei-bkp-sch-timer strong {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--lei-bkp-gold);
+    line-height: 1;
+}
+
+body.lei-page-backup .lei-bkp-sch-timer > span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-bkp-gold);
+}
+
+body.lei-page-backup .lei-bkp-sch-manual {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 13px 16px;
+    margin-top: auto;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-bkp-text);
+    background: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-backup .lei-bkp-sch-manual:hover {
+    background: var(--lei-bkp-white);
+}
+
+/* Snapshot Registry */
+body.lei-page-backup .lei-bkp-snapshot-card {
+    padding: 24px;
+    border-radius: 12px;
+}
+
+body.lei-page-backup .lei-bkp-snap-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+body.lei-page-backup .lei-bkp-snap-title h2 {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: var(--lei-bkp-text);
+}
+
+body.lei-page-backup .lei-bkp-snap-title p {
+    font-size: 12px;
+    margin: 0;
+    color: var(--lei-bkp-muted);
+}
+
+body.lei-page-backup .lei-bkp-filter-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    background: var(--lei-bkp-white);
+    border: 1px solid var(--lei-bkp-border);
+    border-radius: 8px;
+    min-width: 260px;
+}
+
+body.lei-page-backup .lei-bkp-filter-wrap svg {
+    color: var(--lei-bkp-muted);
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-table-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+
+body.lei-page-backup .lei-bkp-filter {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--lei-bkp-muted);
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+body.lei-page-backup .lei-bkp-btn-vault {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: var(--lei-bkp-white);
+    background: var(--lei-bkp-navy);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+body.lei-page-backup .lei-bkp-table-wrap {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.lei-page-backup .lei-bkp-table-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    border-bottom: 1px solid #f3f4f6;
+    font-size: 13px;
+    color: #374151;
+}
+
+body.lei-page-backup .lei-bkp-table-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-backup .lei-bkp-table-row--head {
+    background: #f9fafb;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #9ca3af;
+}
+
+body.lei-page-backup .lei-bkp-table-row:last-child {
+    border-bottom: none;
+}
+
+body.lei-page-backup .lei-bkp-mono {
+    font-family: ui-monospace, monospace;
+    font-weight: 700;
+    color: var(--lei-bkp-text);
+}
+
+body.lei-page-backup .lei-bkp-type-pill {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    background: #f3f4f6;
+    color: #6b7280;
+    border-radius: 4px;
+}
+
+body.lei-page-backup .lei-bkp-verified {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+body.lei-page-backup .lei-bkp-link {
+    background: transparent;
+    border: none;
+    font-size: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+}
+
+/* Bottom row */
+body.lei-page-backup .lei-bkp-bottom-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+body.lei-page-backup .lei-bkp-bottom-row > .lei-bkp-card {
+    flex: 1 1 400px;
+    min-width: 320px;
+}
+
+body.lei-page-backup .lei-bkp-card-head--split {
+    align-items: flex-start;
+}
+
+body.lei-page-backup .lei-bkp-link-action {
+    font-size: 13px;
+    font-weight: 600;
+    color: #0f172a;
+    text-decoration: none;
+}
+
+body.lei-page-backup .lei-bkp-drill-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+body.lei-page-backup .lei-bkp-drill-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: #faf9f7;
+    border: 1px solid #f3f4f6;
+    border-radius: 8px;
+}
+
+body.lei-page-backup .lei-bkp-drill-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: #fef3c7;
+    color: #b45309;
+    border-radius: 40px;
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-drill-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.lei-page-backup .lei-bkp-drill-text strong {
+    display: block;
+    font-size: 14px;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+body.lei-page-backup .lei-bkp-drill-text span {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+body.lei-page-backup .lei-bkp-drill-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+body.lei-page-backup .lei-bkp-drill-status {
+    font-weight: 700;
+    color: #b45309;
+}
+
+body.lei-page-backup .lei-bkp-report-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+body.lei-page-backup .lei-bkp-report-item {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    flex: 1 1 200px;
+    min-width: 180px;
+    padding: 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-backup .lei-bkp-report-item svg {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+body.lei-page-backup .lei-bkp-report-item strong {
+    display: block;
+    font-size: 13px;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+body.lei-page-backup .lei-bkp-report-item span {
+    font-size: 11px;
+    color: #6b7280;
+}
+
+@media (max-width: 1200px) {
+    body.lei-page-backup .lei-bkp-kpi-row,
+    body.lei-page-backup .lei-bkp-mid-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-backup .lei-bkp-kpi {
+        flex: 1 1 220px;
+        min-width: 200px;
+    }
+
+    body.lei-page-backup .lei-bkp-mid-row > .lei-bkp-failover-card,
+    body.lei-page-backup .lei-bkp-mid-row > .lei-bkp-schedule-card {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+        max-width: none;
+    }
+
+    body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-body {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-diagram,
+    body.lei-page-backup .lei-bkp-failover-card .lei-bkp-fo-panel {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+}

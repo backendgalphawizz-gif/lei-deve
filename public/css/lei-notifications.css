@@ -1,0 +1,433 @@
+/* Push Notifications — flexbox only, px units (mockup red theme) */
+
+body.lei-page-notifications {
+    --lei-notif-red: #ff3b30;
+    --lei-notif-red-dark: #e6352b;
+    --lei-notif-teal: #20b2aa;
+    --lei-notif-white: #ffffff;
+    --lei-notif-bg: #f5f5f5;
+    --lei-notif-border: #e5e5e5;
+    --lei-notif-text: #333333;
+    --lei-notif-muted: #888888;
+}
+
+body.lei-page-notifications .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-notif-bg);
+    padding: 20px 24px 32px;
+}
+
+body.lei-page-notifications .lei-notif-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-notifications .lei-notif-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-notif-text);
+    color: var(--lei-notif-white);
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+body.lei-page-notifications .lei-notif-card {
+    background: var(--lei-notif-white);
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+body.lei-page-notifications .lei-notif-form-card {
+    padding: 20px 24px 16px;
+}
+
+body.lei-page-notifications .lei-notif-form-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+body.lei-page-notifications .lei-notif-form-row--main {
+    margin-bottom: 12px;
+}
+
+body.lei-page-notifications .lei-notif-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 180px;
+}
+
+body.lei-page-notifications .lei-notif-field--grow {
+    flex: 1 1 280px;
+}
+
+body.lei-page-notifications .lei-notif-field span {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-notif-text);
+}
+
+body.lei-page-notifications .lei-notif-field select,
+body.lei-page-notifications .lei-notif-field input[type="text"] {
+    padding: 10px 12px;
+    font-size: 14px;
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 6px;
+    background: var(--lei-notif-white);
+    color: var(--lei-notif-text);
+}
+
+body.lei-page-notifications .lei-notif-file-row {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+body.lei-page-notifications .lei-notif-field--file {
+    flex: 1 1 auto;
+    width: 100%;
+}
+
+body.lei-page-notifications .lei-notif-file-input {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+body.lei-page-notifications .lei-notif-file-input input[type="text"] {
+    flex: 1 1 auto;
+    border: none;
+    border-radius: 0;
+    min-width: 0;
+}
+
+body.lei-page-notifications .lei-notif-browse {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--lei-notif-text);
+    background: #f9f9f9;
+    border: none;
+    border-left: 1px solid var(--lei-notif-border);
+    cursor: pointer;
+}
+
+body.lei-page-notifications .lei-notif-form-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+body.lei-page-notifications .lei-notif-btn-reset {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-notif-text);
+    background: var(--lei-notif-white);
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+body.lei-page-notifications .lei-notif-btn-send,
+body.lei-page-notifications .lei-notif-btn-search {
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lei-notif-white);
+    background: var(--lei-notif-red);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+body.lei-page-notifications .lei-notif-btn-send:hover,
+body.lei-page-notifications .lei-notif-btn-search:hover {
+    background: var(--lei-notif-red-dark);
+}
+
+/* Table */
+body.lei-page-notifications .lei-notif-table-card {
+    padding: 0;
+    overflow: hidden;
+}
+
+body.lei-page-notifications .lei-notif-table-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--lei-notif-border);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+body.lei-page-notifications .lei-notif-table-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+body.lei-page-notifications .lei-notif-table-title h2 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--lei-notif-text);
+}
+
+body.lei-page-notifications .lei-notif-count-badge {
+    display: flex;
+    width: 22px;
+    height: 22px;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lei-notif-text);
+    background: #eeeeee;
+    border-radius: 50%;
+}
+
+body.lei-page-notifications .lei-notif-search-form {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+}
+
+body.lei-page-notifications .lei-notif-search-form input {
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 6px;
+    min-width: 180px;
+}
+
+body.lei-page-notifications .lei-notif-table {
+    display: flex;
+    flex-direction: column;
+}
+
+body.lei-page-notifications .lei-notif-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--lei-notif-border);
+    font-size: 14px;
+    gap: 12px;
+}
+
+body.lei-page-notifications .lei-notif-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-notifications .lei-notif-row--head {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-notif-muted);
+    background: #fafafa;
+}
+
+body.lei-page-notifications .lei-notif-row--empty {
+    justify-content: center;
+    color: var(--lei-notif-muted);
+}
+
+body.lei-page-notifications .lei-notif-col-none {
+    display: none;
+}
+
+body.lei-page-notifications .lei-notif-desc {
+    color: var(--lei-notif-text);
+    flex: 1 1 0;
+}
+
+body.lei-page-notifications .lei-notif-col-filename {
+    color: #475569;
+}
+
+body.lei-page-notifications .lei-notif-file {
+    flex: 1.5 1 0;
+}
+
+body.lei-page-notifications .lei-notif-img-cell {
+    flex: 0 0 80px;
+    display: flex;
+    justify-content: center;
+}
+
+body.lei-page-notifications .lei-notif-thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid var(--lei-notif-border);
+}
+
+body.lei-page-notifications .lei-notif-thumb--placeholder {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    background: #f3f4f6;
+    border: 1px solid var(--lei-notif-border);
+    display: block;
+}
+
+body.lei-page-notifications .lei-notif-actions {
+    flex: 0 0 100px;
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    justify-content: flex-end;
+}
+
+/* Action icons — mockup: white btn, red border, red icon */
+body.lei-page-notifications .lei-notif-btn-icon {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: var(--lei-notif-white);
+    border: 1px solid var(--lei-notif-red);
+    border-radius: 6px;
+    color: var(--lei-notif-red);
+    cursor: pointer;
+}
+
+body.lei-page-notifications .lei-notif-btn-icon svg {
+    width: 16px;
+    height: 16px;
+}
+
+body.lei-page-notifications .lei-notif-btn-icon:hover {
+    background: #fff5f5;
+}
+
+/* Hidden columns styling (when enabled in dev) */
+body.lei-page-notifications .lei-notif-btn-resend {
+    display: flex;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: var(--lei-notif-teal);
+    border: none;
+    border-radius: 6px;
+    color: var(--lei-notif-white);
+    cursor: pointer;
+}
+
+body.lei-page-notifications .lei-notif-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+body.lei-page-notifications .lei-notif-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+body.lei-page-notifications .lei-notif-toggle-slider {
+    position: absolute;
+    inset: 0;
+    background: #ccc;
+    border-radius: 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+body.lei-page-notifications .lei-notif-toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--lei-notif-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+body.lei-page-notifications .lei-notif-toggle input:checked + .lei-notif-toggle-slider {
+    background: var(--lei-notif-red);
+}
+
+body.lei-page-notifications .lei-notif-toggle input:checked + .lei-notif-toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* Modal */
+body.lei-page-notifications .lei-notif-modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+body.lei-page-notifications .lei-notif-modal-overlay[hidden] {
+    display: none;
+}
+
+body.lei-page-notifications .lei-notif-modal {
+    width: 400px;
+    max-width: 90%;
+    padding: 24px;
+    background: var(--lei-notif-white);
+    border-radius: 8px;
+}
+
+body.lei-page-notifications .lei-notif-modal h3 {
+    margin: 0 0 16px;
+    font-size: 18px;
+}
+
+body.lei-page-notifications .lei-notif-modal label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 12px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+body.lei-page-notifications .lei-notif-modal input {
+    padding: 10px 12px;
+    border: 1px solid var(--lei-notif-border);
+    border-radius: 6px;
+    font-weight: 400;
+}
+
+body.lei-page-notifications .lei-notif-modal-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 8px;
+}

@@ -1,0 +1,862 @@
+/* Reports & Analytics — flexbox only, px units — mockup palette */
+
+body.lei-page-reports {
+    --lei-rep-bg: #f0f2f5;
+    --lei-rep-navy: #001529;
+    --lei-rep-navy-export: #001529;
+    --lei-rep-gold: #c5a059;
+    --lei-rep-gold-ring: #826a3d;
+    --lei-rep-green: #2e7d32;
+    --lei-rep-red: #d32f2f;
+    --lei-rep-blue: #1a5fad;
+    --lei-rep-sky: #5b9bd5;
+    --lei-rep-text: #1a1a1a;
+    --lei-rep-muted: #6c757d;
+    --lei-rep-border: #e8e8e8;
+    --lei-rep-white: #ffffff;
+}
+
+body.lei-page-reports .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-rep-bg);
+    padding: 28px 30px 36px;
+}
+
+body.lei-page-reports .lei-rep-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-reports .lei-rep-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-rep-navy);
+    color: var(--lei-rep-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-reports .lei-rep-empty {
+    padding: 32px;
+    background: var(--lei-rep-white);
+    border: 1px solid var(--lei-rep-border);
+    border-radius: 12px;
+}
+
+/* Header */
+body.lei-page-reports .lei-rep-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+body.lei-page-reports .lei-rep-head-text h1 {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    color: #001529;
+}
+
+body.lei-page-reports .lei-rep-head-text p {
+    font-size: 13px;
+    margin: 0;
+    color: var(--lei-rep-muted);
+    max-width: 520px;
+}
+
+body.lei-page-reports .lei-rep-head-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+body.lei-page-reports .lei-rep-btn-outline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-rep-text);
+    background: var(--lei-rep-white);
+    border: 1px solid var(--lei-rep-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-reports .lei-rep-btn-primary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-rep-white);
+    background: var(--lei-rep-navy);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-reports .lei-rep-btn-primary:hover {
+    background: #002140;
+}
+
+/* Stat cards */
+body.lei-page-reports .lei-rep-stats-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 16px;
+}
+
+body.lei-page-reports .lei-rep-stat-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 20px 22px;
+    background: var(--lei-rep-white);
+    border: 1px solid var(--lei-rep-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 21, 41, 0.04);
+}
+
+body.lei-page-reports .lei-rep-stat-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+body.lei-page-reports .lei-rep-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+}
+
+body.lei-page-reports .lei-rep-stat-icon--blue {
+    background: #e8f1fb;
+    color: var(--lei-rep-blue);
+}
+
+body.lei-page-reports .lei-rep-stat-icon--gold {
+    background: #f5f0e6;
+    color: var(--lei-rep-gold);
+}
+
+body.lei-page-reports .lei-rep-stat-icon--sky {
+    background: #e8f4fc;
+    color: var(--lei-rep-sky);
+}
+
+body.lei-page-reports .lei-rep-stat-icon--nodes {
+    background: #f1f3f5;
+    color: #78909c;
+}
+
+body.lei-page-reports .lei-rep-trend {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+body.lei-page-reports .lei-rep-trend--up {
+    color: var(--lei-rep-green);
+}
+
+body.lei-page-reports .lei-rep-trend--down {
+    color: var(--lei-rep-red);
+}
+
+body.lei-page-reports .lei-rep-trend--muted {
+    color: var(--lei-rep-muted);
+}
+
+body.lei-page-reports .lei-rep-stat-value {
+    font-size: 30px;
+    font-weight: 700;
+    color: #001529;
+    line-height: 1.1;
+    margin-top: 4px;
+}
+
+body.lei-page-reports .lei-rep-stat-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333333;
+    letter-spacing: 0;
+}
+
+body.lei-page-reports .lei-rep-stat-desc {
+    font-size: 12px;
+    color: var(--lei-rep-muted);
+    line-height: 16px;
+}
+
+/* Cards */
+body.lei-page-reports .lei-rep-card {
+    background: var(--lei-rep-white);
+    border: 1px solid var(--lei-rep-border);
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 21, 41, 0.04);
+}
+
+/* Tabs + analytics */
+body.lei-page-reports .lei-rep-analytics-card {
+    padding: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid #e8e8e8;
+}
+
+body.lei-page-reports .lei-rep-tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 32px;
+    padding: 0 30px;
+    background: #ffffff;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+body.lei-page-reports .lei-rep-tab {
+    padding: 20px 0 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    background: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+body.lei-page-reports .lei-rep-tab--active {
+    color: #000000;
+    font-weight: 700;
+    border-bottom-color: #000000;
+}
+
+body.lei-page-reports .lei-rep-analytics-body {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 24px;
+    padding: 28px 30px 30px;
+    background: #ffffff;
+}
+
+body.lei-page-reports .lei-rep-chart-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 72%;
+    min-width: 0;
+    gap: 18px;
+}
+
+body.lei-page-reports .lei-rep-chart-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+body.lei-page-reports .lei-rep-chart-head h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+body.lei-page-reports .lei-rep-legend {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+body.lei-page-reports .lei-rep-legend span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+body.lei-page-reports .lei-rep-legend-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+body.lei-page-reports .lei-rep-legend-dot--current {
+    background: #000000;
+}
+
+body.lei-page-reports .lei-rep-legend-dot--prev {
+    background: #ffffff;
+    border: 2px solid #d1d5db;
+    box-sizing: border-box;
+}
+
+body.lei-page-reports .lei-rep-chart-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+
+body.lei-page-reports .lei-rep-chart-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 220px;
+    padding: 4px 0 0;
+    background: transparent;
+    border: none;
+}
+
+body.lei-page-reports .lei-rep-chart-svg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 200px;
+    display: block;
+    overflow: visible;
+}
+
+body.lei-page-reports .lei-rep-chart-baseline {
+    stroke: #e5e7eb;
+    stroke-width: 1;
+}
+
+body.lei-page-reports .lei-rep-chart-area {
+    fill: #eceef1;
+}
+
+body.lei-page-reports .lei-rep-chart-line {
+    fill: none;
+    stroke-linejoin: miter;
+    stroke-linecap: butt;
+    vector-effect: non-scaling-stroke;
+}
+
+body.lei-page-reports .lei-rep-chart-line--current {
+    stroke: #000000;
+    stroke-width: 2px;
+}
+
+body.lei-page-reports .lei-rep-chart-line--prev {
+    stroke: #c5c9d0;
+    stroke-width: 1.5px;
+    stroke-dasharray: 6 5;
+}
+
+body.lei-page-reports .lei-rep-chart-dot {
+    fill: #000000;
+    stroke: #ffffff;
+    stroke-width: 2px;
+}
+
+body.lei-page-reports .lei-rep-chart-labels {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 40px 0 36px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #9ca3af;
+    text-transform: uppercase;
+}
+
+/* SLA panel */
+body.lei-page-reports .lei-rep-sla-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 268px;
+    width: 268px;
+    min-width: 248px;
+}
+
+body.lei-page-reports .lei-rep-sla-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    height: 100%;
+    min-height: 320px;
+    padding: 24px 22px;
+    background: #f4f6f8;
+    border: none;
+    border-radius: 10px;
+}
+
+body.lei-page-reports .lei-rep-sla-box h2 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+body.lei-page-reports .lei-rep-donut-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 148px;
+    height: 148px;
+    margin: 8px auto 4px;
+}
+
+body.lei-page-reports .lei-rep-donut-center {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+}
+
+body.lei-page-reports .lei-rep-donut-center strong {
+    font-size: 30px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1;
+}
+
+body.lei-page-reports .lei-rep-donut-center span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #8b6e3c;
+    margin-top: 4px;
+}
+
+body.lei-page-reports .lei-rep-sla-list {
+    list-style: none;
+    padding: 16px 0 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: none;
+}
+
+body.lei-page-reports .lei-rep-sla-list li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+body.lei-page-reports .lei-rep-sla-list strong {
+    color: #000000;
+    font-weight: 700;
+    font-size: 14px;
+}
+
+body.lei-page-reports .lei-rep-sla-warn {
+    color: #8b6e3c;
+}
+
+/* Mid row */
+body.lei-page-reports .lei-rep-mid-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-reports .lei-rep-builder-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 58%;
+    min-width: 0;
+    padding: 22px 24px;
+    gap: 18px;
+}
+
+body.lei-page-reports .lei-rep-builder-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+body.lei-page-reports .lei-rep-builder-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    color: var(--lei-rep-blue);
+}
+
+body.lei-page-reports .lei-rep-builder-title h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-rep-text);
+}
+
+body.lei-page-reports .lei-rep-toggle-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-rep-muted);
+}
+
+body.lei-page-reports .lei-rep-toggle {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+body.lei-page-reports .lei-rep-toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+body.lei-page-reports .lei-rep-toggle span {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #ced4da;
+    border-radius: 24px;
+}
+
+body.lei-page-reports .lei-rep-toggle span::before {
+    position: absolute;
+    content: '';
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background: var(--lei-rep-white);
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+body.lei-page-reports .lei-rep-toggle input:checked + span {
+    background: #0a192f;
+}
+
+body.lei-page-reports .lei-rep-toggle input:checked + span::before {
+    transform: translateX(20px);
+}
+
+body.lei-page-reports .lei-rep-builder-fields {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+body.lei-page-reports .lei-rep-builder-fields label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1 1 140px;
+    min-width: 120px;
+}
+
+body.lei-page-reports .lei-rep-builder-fields label > span {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-rep-muted);
+}
+
+body.lei-page-reports .lei-rep-select {
+    padding: 10px 12px;
+    font-size: 13px;
+    border: 1px solid var(--lei-rep-border);
+    border-radius: 8px;
+    background: var(--lei-rep-white);
+    color: var(--lei-rep-text);
+}
+
+body.lei-page-reports .lei-rep-builder-foot {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 4px;
+    font-size: 12px;
+    color: var(--lei-rep-muted);
+}
+
+/* Export suite */
+body.lei-page-reports .lei-rep-export-card {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 38%;
+    width: 38%;
+    min-width: 280px;
+    padding: 24px;
+    background: var(--lei-rep-navy-export);
+    border: none;
+    color: var(--lei-rep-white);
+    gap: 14px;
+}
+
+body.lei-page-reports .lei-rep-export-card h2 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-rep-gold);
+}
+
+body.lei-page-reports .lei-rep-export-card p {
+    font-size: 12px;
+    margin: 0;
+    color: #a0aec0;
+    line-height: 18px;
+}
+
+body.lei-page-reports .lei-rep-export-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+body.lei-page-reports .lei-rep-export-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #c5a059;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(197, 160, 89, 0.25);
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+body.lei-page-reports .lei-rep-export-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+}
+
+body.lei-page-reports .lei-rep-export-btn svg {
+    flex-shrink: 0;
+}
+
+/* Table */
+body.lei-page-reports .lei-rep-table-card {
+    padding: 22px 24px;
+}
+
+body.lei-page-reports .lei-rep-table-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+body.lei-page-reports .lei-rep-table-head h2 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    color: var(--lei-rep-text);
+}
+
+body.lei-page-reports .lei-rep-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-rep-blue);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+body.lei-page-reports .lei-rep-table {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body.lei-page-reports .lei-rep-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 18px;
+    gap: 12px;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+    color: var(--lei-rep-text);
+}
+
+body.lei-page-reports .lei-rep-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-reports .lei-rep-row > span:last-child {
+    flex: 0 0 90px;
+    text-align: right;
+}
+
+body.lei-page-reports .lei-rep-row--head {
+    background: #f8f9fa;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: var(--lei-rep-muted);
+}
+
+body.lei-page-reports .lei-rep-row:last-child {
+    border-bottom: none;
+}
+
+body.lei-page-reports .lei-rep-report-name {
+    font-weight: 600;
+}
+
+body.lei-page-reports .lei-rep-status {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+body.lei-page-reports .lei-rep-status--ready {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+
+body.lei-page-reports .lei-rep-status--processing {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+body.lei-page-reports .lei-rep-regen {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-rep-blue);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+}
+
+body.lei-page-reports .lei-rep-row-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+body.lei-page-reports .lei-rep-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: var(--lei-rep-muted);
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+body.lei-page-reports .lei-rep-icon-btn:hover {
+    background: #f0f2f5;
+    color: var(--lei-rep-text);
+}
+
+/* Layout chrome */
+body.lei-page-reports.lei-body {
+    background: var(--lei-rep-bg);
+}
+
+body.lei-page-reports .lei-sidebar {
+    background: var(--lei-sidebar-bg);
+}
+
+body.lei-page-reports .lei-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--lei-rep-border);
+}
+
+body.lei-page-reports .lei-topbar-welcome span {
+    color: #001529;
+    font-weight: 700;
+}
+
+body.lei-page-reports .lei-search input {
+    background: #f0f2f5;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+}
+
+@media (max-width: 1100px) {
+    body.lei-page-reports .lei-rep-stats-row,
+    body.lei-page-reports .lei-rep-mid-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-reports .lei-rep-stat-card {
+        flex: 1 1 calc(50% - 8px);
+        min-width: 220px;
+    }
+
+    body.lei-page-reports .lei-rep-analytics-body {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-reports .lei-rep-sla-panel {
+        flex: 1 1 100%;
+        width: 100%;
+        min-width: 0;
+    }
+
+    body.lei-page-reports .lei-rep-export-card {
+        flex: 1 1 100%;
+        width: 100%;
+    }
+}

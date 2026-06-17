@@ -1,0 +1,532 @@
+/* Registry Management — flexbox only, px units */
+
+body.lei-page-registry .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: #f4f7f6;
+    padding: 24px 28px 32px;
+}
+
+body.lei-page-registry .lei-reg-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+body.lei-page-registry .lei-reg-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: #0f172a;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.2);
+}
+
+body.lei-page-registry .lei-reg-empty {
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #64748b;
+}
+
+/* Header */
+body.lei-page-registry .lei-reg-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+body.lei-page-registry .lei-reg-head h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+body.lei-page-registry .lei-reg-head-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+body.lei-page-registry .lei-reg-btn-discard {
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-btn-publish {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #0f172a;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-btn-publish:hover {
+    background: #1e293b;
+}
+
+/* Top row — 2 cards */
+body.lei-page-registry .lei-reg-top-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: stretch;
+}
+
+body.lei-page-registry .lei-reg-top-row > .lei-reg-card {
+    flex: 1 1 420px;
+    min-width: 360px;
+}
+
+body.lei-page-registry .lei-reg-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.06);
+}
+
+body.lei-page-registry .lei-reg-card--wide {
+    width: 100%;
+}
+
+body.lei-page-registry .lei-reg-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 17px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 20px;
+}
+
+body.lei-page-registry .lei-reg-accent {
+    display: block;
+    width: 4px;
+    height: 22px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+body.lei-page-registry .lei-reg-accent--core {
+    background: #0f172a;
+}
+
+body.lei-page-registry .lei-reg-accent--gold {
+    background: #b8860b;
+}
+
+body.lei-page-registry .lei-reg-card-wide-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+body.lei-page-registry .lei-reg-card-wide-head .lei-reg-card-title {
+    margin-bottom: 0;
+}
+
+body.lei-page-registry .lei-reg-pill {
+    font-size: 11px;
+    font-weight: 600;
+    color: #6b7280;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+/* Form */
+body.lei-page-registry .lei-reg-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+body.lei-page-registry .lei-reg-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+body.lei-page-registry .lei-reg-field label,
+body.lei-page-registry .lei-reg-col-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #9ca3af;
+    text-transform: uppercase;
+}
+
+body.lei-page-registry .lei-reg-field small {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-top: -4px;
+}
+
+body.lei-page-registry .lei-reg-field input[type="text"],
+body.lei-page-registry .lei-reg-field select,
+body.lei-page-registry .lei-reg-advanced-col select {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 14px;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    box-sizing: border-box;
+}
+
+body.lei-page-registry .lei-reg-field-row {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+body.lei-page-registry .lei-reg-field-row .lei-reg-field {
+    flex: 1 1 50%;
+}
+
+/* Toggles */
+body.lei-page-registry .lei-reg-toggle-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+body.lei-page-registry .lei-reg-toggle-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 1 220px;
+    gap: 16px;
+}
+
+body.lei-page-registry .lei-reg-toggle-item strong {
+    display: block;
+    font-size: 14px;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+body.lei-page-registry .lei-reg-toggle-item span {
+    font-size: 12px;
+    color: #6b7280;
+}
+
+body.lei-page-registry .lei-reg-switch {
+    display: flex;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-switch input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+body.lei-page-registry .lei-reg-switch-track {
+    width: 44px;
+    height: 24px;
+    background: #e5e7eb;
+    border-radius: 24px;
+    position: relative;
+    transition: background 0.15s;
+}
+
+body.lei-page-registry .lei-reg-switch-track::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    background: #ffffff;
+    border-radius: 18px;
+    transition: transform 0.15s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+body.lei-page-registry .lei-reg-switch input:checked + .lei-reg-switch-track {
+    background: #0f172a;
+}
+
+body.lei-page-registry .lei-reg-switch input:checked + .lei-reg-switch-track::before {
+    transform: translateX(20px);
+}
+
+/* Format pills */
+body.lei-page-registry .lei-reg-format-grid {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+body.lei-page-registry .lei-reg-format-pill {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-format-pill.active {
+    background: #f8fafc;
+    border-color: #0f172a;
+    color: #0f172a;
+}
+
+body.lei-page-registry .lei-reg-format-pill svg {
+    color: #0f172a;
+}
+
+/* Slider */
+body.lei-page-registry .lei-reg-slider-wrap {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+}
+
+body.lei-page-registry .lei-reg-slider-inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex: 1 1 auto;
+    position: relative;
+    height: 28px;
+}
+
+body.lei-page-registry .lei-reg-slider-inner input[type="range"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 28px;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+
+body.lei-page-registry .lei-reg-slider-track {
+    width: 100%;
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+body.lei-page-registry .lei-reg-slider-fill {
+    display: block;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 8px;
+    width: 50%;
+}
+
+body.lei-page-registry .lei-reg-size-badge {
+    flex: 0 0 auto;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #0f172a;
+    border-radius: 6px;
+}
+
+body.lei-page-registry .lei-reg-alert {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    background: #fef9ee;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+}
+
+body.lei-page-registry .lei-reg-alert svg {
+    flex-shrink: 0;
+    color: #b45309;
+}
+
+body.lei-page-registry .lei-reg-alert p {
+    margin: 0;
+    font-size: 12px;
+    color: #92400e;
+    line-height: 18px;
+}
+
+/* Advanced row */
+body.lei-page-registry .lei-reg-advanced-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+body.lei-page-registry .lei-reg-advanced-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1 1 240px;
+    min-width: 220px;
+}
+
+body.lei-page-registry .lei-reg-radio {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #374151;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-radio input {
+    width: 16px;
+    height: 16px;
+    accent-color: #0f172a;
+}
+
+body.lei-page-registry .lei-reg-tier-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+body.lei-page-registry .lei-reg-tier {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    color: #374151;
+    cursor: pointer;
+}
+
+body.lei-page-registry .lei-reg-tier--standard.active {
+    background: #ecfdf5;
+    border-color: #6ee7b7;
+    color: #047857;
+}
+
+body.lei-page-registry .lei-reg-tier--encrypted.active {
+    background: #eff6ff;
+    border-color: #93c5fd;
+    color: #1d4ed8;
+}
+
+body.lei-page-registry .lei-reg-tier--air.active {
+    background: #fef2f2;
+    border-color: #fca5a5;
+    color: #b91c1c;
+}
+
+/* Status bar */
+body.lei-page-registry .lei-reg-status-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 22px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+body.lei-page-registry .lei-reg-status-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #6b7280;
+}
+
+body.lei-page-registry .lei-reg-status-item svg {
+    color: #9ca3af;
+    flex-shrink: 0;
+}
+
+body.lei-page-registry .lei-reg-btn-sandbox {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #92400e;
+    background: #ffffff;
+    border: 1px solid #d4a84b;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: auto;
+}
+
+body.lei-page-registry .lei-reg-btn-sandbox:hover {
+    background: #fffbeb;
+}
+
+@media (max-width: 900px) {
+    body.lei-page-registry .lei-reg-top-row > .lei-reg-card {
+        flex: 1 1 100%;
+        min-width: 0;
+    }
+
+    body.lei-page-registry .lei-reg-btn-sandbox {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
+}

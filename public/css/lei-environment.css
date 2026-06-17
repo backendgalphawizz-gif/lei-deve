@@ -1,0 +1,730 @@
+/* Environment Management — flexbox only, px units only */
+
+body.lei-page-environment .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: #f4f7f9;
+    padding: 20px 24px 32px;
+}
+
+.lei-env-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-self: stretch;
+}
+
+.lei-env-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: #0b162c;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Head */
+.lei-env-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.lei-env-head-text h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #0b162c;
+    margin: 0 0 8px;
+}
+
+.lei-env-head-text p {
+    font-size: 13px;
+    color: #6b7280;
+    margin: 0;
+    max-width: 480px;
+    line-height: 20px;
+}
+
+.lei-env-head-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
+.lei-env-btn-outline {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.lei-env-btn-primary {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+    background: #0b162c;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.lei-env-btn-primary:hover {
+    background: #1e293b;
+}
+
+/* Environment status cards */
+.lei-env-cards-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.lei-env-status-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 200px;
+    min-width: 180px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    gap: 6px;
+}
+
+.lei-env-status-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.lei-env-status-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: #6b7280;
+}
+
+.lei-env-status-uptime {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.lei-env-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.lei-env-dot--green .lei-env-dot { background: #22c55e; }
+.lei-env-dot--orange .lei-env-dot { background: #f59e0b; }
+.lei-env-dot--blue .lei-env-dot { background: #3b82f6; }
+.lei-env-dot--red .lei-env-dot { background: #ef4444; }
+
+.lei-env-status-version {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0b162c;
+}
+
+.lei-env-status-meta {
+    font-size: 12px;
+    color: #9ca3af;
+    line-height: 16px;
+}
+
+.lei-env-status-footer {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px solid #f1f4f8;
+    color: #6b7280;
+}
+
+.lei-env-footer--green strong { color: #16a34a; }
+.lei-env-footer--yellow strong { color: #ca8a04; }
+.lei-env-footer--orange strong { color: #ea580c; }
+.lei-env-footer--blue strong { color: #2563eb; }
+
+/* Workspace */
+.lei-env-workspace {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.lei-env-main-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 560px;
+    gap: 20px;
+    min-width: 320px;
+}
+
+.lei-env-side-col {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 300px;
+    gap: 16px;
+    min-width: 280px;
+}
+
+/* Pipeline card */
+.lei-env-pipeline-card {
+    display: flex;
+    flex-direction: column;
+    background: #0b162c;
+    border-radius: 10px;
+    padding: 22px;
+    color: #e2e8f0;
+    gap: 20px;
+}
+
+.lei-env-pipeline-head {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.lei-env-pipeline-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.lei-env-pipeline-target {
+    font-size: 12px;
+    font-weight: 600;
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.2);
+    padding: 6px 12px;
+    border-radius: 20px;
+}
+
+.lei-env-pipeline-steps {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+    position: relative;
+}
+
+.lei-env-pipeline-steps::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: 40px;
+    right: 40px;
+    height: 2px;
+    background: #334155;
+    z-index: 0;
+}
+
+.lei-env-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1 1 80px;
+    min-width: 70px;
+    gap: 6px;
+    z-index: 1;
+    text-align: center;
+}
+
+.lei-env-step-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 28px;
+    background: #475569;
+    border: 2px solid #64748b;
+}
+
+.lei-env-step--passed .lei-env-step-circle {
+    background: #d4a574;
+    border-color: #e8c9a0;
+}
+
+.lei-env-step--active .lei-env-step-circle {
+    background: #d4a574;
+    border-color: #fef3c7;
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.35);
+}
+
+.lei-env-step--waiting .lei-env-step-circle {
+    background: #334155;
+    border-color: #475569;
+}
+
+.lei-env-step-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.lei-env-step-detail {
+    font-size: 10px;
+    color: #94a3b8;
+}
+
+.lei-env-pipeline-progress-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lei-env-pipeline-progress-label {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+.lei-env-pipeline-bar {
+    display: flex;
+    flex-direction: row;
+    height: 6px;
+    background: #334155;
+    border-radius: 6px;
+    overflow: hidden;
+    flex: 1 1 auto;
+}
+
+.lei-env-pipeline-fill {
+    display: block;
+    height: 6px;
+    background: #60a5fa;
+    border-radius: 6px;
+    min-width: 0;
+}
+
+.lei-env-pipeline-pct {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    align-self: flex-end;
+}
+
+.lei-env-pipeline-progress-wrap {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+.lei-env-pipeline-progress-wrap .lei-env-pipeline-progress-label {
+    flex: 1 1 100%;
+}
+
+.lei-env-pipeline-progress-wrap .lei-env-pipeline-bar {
+    flex: 1 1 200px;
+}
+
+/* History table */
+.lei-env-history-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.lei-env-history-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-bottom: 1px solid #eef1f5;
+}
+
+.lei-env-history-head h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #0b162c;
+    margin: 0;
+}
+
+.lei-env-history-tools {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+.lei-env-icon-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    color: #64748b;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.lei-env-table-head {
+    display: flex;
+    flex-direction: row;
+    padding: 10px 20px;
+    background: #f8fafc;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #9ca3af;
+}
+
+.lei-env-th {
+    flex: 1 1 70px;
+}
+
+.lei-env-th--admin {
+    flex: 2 1 160px;
+}
+
+.lei-env-th--status {
+    flex: 0 0 110px;
+    text-align: right;
+}
+
+.lei-env-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid #f1f4f8;
+}
+
+.lei-env-td {
+    flex: 1 1 70px;
+    font-size: 13px;
+    color: #334155;
+}
+
+.lei-env-td--admin {
+    flex: 2 1 160px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lei-env-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 24px;
+    background: #e2e8f0;
+    font-size: 10px;
+    font-weight: 700;
+    color: #475569;
+}
+
+.lei-env-auth-id {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.lei-env-env-badge {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 4px;
+    letter-spacing: 0.4px;
+}
+
+.lei-env-env-badge--gray { background: #f1f5f9; color: #64748b; }
+.lei-env-env-badge--orange { background: #ffedd5; color: #c2410c; }
+
+.lei-env-status-pill {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.lei-env-status-pill--success { color: #16a34a; }
+.lei-env-status-pill--success .lei-env-dot { background: #22c55e; }
+.lei-env-status-pill--failed { color: #dc2626; }
+.lei-env-status-pill--failed .lei-env-dot { background: #ef4444; }
+
+/* Side: Command console */
+.lei-env-console-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+    gap: 10px;
+}
+
+.lei-env-console-card h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0b162c;
+    margin: 0 0 6px;
+}
+
+.lei-env-cmd-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.lei-env-cmd-btn--warn {
+    background: #fffbeb;
+    border-color: #fcd34d;
+}
+
+.lei-env-cmd-btn--danger {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: #ffffff;
+}
+
+.lei-env-cmd-btn--danger:hover {
+    background: #b91c1c;
+}
+
+/* Pending releases */
+.lei-env-releases-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.lei-env-releases-card h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0b162c;
+    margin: 0 0 14px;
+}
+
+.lei-env-release-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.lei-env-release-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px;
+    background: #f8fafc;
+    border: 1px solid #eef1f5;
+    border-radius: 8px;
+}
+
+.lei-env-release-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.lei-env-release-top strong {
+    font-size: 14px;
+    color: #0b162c;
+}
+
+.lei-env-release-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.lei-env-release-badge--critical { background: #ffedd5; color: #c2410c; }
+.lei-env-release-badge--feature { background: #f1f5f9; color: #64748b; }
+
+.lei-env-release-item p {
+    font-size: 12px;
+    color: #6b7280;
+    margin: 0;
+    line-height: 18px;
+}
+
+.lei-env-release-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.lei-env-btn-approve {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
+    background: #0b162c;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.lei-env-btn-schedule {
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    color: #334155;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.lei-env-btn-schedule--solo {
+    width: 100%;
+}
+
+/* Artifacts */
+.lei-env-artifacts-card {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 18px;
+}
+
+.lei-env-artifacts-card h2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0b162c;
+    margin: 0 0 14px;
+}
+
+.lei-env-artifact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lei-env-artifact-list li {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f1f4f8;
+}
+
+.lei-env-artifact-list li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.lei-env-artifact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.lei-env-artifact-info strong {
+    font-size: 13px;
+    color: #0b162c;
+}
+
+.lei-env-artifact-info span {
+    font-size: 11px;
+    color: #9ca3af;
+}
+
+.lei-env-menu-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    color: #9ca3af;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.lei-env-artifacts-link {
+    display: inline-flex;
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #2563eb;
+    text-decoration: none;
+}

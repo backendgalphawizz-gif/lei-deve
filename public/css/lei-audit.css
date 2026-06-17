@@ -1,0 +1,622 @@
+/* Audit Logs — flexbox only, px units — mockup palette */
+
+body.lei-page-audit {
+    --lei-audit-bg: #f8f9fa;
+    --lei-audit-navy: #0a1629;
+    --lei-audit-navy-text: #1a2b4c;
+    --lei-audit-green: #2e7d32;
+    --lei-audit-red: #d32f2f;
+    --lei-audit-orange: #e65100;
+    --lei-audit-blue: #2b6cb0;
+    --lei-audit-gold: #8b6e3c;
+    --lei-audit-gold-dark: #975a16;
+    --lei-audit-text: #1a2b4c;
+    --lei-audit-muted: #666666;
+    --lei-audit-border: #e0e0e0;
+    --lei-audit-white: #ffffff;
+    --lei-audit-search-bg: #edf2f7;
+    --lei-audit-pill-critical-bg: #fff5f5;
+    --lei-audit-pill-critical-text: #c53030;
+    --lei-audit-pill-info-bg: #ebf8ff;
+    --lei-audit-pill-info-text: #2b6cb0;
+    --lei-audit-pill-warning-bg: #fffaf0;
+    --lei-audit-pill-warning-text: #9c4221;
+}
+
+body.lei-page-audit .lei-content {
+    display: flex;
+    flex-direction: column;
+    background: var(--lei-audit-bg);
+    padding: 28px 30px 36px;
+}
+
+body.lei-page-audit .lei-audit-page {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    max-width: 100%;
+}
+
+body.lei-page-audit .lei-audit-toast {
+    position: fixed;
+    top: 72px;
+    right: 24px;
+    z-index: 1000;
+    background: var(--lei-audit-navy);
+    color: var(--lei-audit-white);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+body.lei-page-audit .lei-audit-empty {
+    padding: 32px;
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 12px;
+}
+
+/* Summary cards */
+body.lei-page-audit .lei-audit-stats-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 20px;
+}
+
+body.lei-page-audit .lei-audit-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 20px 22px;
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 12px;
+    box-shadow: none;
+    position: relative;
+}
+
+body.lei-page-audit .lei-audit-stat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+body.lei-page-audit .lei-audit-stat-icon--chart {
+    background: #ebf8ff;
+    color: var(--lei-audit-blue);
+}
+
+body.lei-page-audit .lei-audit-stat-icon--alert {
+    background: #fff5f5;
+    color: var(--lei-audit-red);
+}
+
+body.lei-page-audit .lei-audit-stat-icon--shield {
+    background: #fffff0;
+    color: var(--lei-audit-gold-dark);
+}
+
+body.lei-page-audit .lei-audit-stat-icon--nodes {
+    background: #e8f5e9;
+    color: var(--lei-audit-green);
+}
+
+body.lei-page-audit .lei-audit-stat-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+body.lei-page-audit .lei-audit-stat-label {
+    font-size: 13px;
+    color: var(--lei-audit-muted);
+    font-weight: 500;
+}
+
+body.lei-page-audit .lei-audit-stat-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--lei-audit-navy-text);
+    line-height: 1.1;
+}
+
+body.lei-page-audit .lei-audit-stat-value--alert {
+    color: var(--lei-audit-red);
+}
+
+body.lei-page-audit .lei-audit-stat-value--integrity {
+    color: var(--lei-audit-gold);
+    font-size: 26px;
+}
+
+body.lei-page-audit .lei-audit-stat-badge {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+body.lei-page-audit .lei-audit-stat-badge--up {
+    color: var(--lei-audit-green);
+}
+
+body.lei-page-audit .lei-audit-stat-badge--critical {
+    color: var(--lei-audit-red);
+}
+
+body.lei-page-audit .lei-audit-stat-badge--gold {
+    color: var(--lei-audit-gold-dark);
+}
+
+body.lei-page-audit .lei-audit-stat-badge--green {
+    color: var(--lei-audit-green);
+}
+
+/* Filter bar */
+body.lei-page-audit .lei-audit-filter-bar {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 20px;
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+body.lei-page-audit .lei-audit-filters {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+}
+
+body.lei-page-audit .lei-audit-filter {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--lei-audit-text);
+}
+
+body.lei-page-audit .lei-audit-filter > span {
+    font-weight: 600;
+    color: var(--lei-audit-muted);
+}
+
+body.lei-page-audit .lei-audit-select {
+    padding: 9px 32px 9px 12px;
+    font-size: 13px;
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 8px;
+    background: var(--lei-audit-white);
+    color: var(--lei-audit-navy-text);
+    min-width: 130px;
+}
+
+body.lei-page-audit .lei-audit-date-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 14px;
+    font-size: 13px;
+    color: var(--lei-audit-navy-text);
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-audit .lei-audit-btn-export {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-audit-white);
+    background: var(--lei-audit-navy);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    flex-shrink: 0;
+}
+
+body.lei-page-audit .lei-audit-btn-export:hover {
+    background: #0a0e1a;
+}
+
+/* Table */
+body.lei-page-audit .lei-audit-card {
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 12px;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+body.lei-page-audit .lei-audit-table {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+body.lei-page-audit .lei-audit-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 16px 20px;
+    gap: 14px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--lei-audit-border);
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-audit-row > span {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+body.lei-page-audit .lei-audit-row > span:nth-child(4) {
+    flex: 1.6 1 0;
+}
+
+body.lei-page-audit .lei-audit-row > span:last-child {
+    flex: 0 0 120px;
+    text-align: right;
+}
+
+body.lei-page-audit .lei-audit-row--head {
+    background: #f8f9fa;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--lei-audit-muted);
+    padding: 14px 20px;
+    text-transform: uppercase;
+}
+
+body.lei-page-audit .lei-audit-row:last-child {
+    border-bottom: none;
+}
+
+body.lei-page-audit .lei-audit-ts {
+    font-size: 12px;
+    color: var(--lei-audit-muted);
+}
+
+body.lei-page-audit .lei-audit-pill {
+    display: inline-block;
+    padding: 5px 12px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    border-radius: 6px;
+}
+
+body.lei-page-audit .lei-audit-pill--critical {
+    background: var(--lei-audit-pill-critical-bg);
+    color: var(--lei-audit-pill-critical-text);
+}
+
+body.lei-page-audit .lei-audit-pill--info {
+    background: var(--lei-audit-pill-info-bg);
+    color: var(--lei-audit-pill-info-text);
+}
+
+body.lei-page-audit .lei-audit-pill--warning {
+    background: var(--lei-audit-pill-warning-bg);
+    color: var(--lei-audit-pill-warning-text);
+}
+
+body.lei-page-audit .lei-audit-actor {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+body.lei-page-audit .lei-audit-actor strong {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-audit-actor small {
+    font-size: 11px;
+    color: var(--lei-audit-muted);
+}
+
+body.lei-page-audit .lei-audit-action-text {
+    font-size: 13px;
+    line-height: 18px;
+    color: #444444;
+}
+
+body.lei-page-audit .lei-audit-status {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lei-audit-muted);
+}
+
+body.lei-page-audit .lei-audit-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+body.lei-page-audit .lei-audit-dot--committed {
+    background: var(--lei-audit-gold-dark);
+}
+
+body.lei-page-audit .lei-audit-dot--logged {
+    background: var(--lei-audit-blue);
+}
+
+body.lei-page-audit .lei-audit-dot--alert {
+    background: var(--lei-audit-orange);
+}
+
+body.lei-page-audit .lei-audit-dot--archived {
+    background: #78909c;
+}
+
+body.lei-page-audit .lei-audit-btn-view {
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #444444;
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-audit .lei-audit-btn-view:hover {
+    background: #f8f9fa;
+}
+
+body.lei-page-audit .lei-audit-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    margin-left: auto;
+    background: transparent;
+    border: none;
+    color: #888888;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+body.lei-page-audit .lei-audit-btn-icon:hover {
+    background: #f0f2f5;
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-audit-row-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+body.lei-page-audit .lei-audit-table-empty {
+    padding: 36px;
+    text-align: center;
+    color: var(--lei-audit-muted);
+    font-size: 14px;
+}
+
+/* Footer — centered pill + telemetry */
+body.lei-page-audit .lei-audit-footer {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 24px 20px 8px;
+    background: transparent;
+    border: none;
+}
+
+body.lei-page-audit .lei-audit-ledger-pill {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #faf6f0;
+    border: 1px solid #e8dcc8;
+    border-radius: 999px;
+}
+
+body.lei-page-audit .lei-audit-ledger-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lei-audit-gold-dark);
+}
+
+body.lei-page-audit .lei-audit-ledger-text {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-audit-verified {
+    padding: 3px 10px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #5d4037;
+    background: #efe4d4;
+    border-radius: 6px;
+}
+
+body.lei-page-audit .lei-audit-telemetry {
+    font-size: 12px;
+    color: var(--lei-audit-muted);
+    margin: 0;
+}
+
+body.lei-page-audit .lei-audit-telemetry strong {
+    color: var(--lei-audit-navy-text);
+    font-weight: 700;
+}
+
+/* Modal */
+body.lei-page-audit .lei-audit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+body.lei-page-audit .lei-audit-modal[hidden] {
+    display: none;
+}
+
+body.lei-page-audit .lei-audit-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 22, 41, 0.5);
+}
+
+body.lei-page-audit .lei-audit-modal-panel {
+    position: relative;
+    width: 480px;
+    max-width: 92%;
+    padding: 24px;
+    background: var(--lei-audit-white);
+    border-radius: 12px;
+    border: 1px solid var(--lei-audit-border);
+    box-shadow: 0 8px 32px rgba(10, 22, 41, 0.15);
+}
+
+body.lei-page-audit .lei-audit-modal-panel h3 {
+    margin: 0 0 14px;
+    font-size: 18px;
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-audit-modal-body {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--lei-audit-navy-text);
+    background: var(--lei-audit-bg);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 8px;
+    padding: 14px;
+    margin: 0 0 16px;
+    white-space: pre-wrap;
+    max-height: 280px;
+    overflow: auto;
+}
+
+body.lei-page-audit .lei-audit-btn-outline {
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lei-audit-navy-text);
+    background: var(--lei-audit-white);
+    border: 1px solid var(--lei-audit-border);
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+body.lei-page-audit .lei-audit-modal-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+/* Layout chrome */
+body.lei-page-audit.lei-body {
+    background: var(--lei-audit-bg);
+}
+
+body.lei-page-audit .lei-sidebar {
+    background: var(--lei-sidebar-bg);
+}
+
+body.lei-page-audit .lei-topbar {
+    background: #ffffff;
+    border-bottom: 1px solid var(--lei-audit-border);
+}
+
+body.lei-page-audit .lei-topbar-welcome {
+    color: var(--lei-audit-muted);
+    font-weight: 500;
+}
+
+body.lei-page-audit .lei-topbar-welcome span {
+    color: var(--lei-audit-navy-text);
+    font-weight: 700;
+}
+
+body.lei-page-audit .lei-search input {
+    background: var(--lei-audit-search-bg);
+    border: 1px solid #dde4ec;
+    border-radius: 20px;
+    color: var(--lei-audit-navy-text);
+}
+
+body.lei-page-audit .lei-search input::placeholder {
+    color: #8896a8;
+}
+
+@media (max-width: 1100px) {
+    body.lei-page-audit .lei-audit-stats-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-audit .lei-audit-stat-card {
+        flex: 1 1 calc(50% - 10px);
+        min-width: 240px;
+    }
+
+    body.lei-page-audit .lei-audit-footer {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    body.lei-page-audit .lei-audit-row {
+        flex-wrap: wrap;
+    }
+
+    body.lei-page-audit .lei-audit-row > span {
+        flex: 1 1 45%;
+    }
+
+    body.lei-page-audit .lei-audit-row > span:last-child {
+        flex: 1 1 100%;
+        text-align: left;
+    }
+}
