@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Rules\PhoneTenDigits;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
@@ -31,7 +32,7 @@ class AdminProfileController extends Controller
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:150', Rule::unique('users', 'email')->ignore($user->id)],
             'job_title' => ['nullable', 'string', 'max:120'],
-            'phone' => ['nullable', 'string', 'max:40'],
+            'phone' => ['nullable', new PhoneTenDigits],
             'photo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'remove_photo' => ['nullable', 'boolean'],
         ]);

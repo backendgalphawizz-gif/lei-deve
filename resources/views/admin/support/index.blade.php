@@ -9,10 +9,10 @@
 
 @section('content')
 <div class="lei-support-page"
-     data-ticket-url="{{ rtrim(config('app.url'), '/') }}/admin/support/tickets/__ID__"
+     data-ticket-url="{{ route('admin.support.ticket', ['ticket' => '__ID__']) }}"
      data-store-ticket-url="{{ route('admin.support.tickets.store') }}"
      data-store-category-url="{{ route('admin.support.categories.store') }}"
-     data-update-category-url="{{ rtrim(config('app.url'), '/') }}/admin/support/categories/__ID__"
+     data-update-category-url="{{ route('admin.support.categories.update', ['category' => '__ID__']) }}"
      data-message-url="{{ $selected ? route('admin.support.message', $selected) : '' }}"
      data-note-url="{{ $selected ? route('admin.support.note', $selected) : '' }}"
      data-action-url="{{ $selected ? route('admin.support.action', $selected) : '' }}"
@@ -63,7 +63,7 @@
                         <button type="button" class="lei-support-btn-primary" id="leiSupportNewTicket">+ New Ticket</button>
                     </div>
                 </div>
-<!-- 
+
                 <form class="lei-support-filter-panel" id="leiSupportFilterPanel" method="GET" action="{{ route('admin.support.index') }}" hidden>
                     <input type="hidden" name="ticket" value="{{ $selected?->id }}">
                     <label>
@@ -97,11 +97,11 @@
                     </label>
                     <label class="lei-support-filter-search">
                         <span>Search</span>
-                        <input type="search" name="q" value="{{ $filters['q'] }}" placeholder="ID, entity, title...">
+                        <input type="search" name="q" value="{{ $filters['q'] }}" placeholder="ID, entity, email, title...">
                     </label>
                     <button type="submit" class="lei-support-btn-apply">Apply</button>
                     <a href="{{ route('admin.support.index', ['ticket' => $selected?->id]) }}" class="lei-support-btn-clear">Clear</a>
-                </form> -->
+                </form>
 
                 <div class="lei-support-table" id="leiSupportTable">
                     <div class="lei-support-row lei-support-row--head">
@@ -226,5 +226,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/lei-support.js') }}?v=3"></script>
+<script src="{{ asset('js/lei-support.js') }}?v=4"></script>
 @endpush

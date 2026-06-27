@@ -10,7 +10,7 @@ class AdminAuthenticate
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->check() || ! auth()->user()->is_active) {
+        if (! auth()->check() || ! auth()->user()->is_active || ! auth()->user()->isAdmin()) {
             return redirect()->route('admin.login')
                 ->with('error', 'Please sign in to access the admin portal.');
         }

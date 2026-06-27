@@ -59,22 +59,22 @@
 
                 <label class="lei-profile-field">
                     <span>Full Name</span>
-                    <input type="text" name="name" value="{{ old('name', $user->name) }}" required>
+                    <input type="text" name="name" value="{{ old('name', $user->name) }}" required data-rules="required|maxLen:120">
                 </label>
 
                 <label class="lei-profile-field">
                     <span>Email</span>
-                    <input type="email" name="email" value="{{ old('email', $user->email) }}" required>
+                    <input type="email" name="email" value="{{ old('email', $user->email) }}" required data-rules="required|email|maxLen:150">
                 </label>
 
                 <label class="lei-profile-field">
                     <span>Job Title</span>
-                    <input type="text" name="job_title" value="{{ old('job_title', $user->job_title) }}" placeholder="e.g. Registry Administrator">
+                    <input type="text" name="job_title" value="{{ old('job_title', $user->job_title) }}" placeholder="e.g. Registry Administrator" data-rules="maxLen:120">
                 </label>
 
                 <label class="lei-profile-field">
                     <span>Phone</span>
-                    <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="+91 ...">
+                    <input type="tel" name="phone" value="{{ old('phone', $user->phone) }}" placeholder="10-digit mobile number" data-type="phone" data-rules="phone">
                 </label>
 
                 <button type="submit" class="lei-profile-btn-primary">Save Profile</button>
@@ -89,15 +89,15 @@
 
                 <label class="lei-profile-field">
                     <span>Current Password</span>
-                    <input type="password" name="current_password" required autocomplete="current-password">
+                    <input type="password" name="current_password" required autocomplete="current-password" data-rules="required">
                 </label>
                 <label class="lei-profile-field">
                     <span>New Password</span>
-                    <input type="password" name="password" required autocomplete="new-password">
+                    <input type="password" name="password" required autocomplete="new-password" data-rules="required|password:8">
                 </label>
                 <label class="lei-profile-field">
                     <span>Confirm Password</span>
-                    <input type="password" name="password_confirmation" required autocomplete="new-password">
+                    <input type="password" name="password_confirmation" required autocomplete="new-password" data-rules="required|confirmed:password">
                 </label>
                 <button type="submit" class="lei-profile-btn-outline">Update Password</button>
             </form>

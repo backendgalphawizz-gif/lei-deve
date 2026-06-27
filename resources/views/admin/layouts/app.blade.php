@@ -16,7 +16,8 @@
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=8">
     <link rel="stylesheet" href="{{ asset('css/lei-global.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/lei-users.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/lei-applications.css') }}?v=1">
+    <link rel="stylesheet" href="{{ asset('css/lei-applications.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('styles')
 </head>
@@ -78,6 +79,7 @@
     </div>
 </div>
 <script src="{{ asset('js/lei-global.js') }}?v=3"></script>
+<script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
 @stack('scripts')
 </body>
 </html>

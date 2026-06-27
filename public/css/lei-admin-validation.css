@@ -1,0 +1,13 @@
+/* Native HTML5 validation helpers — browser shows default tooltips */
+
+input[data-type="phone"],
+input[name="phone"],
+input[name="support_phone"] {
+    letter-spacing: 0.04em;
+}
+
+.lei-public .lei-pub-otp-input {
+    letter-spacing: 0.35em;
+    text-align: center;
+    font-size: 1.25rem;
+}

@@ -28,8 +28,13 @@ class AdminMenuSeeder extends Seeder
             ['Documents', 'admin.documents.index', 'documents', 16],
             ['Notifications', 'admin.notifications.index', 'notifications', 17],
             ['Static Pages', 'admin.static-pages.index', 'pages', 18],
-            ['Business Settings', 'admin.business-settings.index', 'settings', 19],
+            ['FAQ Management', 'admin.faq.index', 'pages', 19],
+            ['Contact Enquiries', 'admin.contact-enquiries.index', 'support', 20],
+            ['Subscription Management', 'admin.subscriptions.index', 'payments', 21],
+            ['Business Settings', 'admin.business-settings.index', 'settings', 22],
         ];
+
+        AdminMenuItem::query()->where('label', 'Website Management')->delete();
 
         foreach ($menus as [$label, $route, $icon, $order]) {
             AdminMenuItem::updateOrCreate(

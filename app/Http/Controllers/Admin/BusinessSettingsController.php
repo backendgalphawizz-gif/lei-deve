@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LeiBusinessSetting;
 use App\Services\BusinessSettingsService;
 use Illuminate\Http\Request;
+use App\Rules\PhoneTenDigits;
 use Illuminate\Validation\Rule;
 
 class BusinessSettingsController extends Controller
@@ -47,7 +48,7 @@ class BusinessSettingsController extends Controller
             'accent_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'sidebar_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'support_email' => ['nullable', 'email', 'max:150'],
-            'support_phone' => ['nullable', 'string', 'max:40'],
+            'support_phone' => ['nullable', new PhoneTenDigits],
             'address_line' => ['nullable', 'string', 'max:255'],
             'city' => ['nullable', 'string', 'max:80'],
             'state' => ['nullable', 'string', 'max:80'],
@@ -62,6 +63,7 @@ class BusinessSettingsController extends Controller
             'date_format' => ['required', Rule::in(array_keys(LeiBusinessSetting::dateFormats()))],
             'currency_code' => ['required', 'string', 'max:8'],
             'currency_symbol' => ['required', 'string', 'max:8'],
+            'renewal_window_days' => ['required', 'integer', 'min:0', 'max:365'],
             'meta_description' => ['nullable', 'string', 'max:500'],
             'maintenance_message' => ['nullable', 'string', 'max:255'],
             'logo' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:2048'],

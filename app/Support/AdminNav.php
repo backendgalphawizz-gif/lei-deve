@@ -32,12 +32,21 @@ class AdminNav
             'admin.documents.index' => 'admin.documents.*',
             'admin.notifications.index' => 'admin.notifications.*',
             'admin.static-pages.index' => 'admin.static-pages.*',
+            'admin.faq.index' => 'admin.faq.*',
+            'admin.contact-enquiries.index' => 'admin.contact-enquiries.*',
+            'admin.subscriptions.index' => ['admin.subscriptions.*', 'admin.pricing-plans.*'],
             'admin.business-settings.index' => 'admin.business-settings.*',
             'admin.profile.show' => 'admin.profile.*',
             'admin.search' => 'admin.search*',
         ];
 
-        return isset($groups[$routeName]) && request()->routeIs($groups[$routeName]);
+        $group = $groups[$routeName] ?? null;
+
+        if (is_array($group)) {
+            return request()->routeIs($group);
+        }
+
+        return $group && request()->routeIs($group);
     }
 
     public static function globalSearchUrl(): string

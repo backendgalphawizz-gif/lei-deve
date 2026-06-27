@@ -41,18 +41,18 @@
 
                     <div class="lei-form-group">
                         <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="e.g. Elena Rodriguez" required>
+                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="e.g. Elena Rodriguez" required data-rules="required|maxLen:120">
                     </div>
 
                     <div class="lei-form-group">
                         <label for="email">Official Email Address</label>
-                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="e.g. e.rod@registry-ops.int" required>
+                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="e.g. e.rod@registry-ops.int" required data-rules="required|email|maxLen:150">
                     </div>
 
                     <div class="lei-form-group">
                         <label for="organization_id">Organization Entity</label>
                         <div class="lei-select-wrap">
-                            <select id="organization_id" name="organization_id" required>
+                            <select id="organization_id" name="organization_id" required data-rules="required">
                                 <option value="">Select Registry Node</option>
                                 @foreach ($organizations as $org)
                                     <option value="{{ $org->id }}" @selected(old('organization_id') == $org->id)>{{ $org->name }}</option>

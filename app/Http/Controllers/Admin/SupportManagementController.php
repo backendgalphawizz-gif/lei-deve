@@ -256,7 +256,9 @@ class SupportManagementController extends Controller
 
     private function filteredQuery(Request $request)
     {
-        $query = LeiSupportTicket::query()->orderBy('sort_order');
+        $query = LeiSupportTicket::query()
+            ->orderByDesc('created_at')
+            ->orderByDesc('id');
 
         $status = $request->query('status', 'active');
         if ($status === 'active') {
@@ -278,6 +280,7 @@ class SupportManagementController extends Controller
             $query->where(function ($sub) use ($q) {
                 $sub->where('ticket_code', 'like', $q)
                     ->orWhere('user_entity', 'like', $q)
+                    ->orWhere('contact_email', 'like', $q)
                     ->orWhere('title', 'like', $q);
             });
         }

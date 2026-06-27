@@ -15,14 +15,14 @@
         <div class="lei-sp-form-main">
             <div class="lei-sp-field">
                 <label for="sp_title">Page Title <span class="lei-sp-req">*</span></label>
-                <input type="text" id="sp_title" name="title" value="{{ old('title', $page->title) }}" placeholder="e.g. Privacy Policy" required>
+                <input type="text" id="sp_title" name="title" value="{{ old('title', $page->title) }}" placeholder="e.g. Privacy Policy" required data-rules="required|maxLen:150">
             </div>
 
             <div class="lei-sp-field">
                 <label for="sp_slug">URL Slug</label>
                 <div class="lei-sp-slug-wrap">
                     <span class="lei-sp-slug-prefix">/</span>
-                    <input type="text" id="sp_slug" name="slug" value="{{ old('slug', $page->slug) }}" placeholder="auto-generated-from-title" pattern="[a-z0-9]+(?:-[a-z0-9]+)*">
+                    <input type="text" id="sp_slug" name="slug" value="{{ old('slug', $page->slug) }}" placeholder="auto-generated-from-title" pattern="[a-z0-9]+(?:-[a-z0-9]+)*" data-rules="slug">
                 </div>
                 <small class="lei-sp-hint">Leave blank to auto-generate from title. Lowercase letters, numbers, and hyphens only.</small>
             </div>

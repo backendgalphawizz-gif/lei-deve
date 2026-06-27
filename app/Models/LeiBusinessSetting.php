@@ -48,6 +48,7 @@ class LeiBusinessSetting extends Model
         'date_format',
         'currency_code',
         'currency_symbol',
+        'renewal_window_days',
         'meta_description',
         'show_maintenance_banner',
         'maintenance_message',
@@ -58,6 +59,7 @@ class LeiBusinessSetting extends Model
         'header_show_logo' => 'boolean',
         'header_show_notifications' => 'boolean',
         'header_notification_count' => 'integer',
+        'renewal_window_days' => 'integer',
     ];
 
     public static function defaults(): array
@@ -96,6 +98,7 @@ class LeiBusinessSetting extends Model
             'date_format' => 'd/m/Y',
             'currency_code' => 'INR',
             'currency_symbol' => '₹',
+            'renewal_window_days' => 90,
             'meta_description' => 'Legal Entity Identifier registry administration portal.',
         ];
     }
@@ -122,7 +125,7 @@ class LeiBusinessSetting extends Model
 
     public function logoUrl(): string
     {
-        return $this->assetUrl($this->logo_path, 'images/lei-logo.png');
+        return $this->assetUrl($this->logo_path, 'images/lei-logo.svg');
     }
 
     public function faviconUrl(): ?string
@@ -136,7 +139,7 @@ class LeiBusinessSetting extends Model
 
     public function sidebarIconUrl(): string
     {
-        return $this->assetUrl($this->sidebar_icon_path, 'images/lei-logo.png');
+        return $this->assetUrl($this->sidebar_icon_path, 'images/lei-logo.svg');
     }
 
     public static function timezones(): array

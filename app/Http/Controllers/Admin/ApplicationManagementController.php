@@ -9,6 +9,7 @@ use App\Services\ApplicationStatsService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApplicationManagementController extends Controller
@@ -17,7 +18,7 @@ class ApplicationManagementController extends Controller
     {
         $query = $this->filteredQuery($request);
         $activeUnderReview = LeiApplication::where('status', 'under_review')->count();
-        $applications = $query->paginate(4)->withQueryString();
+        $applications = $query->with('user')->paginate(10)->withQueryString();
 
         $teams = LeiApplication::query()
             ->whereNotNull('assigned_team')
@@ -39,7 +40,7 @@ class ApplicationManagementController extends Controller
 
     public function show(LeiApplication $application)
     {
-        $application->load('auditEvents');
+        $application->load(['auditEvents', 'user', 'subscription']);
 
         return response()->json([
             'application' => $this->applicationPayload($application),
@@ -50,7 +51,7 @@ class ApplicationManagementController extends Controller
 
     public function detail(LeiApplication $application)
     {
-        $application->load('auditEvents');
+        $application->load(['auditEvents', 'user', 'subscription']);
 
         return view('admin.applications.partials.detail', compact('application'));
     }
@@ -60,6 +61,7 @@ class ApplicationManagementController extends Controller
         $validated = $request->validate([
             'action' => ['required', 'in:approve,clarify,reject,reassign'],
             'team' => ['nullable', 'string', 'max:80'],
+            'lei_number' => ['nullable', 'string', 'max:20'],
         ]);
 
         $actor = auth()->user()->name ?? 'System Admin';
@@ -79,12 +81,45 @@ class ApplicationManagementController extends Controller
                 'reassign' => $application->status,
             };
 
-            $application->update([
+            $updates = [
                 'status' => $status,
                 'assigned_team' => $validated['action'] === 'reassign'
                     ? ($validated['team'] ?? $application->assigned_team)
                     : $application->assigned_team,
-            ]);
+            ];
+
+            if ($validated['action'] === 'approve') {
+                $application->loadMissing('subscription');
+                $years = (int) ($application->subscription?->duration_years ?: 1);
+                $leiNumber = $application->lei_number ?: ($validated['lei_number'] ?? null);
+
+                if ($application->workflow_type === 'renewal') {
+                    $existing = LeiApplication::query()
+                        ->where('user_id', $application->user_id)
+                        ->where('lei_number', $leiNumber)
+                        ->where('status', 'approved')
+                        ->where('id', '!=', $application->id)
+                        ->orderByDesc('expiry_date')
+                        ->first();
+
+                    $base = $existing?->expiry_date && $existing->expiry_date->isFuture()
+                        ? $existing->expiry_date
+                        : now();
+                    $newExpiry = $base->copy()->addYears($years)->toDateString();
+
+                    $updates['lei_number'] = $leiNumber;
+                    $updates['expiry_date'] = $newExpiry;
+
+                    if ($existing) {
+                        $existing->update(['expiry_date' => $newExpiry]);
+                    }
+                } else {
+                    $updates['lei_number'] = $leiNumber ?: $this->generateLeiNumber();
+                    $updates['expiry_date'] = now()->addYears($years)->toDateString();
+                }
+            }
+
+            $application->update($updates);
 
             LeiApplicationAuditEvent::where('lei_application_id', $application->id)
                 ->update(['is_highlight' => false]);
@@ -99,7 +134,7 @@ class ApplicationManagementController extends Controller
             ]);
         });
 
-        $application->refresh()->load('auditEvents');
+        $application->refresh()->load(['auditEvents', 'user', 'subscription']);
 
         return response()->json([
             'success' => true,
@@ -142,6 +177,12 @@ class ApplicationManagementController extends Controller
     {
         $query = LeiApplication::query()->orderByDesc('submitted_on');
 
+        if (! $request->boolean('all')) {
+            $query->whereNotNull('user_id');
+        }
+
+        $query->where('status', '!=', 'draft');
+
         if ($status = $request->string('status')->trim()->toString()) {
             if (in_array($status, ['new', 'pending', 'under_review', 'clarification', 'approved', 'rejected'], true)) {
                 $query->where('status', $status);
@@ -183,7 +224,7 @@ class ApplicationManagementController extends Controller
     private function resolveSelected(Request $request, $applications): ?LeiApplication
     {
         if ($request->filled('selected')) {
-            $found = LeiApplication::with('auditEvents')
+            $found = LeiApplication::with(['auditEvents', 'user', 'subscription'])
                 ->where('application_code', $request->string('selected')->toString())
                 ->first();
             if ($found) {
@@ -192,10 +233,19 @@ class ApplicationManagementController extends Controller
         }
 
         if ($applications->isNotEmpty()) {
-            return LeiApplication::with('auditEvents')->find($applications->first()->id);
+            return LeiApplication::with(['auditEvents', 'user', 'subscription'])->find($applications->first()->id);
         }
 
         return null;
+    }
+
+    private function generateLeiNumber(): string
+    {
+        do {
+            $number = '549300' . strtoupper(Str::random(12));
+        } while (LeiApplication::where('lei_number', $number)->exists());
+
+        return $number;
     }
 
     private function applicationPayload(LeiApplication $application): array
@@ -211,7 +261,7 @@ class ApplicationManagementController extends Controller
             'status_tone' => $application->status_tone,
             'priority' => $application->priority,
             'assigned_team' => $application->assigned_team,
-            'submitted_on' => $application->submitted_on->format('M d, Y'),
+            'submitted_on' => $application->submitted_on?->format('M d, Y') ?? '—',
         ];
     }
 

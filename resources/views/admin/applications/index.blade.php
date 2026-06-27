@@ -4,8 +4,9 @@
 @section('body_class', 'lei-page-applications')
 
 @section('content')
-<div class="lei-app-page" data-show-url="{{ rtrim(config('app.url'), '/') }}/admin/applications/__ID__"
-    data-action-url="{{ rtrim(config('app.url'), '/') }}/admin/applications/__ID__/action"
+<div class="lei-app-page"
+    data-show-url="{{ route('admin.applications.show', ['application' => '__ID__']) }}"
+    data-action-url="{{ route('admin.applications.action', ['application' => '__ID__']) }}"
     data-export-url="{{ route('admin.applications.export', request()->query()) }}">
 
     <div id="leiAppToast" class="lei-app-toast" hidden></div>
@@ -159,7 +160,12 @@
                             aria-label="Select {{ $app->application_code }}">
                     </div>
                     <div class="lei-app-td lei-app-td--id">{{ $app->application_code }}</div>
-                    <div class="lei-app-td lei-app-td--entity">{{ $app->entity_name }}</div>
+                    <div class="lei-app-td lei-app-td--entity">
+                        <span class="lei-app-entity-name">{{ $app->entity_name }}</span>
+                        @if ($app->user)
+                            <span class="lei-app-entity-sub">{{ $app->user->email }}</span>
+                        @endif
+                    </div>
                     <div class="lei-app-td lei-app-td--date">{{ $businessSettings->formatDate($app->submitted_on) }}
                     </div>
                     <div class="lei-app-td lei-app-td--status">
@@ -212,5 +218,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/lei-applications.js') }}?v=3"></script>
+<script src="{{ asset('js/lei-applications.js') }}?v=4"></script>
 @endpush

@@ -14,7 +14,9 @@ class AuthController extends Controller
 {
     public function showLogin()
     {
-        if (auth()->check()) {
+        $user = auth()->user();
+
+        if ($user && $user->is_active && $user->isAdmin()) {
             return redirect()->route('admin.dashboard');
         }
 

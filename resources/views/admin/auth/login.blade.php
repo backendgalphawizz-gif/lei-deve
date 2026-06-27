@@ -9,6 +9,7 @@
     @endif
     <style>:root { {{ $businessSettings->cssVars() }} }</style>
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
 </head>
 <body class="lei-login-page">
     <header class="lei-login-header">
@@ -42,7 +43,7 @@
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
                 </svg>
                 <input type="text" id="system_id" name="system_id" value="{{ old('system_id') }}"
-                       placeholder="admin@gmail.com" required autofocus autocomplete="username">
+                       placeholder="admin@gmail.com" required autofocus autocomplete="username" data-rules="required|maxLen:64">
             </div>
 
             <label class="lei-field-label" for="password">Secure Token</label>
@@ -51,7 +52,7 @@
                     <rect x="3" y="11" width="18" height="11" rx="2"/>
                     <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
                 </svg>
-                <input type="password" id="password" name="password" placeholder="••••••••••" required>
+                <input type="password" id="password" name="password" placeholder="••••••••••" required data-rules="required|minLen:1">
                 <button type="button" class="lei-toggle-pwd" id="togglePassword" aria-label="Toggle password">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
@@ -78,6 +79,7 @@
         </form>
     </div>
 
+    <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
     <script>
         document.getElementById('togglePassword')?.addEventListener('click', function () {
             const input = document.getElementById('password');

@@ -210,8 +210,13 @@
 
     async function loadTicket(id) {
         const url = page.dataset.ticketUrl.replace('__ID__', id);
-        const res = await fetch(url, { headers: { Accept: 'application/json' } });
-        const data = await res.json();
+        let res;
+        try {
+            res = await fetch(url, { headers: { Accept: 'application/json' } });
+        } catch (err) {
+            throw new Error('Could not load ticket details. Refresh the page and try again.');
+        }
+        const data = await res.json().catch(() => ({}));
         if (!res.ok || !data.ok) throw new Error(data.message || 'Failed to load ticket');
         if (detailWrap) {
             detailWrap.innerHTML = data.html;

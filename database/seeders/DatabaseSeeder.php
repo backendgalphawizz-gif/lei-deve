@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             NotificationManagementSeeder::class,
             StaticPageSeeder::class,
             BusinessSettingsSeeder::class,
+            WebsiteSeeder::class,
         ]);
     }
 }

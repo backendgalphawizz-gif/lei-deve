@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\AdminMenuItem;
 use App\Models\LeiBusinessSetting;
+use App\Models\LeiStaticPage;
 use App\Support\CurrencyFormatter;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\URL;
@@ -26,10 +27,22 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         if ($rootUrl = config('app.url')) {
-            $rootUrl = rtrim($rootUrl, '/');
+            $configuredUrl = rtrim($rootUrl, '/');
+
+            if ($this->app->environment('local') && ! $this->app->runningInConsole()) {
+                $request = request();
+                if ($request && $request->getHttpHost()) {
+                    $rootUrl = $request->getSchemeAndHttpHost();
+                } else {
+                    $rootUrl = $configuredUrl;
+                }
+            } else {
+                $rootUrl = $configuredUrl;
+            }
+
             URL::forceRootUrl($rootUrl);
 
-            $basePath = parse_url($rootUrl, PHP_URL_PATH) ?: '';
+            $basePath = parse_url($configuredUrl, PHP_URL_PATH) ?: '';
             if ($basePath && $basePath !== '/') {
                 Paginator::currentPathResolver(function () use ($basePath) {
                     return rtrim($basePath, '/').'/'.ltrim(request()->path(), '/');
@@ -48,6 +61,23 @@ class AppServiceProvider extends ServiceProvider
         };
 
         View::composer(['admin.layouts.app', 'admin.auth.login'], function ($view) use ($shareBusiness) {
+            $shareBusiness($view);
+        });
+
+        View::composer(['public.layouts.app', 'public.*'], function ($view) use ($shareBusiness) {
+            $shareBusiness($view);
+            try {
+                $view->with('footerPages', LeiStaticPage::query()
+                    ->where('status', 'published')
+                    ->where('is_in_footer', true)
+                    ->orderBy('sort_order')
+                    ->get());
+            } catch (\Throwable) {
+                $view->with('footerPages', collect());
+            }
+        });
+
+        View::composer(['applicant.layouts.app', 'applicant.*'], function ($view) use ($shareBusiness) {
             $shareBusiness($view);
         });
 

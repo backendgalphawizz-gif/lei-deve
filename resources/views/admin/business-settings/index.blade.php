@@ -83,7 +83,7 @@
                         </label>
                         <label class="lei-bs-field">
                             <span>Notification Badge Count</span>
-                            <input type="number" name="header_notification_count" value="{{ old('header_notification_count', $settings->header_notification_count) }}" min="0" max="99" data-bs-preview="notif">
+                            <input type="number" name="header_notification_count" value="{{ old('header_notification_count', $settings->header_notification_count) }}" min="0" max="99" data-rules="integer|min:0|max:99" data-bs-preview="notif">
                         </label>
                         <label class="lei-bs-field">
                             <span>Header Logo Source</span>
@@ -113,7 +113,7 @@
                     <div class="lei-bs-grid lei-bs-grid--2">
                         <label class="lei-bs-field">
                             <span>Company Name <em>*</em></span>
-                            <input type="text" name="company_name" value="{{ old('company_name', $settings->company_name) }}" required data-bs-preview="company">
+                            <input type="text" name="company_name" value="{{ old('company_name', $settings->company_name) }}" required data-rules="required|maxLen:150" data-bs-preview="company">
                         </label>
                         <label class="lei-bs-field">
                             <span>Legal Entity Name</span>
@@ -220,11 +220,11 @@
                     <div class="lei-bs-grid lei-bs-grid--2">
                         <label class="lei-bs-field">
                             <span>Support Email</span>
-                            <input type="email" name="support_email" value="{{ old('support_email', $settings->support_email) }}">
+                            <input type="email" name="support_email" value="{{ old('support_email', $settings->support_email) }}" data-rules="email|maxLen:150">
                         </label>
                         <label class="lei-bs-field">
                             <span>Support Phone</span>
-                            <input type="text" name="support_phone" value="{{ old('support_phone', $settings->support_phone) }}">
+                            <input type="tel" name="support_phone" value="{{ old('support_phone', $settings->support_phone) }}" placeholder="10-digit mobile number" data-type="phone" data-rules="phone">
                         </label>
                         <label class="lei-bs-field lei-bs-field--full">
                             <span>Street Address</span>
@@ -287,6 +287,11 @@
                             <span>Currency Symbol</span>
                             <input type="text" name="currency_symbol" value="{{ old('currency_symbol', $settings->currency_symbol) }}">
                         </label>
+                        <label class="lei-bs-field">
+                            <span>Renewal window (days)</span>
+                            <input type="number" min="0" max="365" name="renewal_window_days" value="{{ old('renewal_window_days', $settings->renewal_window_days ?? 90) }}">
+                            <small style="color:#64748b;">Days before LEI expiry when renewal plans become available. Use 0 for after expiry only.</small>
+                        </label>
                     </div>
                 </section>
 
@@ -298,15 +303,15 @@
                     <div class="lei-bs-grid lei-bs-grid--2">
                         <label class="lei-bs-field lei-bs-field--full">
                             <span>Website URL</span>
-                            <input type="url" name="website_url" value="{{ old('website_url', $settings->website_url) }}">
+                            <input type="url" name="website_url" value="{{ old('website_url', $settings->website_url) }}" data-rules="url|maxLen:255">
                         </label>
                         <label class="lei-bs-field">
                             <span>LinkedIn</span>
-                            <input type="url" name="linkedin_url" value="{{ old('linkedin_url', $settings->linkedin_url) }}">
+                            <input type="url" name="linkedin_url" value="{{ old('linkedin_url', $settings->linkedin_url) }}" data-rules="url|maxLen:255">
                         </label>
                         <label class="lei-bs-field">
                             <span>Twitter / X</span>
-                            <input type="url" name="twitter_url" value="{{ old('twitter_url', $settings->twitter_url) }}">
+                            <input type="url" name="twitter_url" value="{{ old('twitter_url', $settings->twitter_url) }}" data-rules="url|maxLen:255">
                         </label>
                         <label class="lei-bs-field lei-bs-field--full">
                             <span>Copyright Footer Text</span>

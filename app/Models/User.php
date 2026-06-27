@@ -29,6 +29,7 @@ class User extends Authenticatable
         'mfa_status',
         'job_title',
         'phone',
+        'country_of_incorporation',
     ];
 
     protected $hidden = [
@@ -51,6 +52,16 @@ class User extends Authenticatable
         return $this->role === 'super_admin';
     }
 
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['super_admin', 'admin'], true);
+    }
+
+    public function isApplicant(): bool
+    {
+        return $this->role === 'applicant';
+    }
+
     public function organization()
     {
         return $this->belongsTo(Organization::class);
@@ -64,6 +75,16 @@ class User extends Authenticatable
     public function modulePermissions()
     {
         return $this->hasMany(UserModulePermission::class);
+    }
+
+    public function subscriptions()
+    {
+        return $this->hasMany(LeiSubscription::class);
+    }
+
+    public function leiApplications()
+    {
+        return $this->hasMany(LeiApplication::class);
     }
 
     public function getInitialsAttribute(): string

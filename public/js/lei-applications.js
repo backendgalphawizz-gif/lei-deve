@@ -11,11 +11,17 @@
     const toast = document.getElementById('leiAppToast');
 
     function showUrl(id) {
-        return showUrlTpl.replace('__ID__', String(id));
+        if (showUrlTpl) {
+            return showUrlTpl.replace('__ID__', String(id));
+        }
+        return window.location.pathname.replace(/\/$/, '') + '/' + id;
     }
 
     function actionUrl(id) {
-        return actionUrlTpl.replace('__ID__', String(id));
+        if (actionUrlTpl) {
+            return actionUrlTpl.replace('__ID__', String(id));
+        }
+        return window.location.pathname.replace(/\/$/, '') + '/' + id + '/action';
     }
 
     function showToast(message, type) {
@@ -44,7 +50,10 @@
                 filterSelected.value = appCode;
             }
         } catch (e) {
-            detailPanel.innerHTML = '<div class="lei-app-detail-empty">Could not load details.</div>';
+            detailPanel.innerHTML = '<div class="lei-app-detail-empty">Could not load details. Please refresh the page and try again.</div>';
+            if (typeof console !== 'undefined') {
+                console.error('Application detail load failed:', e);
+            }
         }
     }
 
@@ -78,10 +87,11 @@
         });
     }
 
-    async function performAction(appId, action, team) {
+    async function performAction(appId, action, team, leiNumber) {
         const body = new FormData();
         body.append('action', action);
         if (team) body.append('team', team);
+        if (leiNumber) body.append('lei_number', leiNumber);
         body.append('_token', csrf);
 
         const res = await fetch(actionUrl(appId), {
@@ -115,9 +125,12 @@
                 if (action === 'reject' && !window.confirm('Reject this application?')) return;
                 if (action === 'approve' && !window.confirm('Grant final approval?')) return;
 
+                const leiInput = panel.querySelector('#lei_number_input');
+                const leiNumber = leiInput ? leiInput.value.trim() : null;
+
                 btn.disabled = true;
                 try {
-                    const data = await performAction(appId, action, team);
+                    const data = await performAction(appId, action, team, leiNumber);
                     detailPanel.innerHTML = data.html;
                     bindDetailActions(appId);
                     updateRowFromApp(data.application);
