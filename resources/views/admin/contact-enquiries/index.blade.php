@@ -102,10 +102,11 @@
                         </div>
                     </form>
                     <div class="lei-wm-detail-actions">
-                        <form method="POST" action="{{ route('admin.contact-enquiries.destroy', $selected) }}" onsubmit="return confirm('Delete this enquiry?')">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="lei-wm-btn-danger">Delete Enquiry</button>
-                        </form>
+                        @include('admin.partials.icon-actions', [
+                            'deleteUrl' => route('admin.contact-enquiries.destroy', $selected),
+                            'deleteConfirm' => 'Delete this enquiry?',
+                            'deleteTitle' => 'Delete Enquiry',
+                        ])
                     </div>
                 </div>
             @else

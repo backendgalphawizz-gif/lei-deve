@@ -40,6 +40,15 @@
         <img src="{{ $user->profileImageUrl() }}" alt="{{ $user->name }}" class="lei-portal-profile-avatar">
         <h3>{{ $user->name }}</h3>
         <p>{{ $user->email }}</p>
+        @if ($user->organization_name)
+            <p class="muted">{{ $user->organization_name }}</p>
+        @endif
+        @if ($user->lei_number)
+            <div class="lei-portal-profile-lei">
+                <span>Your LEI Code</span>
+                <strong class="lei-portal-mono">{{ $user->lei_number }}</strong>
+            </div>
+        @endif
         <p class="muted">Applicant account</p>
     </aside>
 </form>

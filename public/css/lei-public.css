@@ -182,6 +182,11 @@ body.lei-pub-notify-open{overflow:hidden}
 .lei-pub-auth-icon{width:56px;height:56px;border-radius:50%;background:var(--lei-navy,#0b162c);color:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:22px}
 .lei-pub-otp-input{text-align:center;letter-spacing:.4em;font-size:24px}
 .lei-pub-dev-otp{background:#fef3c7;padding:8px 12px;border-radius:8px;font-size:13px;text-align:center}
+.lei-pub-auth-card input.is-invalid,.lei-pub-auth-card select.is-invalid{border-color:#ef4444!important;background:#fff5f5}
+.lei-pub-lei-assigned{background:linear-gradient(135deg,#ecfdf5 0%,#f0fdf4 100%);border:1px solid #a7f3d0;border-radius:12px;padding:16px 18px;margin:16px 0;text-align:center}
+.lei-pub-lei-assigned span{display:block;font-size:12px;font-weight:600;color:#047857;text-transform:uppercase;letter-spacing:.06em}
+.lei-pub-lei-assigned strong{display:block;font-family:ui-monospace,monospace;font-size:20px;color:#065f46;letter-spacing:.06em;margin:8px 0}
+.lei-pub-lei-assigned small{display:block;font-size:12px;color:#047857;line-height:1.4}
 .lei-pub-register-section{padding:48px 0}
 .lei-pub-register-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px;align-items:start}
 .lei-pub-register-features{list-style:none;padding:0;margin-top:24px}
@@ -209,6 +214,39 @@ body.lei-pub-notify-open{overflow:hidden}
 .lei-pub-dash-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:24px}
 .lei-pub-dash-cards article{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px}
 
+/* Stats band */
+.lei-pub-stats-band{background:var(--lei-navy,#0b162c);padding:28px 0;border-bottom:1px solid rgba(201,162,39,.25)}
+.lei-pub-stats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:0;text-align:center}
+.lei-pub-stat-item{padding:12px 16px;border-right:1px solid rgba(255,255,255,.1)}
+.lei-pub-stat-item:last-child{border-right:none}
+.lei-pub-stat-item strong{display:block;font-size:22px;font-weight:700;color:var(--lei-gold,#c9a227);letter-spacing:-.02em}
+.lei-pub-stat-item span{display:block;font-size:12px;color:rgba(255,255,255,.65);margin-top:4px;text-transform:uppercase;letter-spacing:.04em}
+
+/* Trust badges */
+.lei-pub-trust-section{background:#f8fafc}
+.lei-pub-trust-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.lei-pub-trust-badge{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:22px 24px;display:flex;flex-direction:column;align-items:flex-start;gap:8px;transition:box-shadow .2s}
+.lei-pub-trust-badge:hover{box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.lei-pub-trust-badge i{font-size:22px;color:var(--lei-navy,#0b162c);background:linear-gradient(135deg,#eef2ff,#e0e7ff);width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.lei-pub-trust-badge strong{font-size:14px;color:#0f172a;font-weight:700}
+.lei-pub-trust-badge span{font-size:13px;color:#64748b;line-height:1.5}
+
+/* CTA section */
+.lei-pub-cta-section{background:linear-gradient(135deg,var(--lei-navy,#0b162c) 0%,#1e2f4d 100%);padding:64px 0}
+.lei-pub-cta-inner{display:flex;justify-content:space-between;align-items:center;gap:32px}
+.lei-pub-cta-inner h2{font-size:28px;color:#fff;margin:0 0 8px}
+.lei-pub-cta-inner p{color:rgba(255,255,255,.75);margin:0;font-size:15px}
+.lei-pub-cta-actions{display:flex;gap:12px;flex-shrink:0}
+.lei-pub-btn{display:inline-flex;align-items:center;background:var(--lei-gold,#c9a227);color:#0b162c;font-weight:700;font-size:14px;padding:12px 24px;border-radius:10px;text-decoration:none;transition:background .2s}
+.lei-pub-btn:hover{background:#b8921f}
+.lei-pub-btn--ghost{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+.lei-pub-btn--ghost:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* Security bar on checkout */
+.lei-pub-secure-bar{display:flex;align-items:center;justify-content:center;gap:20px;padding:12px 0;margin-top:16px;border-top:1px solid #e2e8f0;flex-wrap:wrap}
+.lei-pub-secure-bar span{display:flex;align-items:center;gap:6px;font-size:12px;color:#64748b;font-weight:500}
+.lei-pub-secure-bar i{color:#16a34a;font-size:13px}
+
 /* Footer */
 .lei-pub-footer{background:var(--lei-navy,#0b162c);color:rgba(255,255,255,.8);padding:56px 0 24px;margin-top:0}
 .lei-pub-footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.1)}
@@ -229,10 +267,127 @@ body.lei-pub-notify-open{overflow:hidden}
 .lei-pub-prose{line-height:1.8;color:#374151}
 .lei-pub-static-page h1{margin-bottom:24px;color:var(--lei-navy,#0b162c)}
 
+.lei-pub-stat-item strong{display:block;font-size:28px;font-weight:700;color:#fff;line-height:1.1}
+.lei-pub-stat-item span{font-size:12px;color:rgba(255,255,255,.65);letter-spacing:.04em;text-transform:uppercase}
+
+/* Public LEI Registry Search */
+.lei-reg-hero{padding:56px 0 48px;background:linear-gradient(180deg,#fff 0%,#f8fafc 100%);border-bottom:1px solid #e8ecf1}
+.lei-reg-hero h1{font-size:36px;color:var(--lei-navy,#0b162c);margin:0 0 12px}
+.lei-reg-hero--detail{padding-bottom:40px}
+.lei-reg-back{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:#64748b;margin-bottom:16px}
+.lei-reg-back:hover{color:var(--lei-navy,#0b162c)}
+.lei-reg-lei-badge{display:inline-block;margin-top:16px;padding:12px 20px;background:#ecfdf5;border:2px solid #a7f3d0;border-radius:10px;font-family:ui-monospace,monospace;font-size:20px;font-weight:700;letter-spacing:.08em;color:#065f46}
+.lei-reg-home-search{margin:28px 0 8px;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 8px 24px rgba(15,23,42,.06)}
+.lei-reg-home-search-title{margin:0 0 16px;font-size:17px;font-weight:700;color:var(--lei-navy,#0b162c);display:flex;align-items:center;gap:10px}
+.lei-reg-home-search-title i{color:var(--lei-gold,#c9a227)}
+.lei-reg-search-form{display:flex;flex-direction:column;gap:14px}
+.lei-reg-search-types{display:flex;flex-wrap:wrap;gap:8px}
+.lei-reg-search-type{display:inline-flex;align-items:center;cursor:pointer}
+.lei-reg-search-type input{position:absolute;opacity:0;pointer-events:none}
+.lei-reg-search-type span{display:inline-block;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:#64748b;background:#fff;border:1px solid #e2e8f0;transition:.15s}
+.lei-reg-search-type.active span,.lei-reg-search-type:hover span{color:var(--lei-navy,#0b162c);border-color:var(--lei-gold,#c9a227);background:#fffbeb}
+.lei-reg-search-row{display:flex;gap:12px;align-items:flex-start}
+.lei-reg-search-combobox{position:relative;flex:1;min-width:0}
+.lei-reg-search-input-wrap{flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:2px solid #e2e8f0;border-radius:12px;padding:0 16px;transition:border-color .15s}
+.lei-reg-search-input-wrap:focus-within{border-color:var(--lei-gold,#c9a227)}
+.lei-reg-search-input-wrap i{color:#94a3b8;font-size:16px}
+.lei-reg-search-input-wrap input{flex:1;border:none;outline:none;padding:14px 0;font-size:15px;background:transparent;color:#1e293b;min-width:0}
+.lei-reg-search-clear{flex-shrink:0;border:none;background:transparent;color:#94a3b8;font-size:22px;line-height:1;cursor:pointer;padding:0 4px}
+.lei-reg-search-clear:hover{color:#64748b}
+.lei-reg-suggest{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:200;background:#fff;border:1px solid #e2e8f0;border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.12);max-height:320px;overflow-y:auto}
+.lei-reg-suggest-empty{padding:16px;font-size:14px;color:#64748b;text-align:center}
+.lei-reg-suggest-item{display:block;padding:12px 16px;border-bottom:1px solid #f1f5f9;text-decoration:none;color:inherit;transition:background .12s}
+.lei-reg-suggest-row{display:flex;align-items:center;border-bottom:1px solid #f1f5f9}
+.lei-reg-suggest-row:last-of-type{border-bottom:none}
+.lei-reg-suggest-row .lei-reg-suggest-item{flex:1;border-bottom:none}
+.lei-reg-suggest-renew{flex-shrink:0;padding:12px 16px;font-size:12px;font-weight:700;color:#b45309;white-space:nowrap;border-left:1px solid #f1f5f9}
+.lei-reg-suggest-renew:hover{background:#fffbeb;color:#92400e}
+.lei-reg-suggest-item:hover,.lei-reg-suggest-item.is-active{background:#f8fafc}
+.lei-reg-suggest-name{display:block;font-size:14px;font-weight:600;color:#0f172a;margin-bottom:4px}
+.lei-reg-suggest-meta{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:12px;color:#64748b}
+.lei-reg-suggest-lei{font-family:ui-monospace,monospace;font-weight:600;color:#065f46}
+.lei-reg-suggest-reg{font-family:ui-monospace,monospace}
+.lei-reg-suggest-country{color:#94a3b8}
+.lei-reg-suggest-more{display:block;padding:12px 16px;font-size:13px;font-weight:600;color:var(--lei-navy,#0b162c);background:#f8fafc;text-align:center;border-top:1px solid #e2e8f0}
+.lei-reg-suggest-more:hover{background:#eff6ff}
+.lei-reg-search-row .lei-pub-btn{flex-shrink:0;padding:14px 24px;white-space:nowrap}
+.lei-reg-search-hint{margin:0;font-size:13px;color:#64748b}
+.lei-reg-search-form--compact .lei-reg-search-hint{display:none}
+.lei-reg-empty{text-align:center;padding:48px 24px;background:#fff;border:1px solid #e5e7eb;border-radius:16px}
+.lei-reg-empty i{font-size:40px;color:#cbd5e1;margin-bottom:16px}
+.lei-reg-empty h2{margin:0 0 8px;font-size:22px;color:var(--lei-navy,#0b162c)}
+.lei-reg-empty p{margin:0;color:#64748b;max-width:480px;margin-inline:auto}
+.lei-reg-results-head{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:20px}
+.lei-reg-results-head h2{margin:0;font-size:22px;color:var(--lei-navy,#0b162c)}
+.lei-reg-results-meta{font-size:13px;color:#64748b}
+.lei-reg-table-wrap{overflow-x:auto;background:#fff;border:1px solid #e5e7eb;border-radius:14px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+.lei-reg-table{width:100%;border-collapse:collapse;font-size:14px}
+.lei-reg-table th{text-align:left;padding:14px 16px;background:#f8fafc;color:#64748b;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid #e5e7eb}
+.lei-reg-table td{padding:16px;border-bottom:1px solid #f1f5f9;vertical-align:middle;color:#334155}
+.lei-reg-table tbody tr:last-child td{border-bottom:none}
+.lei-reg-table tbody tr:hover td{background:#fafbfc}
+.lei-reg-mono{font-family:ui-monospace,monospace;font-size:13px}
+.lei-reg-status{display:inline-block;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:700;letter-spacing:.04em}
+.lei-reg-status--active{background:#ecfdf5;color:#15803d}
+.lei-reg-status--warning{background:#fffbeb;color:#b45309}
+.lei-reg-status--expired{background:#fef2f2;color:#b91c1c}
+.lei-reg-actions{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.lei-reg-renew-link{font-size:13px;font-weight:700;color:#b45309;white-space:nowrap}
+.lei-reg-renew-link:hover{color:#92400e}
+.lei-reg-cta-card{display:flex;flex-wrap:wrap;align-items:center;gap:20px;padding:28px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 4px 16px rgba(15,23,42,.04)}
+.lei-reg-cta-card h3{margin:0 0 6px;font-size:18px;color:var(--lei-navy,#0b162c)}
+.lei-reg-cta-card p{margin:0;color:#64748b;font-size:14px;max-width:520px}
+.lei-reg-cta-icon{font-size:36px;color:var(--lei-gold,#c9a227);flex-shrink:0}
+.lei-reg-cta-actions{display:flex;flex-wrap:wrap;gap:10px;margin-left:auto}
+.lei-reg-action-banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding:20px 24px;border-radius:14px;border:1px solid #e5e7eb;background:#fff}
+.lei-reg-action-banner--active{border-color:#bbf7d0;background:#f0fdf4}
+.lei-reg-action-banner--warning{border-color:#fde68a;background:#fffbeb}
+.lei-reg-action-banner--expired{border-color:#fecaca;background:#fef2f2}
+.lei-reg-action-banner-text{display:flex;flex-direction:column;gap:4px}
+.lei-reg-action-banner-text strong{font-size:15px;color:var(--lei-navy,#0b162c)}
+.lei-reg-action-banner-text span{font-size:14px;color:#64748b}
+.lei-reg-suggest-status{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px;letter-spacing:.04em}
+.lei-reg-suggest-status--active{background:#ecfdf5;color:#15803d}
+.lei-reg-suggest-status--warning{background:#fffbeb;color:#b45309}
+.lei-reg-suggest-status--expired{background:#fef2f2;color:#b91c1c}
+.lei-reg-suggest-empty{padding:16px;text-align:center;font-size:13px;color:#64748b}
+.lei-reg-suggest-register{display:block;padding:12px 16px;font-size:13px;font-weight:600;color:#fff;background:var(--lei-navy,#0b162c);text-align:center;border-top:1px solid #e2e8f0}
+.lei-reg-suggest-register:hover{background:#1a2d4a}
+.lei-reg-source{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.04em;white-space:nowrap}
+.lei-reg-source--local{background:#eff6ff;color:#1d4ed8}
+.lei-reg-source--gleif{background:#f5f3ff;color:#6d28d9}
+.lei-reg-suggest-source{font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px}
+.lei-reg-suggest-source--local{background:#eff6ff;color:#1d4ed8}
+.lei-reg-suggest-source--gleif{background:#f5f3ff;color:#6d28d9}
+.lei-reg-view-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--lei-navy,#0b162c);white-space:nowrap}
+.lei-reg-view-link:hover{color:#1a5fad}
+.lei-reg-pager{display:flex;align-items:center;justify-content:center;gap:16px;margin-top:24px;font-size:14px}
+.lei-reg-pager a{color:var(--lei-navy,#0b162c);font-weight:600}
+.lei-reg-pager .disabled{color:#94a3b8}
+.lei-reg-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.lei-reg-detail-card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:28px}
+.lei-reg-detail-card h2{margin:0 0 20px;font-size:18px;color:var(--lei-navy,#0b162c)}
+.lei-reg-dl{display:grid;gap:14px;margin:0}
+.lei-reg-dl > div{display:grid;grid-template-columns:160px 1fr;gap:12px;align-items:start}
+.lei-reg-dl dt{margin:0;font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em}
+.lei-reg-dl dd{margin:0;font-size:14px;color:#1e293b}
+
 @media (max-width:960px){
   .lei-pub-nav{display:none}
-  .lei-pub-hero-grid,.lei-pub-features-grid,.lei-pub-about-grid,.lei-pub-mission-grid,.lei-pub-contact-card,.lei-pub-register-grid,.lei-pub-faq-layout,.lei-pub-pricing-grid,.lei-pub-cards-3,.lei-pub-cards-4,.lei-pub-workflow,.lei-pub-dash-cards,.lei-pub-footer-grid,.lei-pub-cta-inner{grid-template-columns:1fr}
+  .lei-pub-hero-grid,.lei-pub-features-grid,.lei-pub-about-grid,.lei-pub-mission-grid,.lei-pub-contact-card,.lei-pub-register-grid,.lei-pub-faq-layout,.lei-pub-pricing-grid,.lei-pub-cards-3,.lei-pub-cards-4,.lei-pub-workflow,.lei-pub-dash-cards,.lei-pub-footer-grid,.lei-pub-cta-inner,.lei-pub-trust-grid{grid-template-columns:1fr}
+  .lei-pub-stats-grid{grid-template-columns:repeat(3,1fr)}
+  .lei-pub-stat-item{border-bottom:1px solid rgba(255,255,255,.1);border-right:none}
+  .lei-pub-stat-item:nth-child(1),.lei-pub-stat-item:nth-child(2),.lei-pub-stat-item:nth-child(3){border-right:none}
   .lei-pub-mini-cards{grid-template-columns:1fr}
   .lei-pub-form-row{grid-template-columns:1fr}
   .lei-pub-cta-inner{flex-direction:column;text-align:center}
+  .lei-pub-cta-actions{justify-content:center}
+  .lei-reg-search-row{flex-direction:column}
+  .lei-reg-search-row .lei-pub-btn{width:100%}
+  .lei-reg-detail-grid{grid-template-columns:1fr}
+  .lei-reg-dl > div{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .lei-pub-stats-grid{grid-template-columns:repeat(2,1fr)}
+  .lei-pub-trust-grid{grid-template-columns:1fr}
 }

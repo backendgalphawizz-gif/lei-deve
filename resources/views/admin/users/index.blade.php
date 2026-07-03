@@ -146,6 +146,7 @@
                         <th>Organization</th>
                         <th>Status</th>
                         <th>MFA</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -193,10 +194,20 @@
                                     </span>
                                 @endif
                             </td>
+                            <td>
+                                @include('admin.partials.icon-actions', [
+                                    'viewUrl' => route('admin.users.show', $user),
+                                    'editUrl' => route('admin.users.edit', $user),
+                                    'approveUrl' => $user->account_status === 'pending' ? route('admin.users.approve', $user) : null,
+                                    'deleteUrl' => $user->id !== auth()->id() ? route('admin.users.destroy', $user) : null,
+                                    'deleteConfirm' => 'Permanently delete '.$user->name.'? This cannot be undone.',
+                                    'deleteTitle' => 'Delete User',
+                                ])
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="lei-table-empty">No users match your filters.</td>
+                            <td colspan="6" class="lei-table-empty">No users match your filters.</td>
                         </tr>
                     @endforelse
                 </tbody>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Applicant;
 
 use App\Models\LeiApplication;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicationTrackingController extends ApplicantPortalController
 {
@@ -26,7 +27,7 @@ class ApplicationTrackingController extends ApplicantPortalController
         $this->sharePortalContext();
         abort_unless($application->user_id === auth()->id(), 404);
 
-        $application->load(['auditEvents', 'subscription']);
+        $application->load(['auditEvents', 'subscription', 'certificate']);
 
         $events = $application->auditEvents;
 
@@ -53,5 +54,20 @@ class ApplicationTrackingController extends ApplicantPortalController
         return redirect()
             ->route('applicant.applications.show', $application)
             ->with('success', 'Your clarification response has been submitted.');
+    }
+
+    public function certificate(LeiApplication $application)
+    {
+        abort_unless($application->user_id === auth()->id(), 404);
+        abort_unless($application->status === 'approved', 403);
+
+        $certificate = $application->certificate;
+        abort_unless($certificate?->isSigned() && $certificate->signed_pdf_path, 403, 'Your signed certificate is not yet available. It will be issued after CA digital signing.');
+        abort_unless(Storage::disk('local')->exists($certificate->signed_pdf_path), 404);
+
+        return Storage::disk('local')->download(
+            $certificate->signed_pdf_path,
+            'LEI-Certificate-'.$application->lei_number.'.pdf',
+        );
     }
 }

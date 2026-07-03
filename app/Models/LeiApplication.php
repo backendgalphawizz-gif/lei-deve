@@ -50,6 +50,11 @@ class LeiApplication extends Model
         return $this->hasMany(LeiApplicationAuditEvent::class)->orderByDesc('occurred_at');
     }
 
+    public function certificate()
+    {
+        return $this->hasOne(LeiCertificate::class, 'lei_application_id');
+    }
+
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {

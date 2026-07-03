@@ -7,11 +7,29 @@ use Illuminate\Validation\Rule;
 
 class RegistrationController extends ApplicantPortalController
 {
+    public function apply(Request $request)
+    {
+        return redirect()->route('applicant.registration.step', ['step' => 1]);
+    }
+
+    public function submitApply(Request $request)
+    {
+        return redirect()->route('applicant.registration.step', ['step' => 1]);
+    }
+
     public function step(Request $request, int $step)
     {
         $this->sharePortalContext();
         $step = max(1, min(4, $step));
         $user = auth()->user();
+
+        if ($this->applications->hasSubmittedRegistration($user)) {
+            $submitted = $this->applications->submittedRegistration($user);
+
+            return redirect()
+                ->route('applicant.applications.show', $submitted)
+                ->with('info', 'You have already submitted your LEI registration. Each account may register only once.');
+        }
 
         $draft = $this->applications->activeDraft($user, 'registration');
         $subscription = $this->applications->registrationSubscription($user, $draft);
@@ -23,20 +41,30 @@ class RegistrationController extends ApplicantPortalController
         }
 
         $application = $this->applications->startRegistration($user, $subscription);
+        $application = $this->applications->applyRegistrationPrefill($application);
 
         if ($step > (int) $application->workflow_step + 1) {
             return redirect()->route('applicant.registration.step', ['step' => $application->workflow_step]);
         }
 
         $draft = $application->draft_data ?? [];
+        $registrationPrefill = session(\App\Services\GleifRegistrationPrefillService::SESSION_KEY);
 
-        return view('applicant.registration.step' . $step, compact('application', 'draft', 'step', 'subscription'));
+        return view('applicant.registration.step'.$step, compact('application', 'draft', 'step', 'subscription', 'registrationPrefill'));
     }
 
     public function save(Request $request, int $step)
     {
         $step = max(1, min(4, $step));
         $user = auth()->user();
+
+        if ($this->applications->hasSubmittedRegistration($user)) {
+            $submitted = $this->applications->submittedRegistration($user);
+
+            return redirect()
+                ->route('applicant.applications.show', $submitted)
+                ->with('info', 'You have already submitted your LEI registration. Each account may register only once.');
+        }
 
         $existingDraft = $this->applications->activeDraft($user, 'registration');
         $subscription = $this->applications->registrationSubscription($user, $existingDraft);
@@ -131,12 +159,24 @@ class RegistrationController extends ApplicantPortalController
         $nextStep = min(4, $step + 1);
         $this->applications->saveStep($application, $nextStep, $data);
 
+        if ($step === 1) {
+            app(\App\Services\GleifRegistrationPrefillService::class)->clear();
+        }
+
         if ($step === 4 && $request->boolean('submit')) {
-            $this->applications->submitRegistration($application->fresh());
+            try {
+                $application = $this->applications->submitRegistration($application->fresh());
+            } catch (\RuntimeException $e) {
+                return redirect()
+                    ->route('applicant.applications.show', $this->applications->submittedRegistration($user))
+                    ->with('error', $e->getMessage());
+            }
 
             return redirect()
                 ->route('applicant.applications.show', $application)
-                ->with('success', 'Your LEI registration has been submitted for review.');
+                ->with('success', $application->lei_number
+                    ? 'Your application has been submitted with LEI code '.$application->lei_number.'.'
+                    : 'Your LEI registration has been submitted for review.');
         }
 
         if ($step >= 4) {
@@ -145,6 +185,6 @@ class RegistrationController extends ApplicantPortalController
 
         return redirect()
             ->route('applicant.registration.step', ['step' => $nextStep])
-            ->with('success', 'Step ' . $step . ' saved. Continue to the next step.');
+            ->with('success', 'Step '.$step.' saved. Continue to the next step.');
     }
 }

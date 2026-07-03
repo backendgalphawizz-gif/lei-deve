@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Mail\PaymentConfirmationMail;
 use App\Models\LeiPricingPlan;
 use App\Services\ApplicantApplicationService;
 use App\Services\ApplicantPortalRedirect;
 use App\Services\SubscriptionService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class PlanSubscriptionController extends ApplicantPortalController
 {
@@ -66,6 +68,13 @@ class PlanSubscriptionController extends ApplicantPortalController
             return redirect()
                 ->route('applicant.payments.index')
                 ->with('error', $e->getMessage());
+        }
+
+        // Send payment confirmation email
+        try {
+            Mail::to($user->email)->send(new PaymentConfirmationMail($user, $subscription));
+        } catch (\Throwable) {
+            // Non-fatal
         }
 
         if ($plan->section === 'registration') {

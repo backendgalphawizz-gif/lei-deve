@@ -97,10 +97,46 @@
     @endif
 
     @if ($application->user_id && $application->status !== 'approved' && $application->workflow_type === 'registration')
+        @php $louPrefix = \App\Models\LeiBusinessSetting::current()->lou_prefix ?? '5493'; @endphp
         <div class="lei-app-detail-section">
             <h4>LEI on Approval</h4>
-            <p class="lei-app-detail-hint">Leave blank to auto-generate a LEI number when you approve.</p>
-            <input id="lei_number_input" name="lei_number" type="text" maxlength="20" class="lei-app-lei-input" placeholder="549300XXXXXXXXXXXX" value="{{ old('lei_number', $application->lei_number) }}">
+            @if ($application->lei_number)
+                <p class="lei-app-detail-hint">LEI already assigned at submission:</p>
+                <p style="font-family:monospace;letter-spacing:0.08em;font-size:15px;margin:8px 0 12px;"><strong>{{ $application->lei_number }}</strong></p>
+                <p class="lei-app-detail-hint">Override only if you need to replace it before approval.</p>
+            @else
+                <p class="lei-app-detail-hint">Leave blank to auto-generate a valid ISO 17442 LEI code when you approve.</p>
+            @endif
+            <input id="lei_number_input" name="lei_number" type="text" maxlength="20" class="lei-app-lei-input"
+                   placeholder="{{ $louPrefix }}00XXXXXXXXXXXX??"
+                   value="{{ old('lei_number', $application->lei_number) }}"
+                   style="font-family:monospace;letter-spacing:0.08em;">
+            <small style="color:#64748b;font-size:12px;display:block;margin-top:4px;">
+                Format: <strong>{{ $louPrefix }}</strong> (LOU prefix) + <strong>00</strong> + 12 chars + 2 check digits = 20 chars
+            </small>
+        </div>
+    @endif
+
+    @if ($application->certificate)
+        <div class="lei-app-detail-section">
+            <h4>LEI Certificate (ISO 17442-2)</h4>
+            <div class="lei-app-detail-grid">
+                <div class="lei-app-meta-item">
+                    <span class="label">Certificate Status</span>
+                    <span class="value lei-app-status lei-app-status--{{ $application->certificate->statusTone() }}">{{ $application->certificate->statusLabel() }}</span>
+                </div>
+                @if ($application->certificate->serial_number)
+                    <div class="lei-app-meta-item">
+                        <span class="label">Serial Number</span>
+                        <span class="value">{{ $application->certificate->serial_number }}</span>
+                    </div>
+                @endif
+            </div>
+            @if (auth()->user()?->isCertificateAuthority() && $application->certificate->isPendingCa())
+                <p class="lei-app-detail-hint" style="margin-top:12px;">
+                    <a href="{{ route('admin.certificates.show', $application->certificate) }}">Open in Certificate Authority panel →</a>
+                </p>
+            @endif
         </div>
     @endif
 

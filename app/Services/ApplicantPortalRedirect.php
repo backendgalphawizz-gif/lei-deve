@@ -14,10 +14,27 @@ class ApplicantPortalRedirect
 
     public function url(User $user): string
     {
+        if (session(GleifRegistrationPrefillService::SESSION_KEY)
+            && ! $this->applications->hasSubmittedRegistration($user)) {
+            $subscription = $this->applications->registrationSubscription($user);
+            if ($subscription) {
+                $application = $this->applications->startRegistration($user, $subscription);
+                $this->applications->applyRegistrationPrefill($application);
+
+                return route('applicant.registration.step', ['step' => 1]);
+            }
+        }
+
         $draft = $this->applications->activeDraft($user);
 
         if ($draft) {
             return $this->workflowUrl($draft);
+        }
+
+        if ($this->applications->hasSubmittedRegistration($user)) {
+            $submitted = $this->applications->submittedRegistration($user);
+
+            return route('applicant.applications.show', $submitted);
         }
 
         if ($this->applications->registrationSubscription($user)

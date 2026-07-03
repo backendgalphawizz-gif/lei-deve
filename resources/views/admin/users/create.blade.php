@@ -129,7 +129,7 @@
                                 <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
                             </svg>
                         </span>
-                        <span><strong>Security Note:</strong> Permission changes will be logged in the Global Audit Trail. The user will receive an invitation email to set their secure passkey once created.</span>
+                        <span><strong>Security Note:</strong> New users are created in <strong>Pending</strong> status. Approve them from User Management before they can sign in. Permission changes are logged in the Global Audit Trail.</span>
                     </div>
                 </section>
             </div>

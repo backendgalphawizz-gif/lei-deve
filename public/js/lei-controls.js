@@ -108,7 +108,7 @@
     });
 
     document.getElementById('leiExecuteOverride')?.addEventListener('click', async () => {
-        if (!confirm('Execute full system override? This action is logged and irreversible.')) return;
+        if (!(await window.leiConfirm({ title: 'System Override', message: 'Execute full system override? This action is logged and irreversible.', button: 'Execute', variant: 'danger' }))) return;
         try {
             const data = await postJson(page.dataset.overrideExecUrl);
             document.getElementById('leiOverrideArm').checked = false;
@@ -119,7 +119,7 @@
     });
 
     document.getElementById('leiRevokeSessions')?.addEventListener('click', async () => {
-        if (!confirm('Revoke all global admin sessions?')) return;
+        if (!(await window.leiConfirm({ title: 'Revoke Sessions', message: 'Revoke all global admin sessions?', button: 'Revoke', variant: 'warning' }))) return;
         try {
             const data = await postJson(page.dataset.revokeUrl);
             showToast(data.message);
@@ -147,7 +147,7 @@
     });
 
     document.getElementById('leiInstantScrub')?.addEventListener('click', async () => {
-        if (!confirm('Instant scrub is destructive. Continue?')) return;
+        if (!(await window.leiConfirm({ title: 'Instant Scrub', message: 'Instant scrub is destructive. Continue?', button: 'Continue', variant: 'danger' }))) return;
         try {
             const data = await postJson(page.dataset.scrubUrl, { confirmed: true });
             showToast(data.message);

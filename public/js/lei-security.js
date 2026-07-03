@@ -78,7 +78,7 @@
         btn.addEventListener('click', async () => {
             const row = btn.closest('.lei-sec-ip-row');
             const id = row?.dataset.ruleId;
-            if (!id || !window.confirm('Remove this IP range?')) return;
+            if (!id || !(await window.leiConfirm({ title: 'Remove IP Range', message: 'Remove this IP range?', button: 'Remove', variant: 'danger' }))) return;
             const url = page.dataset.ipDeleteUrl.replace('__ID__', id);
             try {
                 const res = await fetch(url, {

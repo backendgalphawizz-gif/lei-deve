@@ -34,6 +34,7 @@ class UserManagementSeeder extends Seeder
             ['Data Analyst', 'data_analyst', 'SLA & Metrics focus'],
             ['Global Auditor', 'global_auditor', 'Read-only oversight'],
             ['Security Analyst', 'security_analyst', 'Security & audit focus'],
+            ['Certificate Authority', 'certificate_authority', 'Digital signing of LEI certificates (ISO 17442-2)'],
         ];
 
         foreach ($roles as [$name, $slug, $desc]) {
@@ -49,6 +50,7 @@ class UserManagementSeeder extends Seeder
             ['System Health', 'system_health', 'SLA monitoring & server diagnostics', 2],
             ['Payment Processing', 'payments', 'Transaction history and reconciliation', 3],
             ['User Monitoring', 'user_monitoring', 'Log oversight and session audits', 4],
+            ['Certificate Signing', 'certificate_signing', 'CA queue and digital certificate signing', 5],
         ];
 
         foreach ($modules as [$name, $slug, $desc, $order]) {
@@ -67,14 +69,17 @@ class UserManagementSeeder extends Seeder
                 ['read' => 1, 'write' => 1, 'delete' => 0],
                 ['read' => 1, 'write' => 1, 'delete' => 0],
                 ['read' => 1, 'write' => 0, 'delete' => 0],
+                ['read' => 1, 'write' => 0, 'delete' => 0],
             ],
             'data_analyst' => [
                 ['read' => 1, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 1, 'delete' => 0],
                 ['read' => 0, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 0, 'delete' => 0],
+                ['read' => 0, 'write' => 0, 'delete' => 0],
             ],
             'global_auditor' => [
+                ['read' => 1, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 0, 'delete' => 0],
@@ -83,6 +88,14 @@ class UserManagementSeeder extends Seeder
             'security_analyst' => [
                 ['read' => 1, 'write' => 1, 'delete' => 0],
                 ['read' => 1, 'write' => 1, 'delete' => 0],
+                ['read' => 0, 'write' => 0, 'delete' => 0],
+                ['read' => 1, 'write' => 1, 'delete' => 0],
+                ['read' => 0, 'write' => 0, 'delete' => 0],
+            ],
+            'certificate_authority' => [
+                ['read' => 1, 'write' => 0, 'delete' => 0],
+                ['read' => 0, 'write' => 0, 'delete' => 0],
+                ['read' => 0, 'write' => 0, 'delete' => 0],
                 ['read' => 0, 'write' => 0, 'delete' => 0],
                 ['read' => 1, 'write' => 1, 'delete' => 0],
             ],
@@ -115,6 +128,7 @@ class UserManagementSeeder extends Seeder
             ['Priya Sharma', 'p.sharma@registry-ops.int', 'data_analyst', 'FAH', 'active', 'enabled'],
             ['Thomas Weber', 't.weber@registry-ops.int', 'global_auditor', 'GC', 'active', 'enabled'],
             ['Lisa Park', 'l.park@registry-ops.int', 'security_analyst', 'APR', 'locked', 'disabled'],
+            ['CA Officer', 'ca@registry-ops.int', 'certificate_authority', 'FAH', 'active', 'enabled'],
         ];
 
         foreach ($sampleUsers as [$name, $email, $roleSlug, $orgCode, $status, $mfa]) {
@@ -129,7 +143,7 @@ class UserManagementSeeder extends Seeder
                 [
                     'name' => $name,
                     'system_id' => $email,
-                    'password' => Hash::make('Temp@12345'),
+                    'password' => Hash::make('12345678'),
                     'role' => 'admin',
                     'organization_id' => $org->id,
                     'admin_role_id' => $role->id,

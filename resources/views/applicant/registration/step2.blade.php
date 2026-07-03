@@ -39,12 +39,13 @@
                     </div>
                 </div>
             @endif
-            <label class="lei-portal-upload lei-portal-upload--primary">
+            <label class="lei-portal-upload lei-portal-upload--primary lei-drop-zone" data-drop>
                 <i class="fa-solid fa-cloud-arrow-up"></i>
                 <div class="lei-portal-upload-text">
-                    <span>Supported: PDF, JPG, PNG (Max 10MB)</span>
+                    <span>Drag & drop here, or <u>Browse Files</u></span>
+                    <small style="display:block;color:#64748b;font-size:11px;margin-top:4px;">PDF, JPG, PNG — Max 10 MB</small>
                 </div>
-                <span class="lei-portal-upload-browse">Browse Files</span>
+                <span class="lei-portal-upload-browse">Browse</span>
                 <input type="file" name="certificate_of_incorporation" accept=".pdf,.jpg,.jpeg,.png" data-doc-key="certificate_of_incorporation" data-doc-label="Certificate of Incorporation" {{ $certificatePath ? '' : 'required' }}>
             </label>
             @error('certificate_of_incorporation')<p class="lei-portal-field-error">{{ $message }}</p>@enderror
@@ -65,9 +66,10 @@
                     </div>
                 </div>
             @endif
-            <label class="lei-portal-upload lei-portal-upload--compact">
+            <label class="lei-portal-upload lei-portal-upload--compact lei-drop-zone" data-drop>
                 <i class="fa-regular fa-file-lines"></i>
-                <div>{{ $articlesPath ? 'Click to replace document' : 'Click to upload document' }}</div>
+                <div>{{ $articlesPath ? 'Drop file or click to replace' : 'Drop file here or click to upload' }}</div>
+                <small style="display:block;color:#64748b;font-size:11px;margin-top:4px;">PDF, JPG, PNG — Max 10 MB</small>
                 <input type="file" name="articles_of_association" accept=".pdf,.jpg,.jpeg,.png" data-doc-key="articles_of_association" data-doc-label="Articles of Association">
             </label>
             @error('articles_of_association')<p class="lei-portal-field-error">{{ $message }}</p>@enderror
@@ -122,8 +124,8 @@
         <div class="lei-portal-actions">
             <a href="{{ route('applicant.registration.step', ['step' => 1]) }}" class="lei-btn-secondary"><i class="fa-solid fa-arrow-left"></i> Back to Entity Details</a>
             <div class="right">
-                <button type="submit" name="draft" value="1" class="lei-btn-link">Save as Draft</button>
-                <button type="submit" class="lei-btn-primary">Next Step <i class="fa-solid fa-arrow-right"></i></button>
+                <button type="submit" name="draft" value="1" class="lei-btn-link" data-loading="Saving…">Save as Draft</button>
+                <button type="submit" class="lei-btn-primary" data-loading="Uploading…">Next Step <i class="fa-solid fa-arrow-right"></i></button>
             </div>
         </div>
     </div>

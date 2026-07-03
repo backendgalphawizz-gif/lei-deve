@@ -27,29 +27,49 @@ class LeiAdminSeeder extends Seeder
             ]
         );
 
+        $caRole = \App\Models\AdminRole::where('slug', 'certificate_authority')->first();
+        $org = \App\Models\Organization::where('code', 'FAH')->first();
+        if ($caRole && $org) {
+            User::query()->updateOrCreate(
+                ['email' => 'ca@registry-ops.int'],
+                [
+                    'system_id' => 'ca@registry-ops.int',
+                    'name' => 'CA Officer',
+                    'password' => Hash::make('12345678'),
+                    'role' => 'admin',
+                    'organization_id' => $org->id,
+                    'admin_role_id' => $caRole->id,
+                    'account_status' => 'active',
+                    'mfa_status' => 'enabled',
+                    'is_active' => true,
+                ]
+            );
+        }
+
         $menus = [
             ['Dashboard', 'admin.dashboard', 'dashboard', 1],
             ['User Management', 'admin.users.index', 'users', 2],
             ['Application Management', 'admin.applications.index', 'applications', 3],
-            ['Payments', 'admin.payments.index', 'payments', 4],
-            ['Advanced Controls', 'admin.controls.index', 'controls', 5],
-            ['Environment Management', 'admin.environment.index', 'environment', 6],
-            ['Master Data', 'admin.master-data.index', 'database', 7],
-            ['Template Management', 'admin.templates.index', 'template', 8],
-            ['Registry Services', 'admin.registry.index', 'registry', 9],
-            ['Backup', 'admin.backup.index', 'backup', 10],
-            ['SLA Metrics', 'admin.sla.index', 'sla', 11],
-            ['Security', 'admin.security.index', 'security', 12],
-            ['Audit Logs', 'admin.audit.index', 'audit', 13],
-            ['Reports & Analytics', 'admin.reports.index', 'reports', 14],
-            ['Support', 'admin.support.index', 'support', 15],
-            ['Documents', 'admin.documents.index', 'documents', 16],
-            ['Notifications', 'admin.notifications.index', 'notifications', 17],
-            ['Static Pages', 'admin.static-pages.index', 'pages', 18],
-            ['FAQ Management', 'admin.faq.index', 'pages', 19],
-            ['Contact Enquiries', 'admin.contact-enquiries.index', 'support', 20],
-            ['Subscription Management', 'admin.subscriptions.index', 'payments', 21],
-            ['Business Settings', 'admin.business-settings.index', 'settings', 22],
+            ['CA Management', 'admin.certificates.index', 'certificate', 4],
+            ['Payments', 'admin.payments.index', 'payments', 5],
+            ['Advanced Controls', 'admin.controls.index', 'controls', 6],
+            ['Environment Management', 'admin.environment.index', 'environment', 7],
+            ['Master Data', 'admin.master-data.index', 'database', 8],
+            ['Template Management', 'admin.templates.index', 'template', 9],
+            ['Registry Services', 'admin.registry.index', 'registry', 10],
+            ['Backup', 'admin.backup.index', 'backup', 11],
+            ['SLA Metrics', 'admin.sla.index', 'sla', 12],
+            ['Security', 'admin.security.index', 'security', 13],
+            ['Audit Logs', 'admin.audit.index', 'audit', 14],
+            ['Reports & Analytics', 'admin.reports.index', 'reports', 15],
+            ['Support', 'admin.support.index', 'support', 16],
+            ['Documents', 'admin.documents.index', 'documents', 17],
+            ['Notifications', 'admin.notifications.index', 'notifications', 18],
+            ['Static Pages', 'admin.static-pages.index', 'pages', 19],
+            ['FAQ Management', 'admin.faq.index', 'pages', 20],
+            ['Contact Enquiries', 'admin.contact-enquiries.index', 'support', 21],
+            ['Subscription Management', 'admin.subscriptions.index', 'payments', 22],
+            ['Business Settings', 'admin.business-settings.index', 'settings', 23],
         ];
 
         AdminMenuItem::query()->where('label', 'Website Management')->delete();

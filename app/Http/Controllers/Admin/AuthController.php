@@ -16,7 +16,7 @@ class AuthController extends Controller
     {
         $user = auth()->user();
 
-        if ($user && $user->is_active && $user->isAdmin()) {
+        if ($user && $user->is_active && $user->isAdmin() && $user->account_status === 'active') {
             return redirect()->route('admin.dashboard');
         }
 
@@ -34,7 +34,7 @@ class AuthController extends Controller
         $identifier = $credentials['system_id'];
 
         $user = User::query()
-            ->where('is_active', true)
+            ->where('role', '!=', 'applicant')
             ->where(function ($query) use ($identifier) {
                 $query->where('system_id', $identifier)
                     ->orWhere('email', $identifier);
@@ -44,6 +44,24 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($credentials['password'], $user->password)) {
             throw ValidationException::withMessages([
                 'system_id' => 'Invalid admin identifier or secure token.',
+            ]);
+        }
+
+        if (! $user->isAdmin()) {
+            throw ValidationException::withMessages([
+                'system_id' => 'Invalid admin identifier or secure token.',
+            ]);
+        }
+
+        if ($user->account_status === 'pending') {
+            throw ValidationException::withMessages([
+                'system_id' => 'Your account is pending administrator approval. Please contact your registry administrator.',
+            ]);
+        }
+
+        if ($user->account_status === 'locked' || ! $user->is_active) {
+            throw ValidationException::withMessages([
+                'system_id' => 'This account is locked or inactive. Contact your administrator.',
             ]);
         }
 
@@ -62,7 +80,11 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(route('admin.dashboard'));
+        $home = $user->adminRole?->slug === 'certificate_authority' && ! $user->isSuperAdmin()
+            ? route('admin.certificates.index')
+            : route('admin.dashboard');
+
+        return redirect()->intended($home);
     }
 
     public function logout(Request $request)

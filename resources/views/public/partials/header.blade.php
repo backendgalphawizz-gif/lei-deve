@@ -23,7 +23,7 @@
             @endforeach
         </nav>
         <div class="lei-pub-header-actions">
-            <a href="{{ route('faq') }}" class="lei-pub-search" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="{{ route('registry.search') }}" class="lei-pub-search" aria-label="Search LEI Registry"><i class="fa-solid fa-magnifying-glass"></i></a>
             @auth
                 @if (auth()->user()->isApplicant())
                     <a href="{{ route('applicant.dashboard') }}" class="lei-pub-btn">Portal</a>

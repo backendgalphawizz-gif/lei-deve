@@ -74,11 +74,12 @@
                             </span>
                         </div>
                         <div class="lei-wm-td lei-wm-td--actions">
-                            <a href="{{ route('admin.pricing-plans.edit', $row) }}" class="lei-wm-action">Edit</a>
-                            <form method="POST" action="{{ route('admin.pricing-plans.destroy', $row) }}" onsubmit="return confirm('Delete this pricing plan?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="lei-wm-action lei-wm-action--delete">Delete</button>
-                            </form>
+                            @include('admin.partials.icon-actions', [
+                                'editUrl' => route('admin.pricing-plans.edit', $row),
+                                'deleteUrl' => route('admin.pricing-plans.destroy', $row),
+                                'deleteConfirm' => 'Delete this pricing plan?',
+                                'deleteTitle' => 'Delete Plan',
+                            ])
                         </div>
                     </div>
                 @empty
@@ -143,7 +144,9 @@
                         <div class="lei-wm-td"><span class="lei-wm-badge lei-wm-badge--{{ $row->payment_status }}">{{ $row->paymentStatusLabel() }}</span></div>
                         <div class="lei-wm-td">{{ $row->formattedAmount() }}</div>
                         <div class="lei-wm-td lei-wm-td--actions">
-                            <a href="{{ route('admin.subscriptions.edit', $row) }}" class="lei-wm-action">Edit</a>
+                            @include('admin.partials.icon-actions', [
+                                'editUrl' => route('admin.subscriptions.edit', $row),
+                            ])
                         </div>
                     </div>
                 @empty

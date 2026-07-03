@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Applicant;
 
+use App\Models\LeiSubscription;
+use App\Models\LeiBusinessSetting;
 use App\Services\ApplicantApplicationService;
 use App\Services\SubscriptionService;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaymentController extends ApplicantPortalController
 {
@@ -51,5 +54,29 @@ class PaymentController extends ApplicantPortalController
             'unusedRegistration',
             'unusedRenewal',
         ));
+    }
+
+    public function invoice(LeiSubscription $subscription)
+    {
+        abort_unless($subscription->user_id === auth()->id(), 404);
+
+        $user = auth()->user();
+        $businessSettings = LeiBusinessSetting::current();
+
+        $baseAmount  = (float) ($subscription->amount ?? 0);
+        $gstAmount   = round($baseAmount * 0.18, 2);
+        $totalAmount = $baseAmount + $gstAmount;
+        $currency    = '₹';
+
+        $pdf = Pdf::loadView('applicant.payments.invoice', compact(
+            'subscription', 'user', 'businessSettings',
+            'baseAmount', 'gstAmount', 'totalAmount', 'currency',
+        ))
+            ->setPaper('A4', 'portrait')
+            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => false]);
+
+        $filename = 'Invoice-' . $subscription->reference . '.pdf';
+
+        return $pdf->download($filename);
     }
 }

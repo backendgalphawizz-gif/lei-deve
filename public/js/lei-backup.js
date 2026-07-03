@@ -63,7 +63,7 @@
     });
 
     document.getElementById('leiBkpFailover')?.addEventListener('click', async () => {
-        if (!window.confirm('Initiate site failover? This is a critical action.')) return;
+        if (!(await window.leiConfirm({ title: 'Site Failover', message: 'Initiate site failover? This is a critical action.', button: 'Initiate', variant: 'danger' }))) return;
         try {
             const data = await postJson(page.dataset.failoverUrl);
             showToast(data.message);

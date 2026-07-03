@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\StaticPageController;
 use App\Http\Controllers\Admin\PricingPlanManagementController;
 use App\Http\Controllers\Admin\SubscriptionManagementController;
 use App\Http\Controllers\Admin\BusinessSettingsController;
+use App\Http\Controllers\Admin\CertificateAuthorityController;
 use App\Http\Controllers\Admin\ContactEnquiryController;
 use App\Http\Controllers\Admin\FaqManagementController;
 use App\Http\Controllers\Admin\GlobalSearchController;
@@ -43,10 +44,17 @@ use App\Http\Controllers\PublicSite\FaqController;
 use App\Http\Controllers\PublicSite\HomeController;
 use App\Http\Controllers\PublicSite\PageController;
 use App\Http\Controllers\PublicSite\PricingController;
+use App\Http\Controllers\PublicSite\RegistrySearchController;
 use App\Http\Controllers\PublicSite\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/registry/register-with-us', [RegistrySearchController::class, 'registerWithUs'])->name('registry.register-with-us');
+Route::get('/registry/search', [RegistrySearchController::class, 'index'])->name('registry.search');
+Route::get('/registry/suggest', [RegistrySearchController::class, 'suggest'])->name('registry.suggest');
+Route::get('/registry/lookup/{leiNumber}', [RegistrySearchController::class, 'show'])
+    ->where('leiNumber', '[A-Za-z0-9]{10,24}')
+    ->name('registry.show');
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/faq', [FaqController::class, 'index'])->name('faq');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
@@ -56,6 +64,7 @@ Route::get('/pricing/plan/{plan}/subscribe', [SubscriptionController::class, 'sh
 Route::post('/pricing/plan/{plan}/subscribe', [SubscriptionController::class, 'store'])->name('pricing.subscribe.submit');
 Route::get('/pages/{slug}', [PageController::class, 'show'])->name('pages.show');
 
+Route::get('/session-expired', [ApplicantAuthController::class, 'sessionExpired'])->name('applicant.session-expired');
 Route::get('/login', [ApplicantAuthController::class, 'showLogin'])->name('applicant.login');
 Route::post('/login', [ApplicantAuthController::class, 'login'])->name('applicant.login.submit');
 Route::get('/register', [ApplicantAuthController::class, 'showRegister'])->name('register');
@@ -69,18 +78,22 @@ Route::post('/reset-password', [ApplicantAuthController::class, 'resetPassword']
 
 Route::middleware('applicant.auth')->group(function () {
     Route::get('/portal', [ApplicantDashboardController::class, 'index'])->name('applicant.dashboard');
+    Route::get('/portal/apply', [ApplicantRegistrationController::class, 'apply'])->name('applicant.registration.apply');
+    Route::post('/portal/apply', [ApplicantRegistrationController::class, 'submitApply'])->name('applicant.registration.apply.submit');
     Route::get('/portal/register/step/{step}', [ApplicantRegistrationController::class, 'step'])->name('applicant.registration.step')->whereNumber('step');
     Route::post('/portal/register/step/{step}', [ApplicantRegistrationController::class, 'save'])->name('applicant.registration.save')->whereNumber('step');
     Route::get('/portal/renewal/step/{step}', [ApplicantRenewalController::class, 'step'])->name('applicant.renewal.step')->whereNumber('step');
     Route::post('/portal/renewal/step/{step}', [ApplicantRenewalController::class, 'save'])->name('applicant.renewal.save')->whereNumber('step');
     Route::get('/portal/transfers', [ApplicantTransferController::class, 'index'])->name('applicant.transfers.index');
     Route::get('/portal/payments', [ApplicantPaymentController::class, 'index'])->name('applicant.payments.index');
+    Route::get('/portal/payments/{subscription}/invoice', [ApplicantPaymentController::class, 'invoice'])->name('applicant.payments.invoice');
     Route::get('/portal/plans/{plan}/subscribe', [ApplicantPlanSubscriptionController::class, 'show'])->name('applicant.plans.subscribe');
     Route::post('/portal/plans/{plan}/subscribe', [ApplicantPlanSubscriptionController::class, 'store'])->name('applicant.plans.subscribe.submit');
     Route::get('/portal/applications', [ApplicationTrackingController::class, 'index'])->name('applicant.applications.index');
     Route::get('/portal/applications/{application}', [ApplicationTrackingController::class, 'show'])->name('applicant.applications.show');
     Route::get('/portal/applications/{application}/clarify', [ApplicationTrackingController::class, 'clarify'])->name('applicant.applications.clarify');
     Route::post('/portal/applications/{application}/clarify', [ApplicationTrackingController::class, 'submitClarification'])->name('applicant.applications.clarify.submit');
+    Route::get('/portal/applications/{application}/certificate', [ApplicationTrackingController::class, 'certificate'])->name('applicant.applications.certificate');
     Route::get('/portal/support', [ApplicantSupportController::class, 'index'])->name('applicant.support.index');
     Route::get('/portal/support/create', [ApplicantSupportController::class, 'create'])->name('applicant.support.create');
     Route::post('/portal/support', [ApplicantSupportController::class, 'store'])->name('applicant.support.store');
@@ -103,9 +116,27 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('applications/{application}/detail', [ApplicationManagementController::class, 'detail'])->name('applications.detail');
         Route::get('applications/{application}', [ApplicationManagementController::class, 'show'])->name('applications.show');
         Route::post('applications/{application}/action', [ApplicationManagementController::class, 'action'])->name('applications.action');
+
+        Route::middleware('ca.auth')->prefix('certificates')->name('certificates.')->group(function () {
+            Route::get('/', [CertificateAuthorityController::class, 'index'])->name('index');
+            Route::post('signature', [CertificateAuthorityController::class, 'uploadSignature'])->name('signature.upload');
+            Route::delete('signature', [CertificateAuthorityController::class, 'removeSignature'])->name('signature.remove');
+            Route::get('{certificate}', [CertificateAuthorityController::class, 'show'])->name('show');
+            Route::post('{certificate}/sign', [CertificateAuthorityController::class, 'sign'])->name('sign');
+            Route::get('{certificate}/unsigned', [CertificateAuthorityController::class, 'downloadUnsigned'])->name('download.unsigned');
+            Route::get('{certificate}/signed', [CertificateAuthorityController::class, 'downloadSigned'])->name('download.signed');
+        });
+
         Route::get('users', [UserManagementController::class, 'index'])->name('users.index');
         Route::get('users/create', [UserManagementController::class, 'create'])->name('users.create');
         Route::post('users', [UserManagementController::class, 'store'])->name('users.store');
+        Route::get('users/{user}', [UserManagementController::class, 'show'])->name('users.show');
+        Route::get('users/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
+        Route::put('users/{user}', [UserManagementController::class, 'update'])->name('users.update');
+        Route::post('users/{user}/approve', [UserManagementController::class, 'approve'])->name('users.approve');
+        Route::post('users/{user}/lock', [UserManagementController::class, 'lock'])->name('users.lock');
+        Route::post('users/{user}/activate', [UserManagementController::class, 'activate'])->name('users.activate');
+        Route::delete('users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
         Route::get('users/roles/{role}/permissions', [UserManagementController::class, 'rolePermissions'])->name('users.role.permissions');
         Route::get('payments/export', [PaymentManagementController::class, 'export'])->name('payments.export');
         Route::post('payments/reconcile', [PaymentManagementController::class, 'reconcile'])->name('payments.reconcile');

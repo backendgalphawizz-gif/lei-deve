@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'gleif' => [
+        'enabled' => env('GLEIF_API_ENABLED', true),
+    ],
+
 ];

@@ -384,6 +384,69 @@
 .lei-mfa-icon.warn { color: #d97706; }
 .lei-mfa-icon.off { color: #9ca3af; }
 
+.lei-user-row-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.lei-user-action {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--lei-navy, #1a4a7a);
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.lei-user-action:hover { text-decoration: underline; }
+
+.lei-user-action--approve { color: #166534; }
+
+.lei-user-action--delete { color: #991b1b; }
+
+.lei-user-action-form { display: inline; margin: 0; }
+
+.lei-btn-filter--danger {
+    color: #991b1b;
+    border-color: #fecaca;
+}
+
+.lei-btn-filter--danger:hover {
+    background: #fef2f2;
+}
+
+.lei-user-detail-dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 0;
+    padding: 18px;
+}
+
+.lei-user-detail-dl > div {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--lei-gray-200);
+}
+
+.lei-user-detail-dl dt {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--lei-gray-400);
+    margin-bottom: 4px;
+}
+
+.lei-user-detail-dl dd {
+    margin: 0;
+    font-size: 14px;
+    color: #0f172a;
+}
+
 .lei-table-footer {
     display: flex;
     align-items: center;

@@ -15,11 +15,14 @@ class User extends Authenticatable
 
     protected $fillable = [
         'name',
+        'organization_name',
+        'lei_number',
         'email',
         'system_id',
         'password',
         'role',
         'avatar',
+        'ca_signature_path',
         'tier',
         'is_active',
         'last_login_at',
@@ -60,6 +63,16 @@ class User extends Authenticatable
     public function isApplicant(): bool
     {
         return $this->role === 'applicant';
+    }
+
+    public function isCertificateAuthority(): bool
+    {
+        if ($this->isSuperAdmin()) {
+            return true;
+        }
+
+        return $this->isAdmin()
+            && $this->adminRole?->slug === 'certificate_authority';
     }
 
     public function organization()
@@ -119,6 +132,24 @@ class User extends Authenticatable
         $index = abs(crc32($this->email ?? $this->name)) % count($palette);
 
         return $palette[$index];
+    }
+
+    public function caSignatureDataUri(): ?string
+    {
+        if (! $this->ca_signature_path || ! Storage::disk('local')->exists($this->ca_signature_path)) {
+            return null;
+        }
+
+        $ext = strtolower(pathinfo($this->ca_signature_path, PATHINFO_EXTENSION));
+        $mime = match ($ext) {
+            'png' => 'image/png',
+            'jpg', 'jpeg' => 'image/jpeg',
+            'webp' => 'image/webp',
+            'svg' => 'image/svg+xml',
+            default => 'image/png',
+        };
+
+        return 'data:'.$mime.';base64,'.base64_encode(Storage::disk('local')->get($this->ca_signature_path));
     }
 
     public function profileImageUrl(): string

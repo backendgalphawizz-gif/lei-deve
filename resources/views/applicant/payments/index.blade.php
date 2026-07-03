@@ -94,6 +94,7 @@
                 <th>Status</th>
                 <th>Payment</th>
                 <th>Valid Until</th>
+                <th>Invoice</th>
             </tr>
         </thead>
         <tbody>
@@ -114,9 +115,20 @@
                         </span>
                     </td>
                     <td data-label="Valid Until">{{ $subscription->expires_at?->format('M j, Y') ?? '—' }}</td>
+                    <td data-label="Invoice">
+                        @if ($subscription->payment_status === 'paid')
+                            <a href="{{ route('applicant.payments.invoice', $subscription) }}"
+                               class="lei-btn-link" style="font-size:12px;"
+                               aria-label="Download GST invoice for {{ $subscription->reference }}">
+                                <i class="fa-solid fa-file-invoice" aria-hidden="true"></i> GST Invoice
+                            </a>
+                        @else
+                            <span class="muted" style="font-size:12px;">—</span>
+                        @endif
+                    </td>
                 </tr>
             @empty
-                <tr><td colspan="7">No payment history yet.</td></tr>
+                <tr><td colspan="8">No payment history yet.</td></tr>
             @endforelse
         </tbody>
         </table>
