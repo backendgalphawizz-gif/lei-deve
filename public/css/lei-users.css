@@ -181,6 +181,19 @@
 .lei-mini-stat.lei-accent-red .lei-mini-stat-inner { border-left-color: #dc2626; }
 .lei-mini-stat.lei-accent-gold .lei-mini-stat-inner { border-left-color: #d97706; }
 .lei-mini-stat.lei-accent-blue .lei-mini-stat-inner { border-left-color: #2563eb; }
+.lei-mini-stat.lei-accent-yellow .lei-mini-stat-inner { border-left-color: #d97706; }
+
+.lei-mini-stat.lei-mini-stat--notice {
+    margin-top: 12px;
+    padding-top: 12px;
+}
+
+.lei-mini-stat.lei-mini-stat--notice .value-row {
+    font-size: 12px;
+    color: #92400e;
+    line-height: 1.5;
+    font-weight: 500;
+}
 
 .lei-mini-stat .label {
     font-size: 12px;
@@ -310,9 +323,10 @@
 }
 
 .lei-users-table {
+    width: 100%;
     border-collapse: collapse;
     font-size: 13px;
-    min-width: 640px;
+    min-width: 720px;
 }
 
 .lei-users-table th {
@@ -335,6 +349,32 @@
 }
 
 .lei-users-table tbody tr:hover { background: #fafbfc; }
+
+.lei-users-table tbody tr.lei-users-row {
+    cursor: pointer;
+    transition: background 0.12s ease;
+}
+
+.lei-users-table td.lei-users-td--actions {
+    white-space: nowrap;
+    width: 1%;
+}
+
+.lei-users-table td.lei-users-td--status,
+.lei-users-table td.lei-users-td--mfa {
+    width: 1%;
+    white-space: nowrap;
+}
+
+.lei-users-table td.lei-users-td--role {
+    color: var(--lei-gray-600);
+    max-width: 140px;
+}
+
+.lei-users-table td.lei-users-td--org {
+    color: var(--lei-gray-600);
+    max-width: 160px;
+}
 
 .lei-user-cell {
     display: flex;
@@ -364,6 +404,16 @@
 }
 
 .lei-user-name { font-weight: 600; color: #0f172a; display: block; }
+.lei-user-name-link {
+    font-weight: 600;
+    color: #0f172a;
+    display: block;
+    text-decoration: none;
+}
+.lei-user-name-link:hover {
+    color: var(--lei-blue, #2563eb);
+    text-decoration: underline;
+}
 .lei-user-email { font-size: 12px; color: var(--lei-gray-400); }
 
 .lei-status-pill {
@@ -422,14 +472,102 @@
 
 .lei-user-detail-dl {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0;
-    padding: 18px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 24px;
+    padding: 0 18px 18px;
+}
+
+@media (max-width: 720px) {
+    .lei-user-detail-dl {
+        grid-template-columns: 1fr;
+    }
 }
 
 .lei-user-detail-dl > div {
-    padding: 12px 0;
+    padding: 14px 0;
     border-bottom: 1px solid var(--lei-gray-200);
+}
+
+.lei-user-detail-section {
+    padding: 18px 18px 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+}
+
+.lei-user-detail-section + .lei-user-detail-dl {
+    padding-top: 4px;
+}
+
+.lei-user-profile-card {
+    text-align: center;
+    padding-bottom: 4px;
+}
+
+.lei-user-profile-card .lei-user-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    font-size: 20px;
+    margin: 0 auto 14px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.12);
+}
+
+.lei-user-profile-card .lei-user-name {
+    font-size: 16px;
+    margin-bottom: 4px;
+}
+
+.lei-user-profile-card .lei-user-role-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--lei-gray-600);
+    background: var(--lei-gray-100);
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-top: 4px;
+}
+
+.lei-user-detail-card {
+    flex: 1;
+    min-width: 0;
+}
+
+.lei-user-detail-card .lei-table-scroll {
+    padding: 0 18px 18px;
+}
+
+.lei-perm-flag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.lei-perm-flag--yes {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.lei-perm-flag--no {
+    background: #f8fafc;
+    color: #cbd5e1;
+}
+
+.lei-users-header .lei-header-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.lei-users-table-card .lei-icon-actions {
+    justify-content: flex-end;
 }
 
 .lei-user-detail-dl dt {
@@ -445,6 +583,13 @@
     margin: 0;
     font-size: 14px;
     color: #0f172a;
+    word-break: break-word;
+}
+
+.lei-user-detail-dl dd.lei-user-detail-mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    letter-spacing: 0.02em;
 }
 
 .lei-table-footer {

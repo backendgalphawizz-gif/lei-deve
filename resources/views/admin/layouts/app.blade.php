@@ -15,7 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=8">
     <link rel="stylesheet" href="{{ asset('css/lei-global.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/lei-users.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/lei-users.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/lei-applications.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
     <link rel="stylesheet" href="{{ asset('css/lei-admin-actions.css') }}?v=2">

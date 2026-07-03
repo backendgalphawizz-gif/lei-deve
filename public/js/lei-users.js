@@ -62,4 +62,11 @@
         });
         updateCredentialStatus();
     }
+
+    document.querySelectorAll('.lei-users-row[data-href]').forEach(function (row) {
+        row.addEventListener('click', function (e) {
+            if (e.target.closest('a, button, form, .lei-icon-actions')) return;
+            window.location.href = row.dataset.href;
+        });
+    });
 })();

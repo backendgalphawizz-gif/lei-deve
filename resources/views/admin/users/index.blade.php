@@ -1,6 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('title', 'User Management')
+@section('body_class', 'lei-page-users')
 
 @section('breadcrumbs')
     <a href="{{ route('admin.dashboard') }}">Registry</a>
@@ -151,26 +152,26 @@
                 </thead>
                 <tbody>
                     @forelse ($users as $user)
-                        <tr>
+                        <tr class="lei-users-row" data-href="{{ route('admin.users.show', $user) }}">
                             <td>
                                 <div class="lei-user-cell">
                                     <div class="lei-user-avatar" style="background-color: {{ $user->avatar_color }}">
                                         {{ $user->initials }}
                                     </div>
                                     <div>
-                                        <span class="lei-user-name">{{ $user->name }}</span>
+                                        <a href="{{ route('admin.users.show', $user) }}" class="lei-user-name-link">{{ $user->name }}</a>
                                         <span class="lei-user-email">{{ $user->email }}</span>
                                     </div>
                                 </div>
                             </td>
-                            <td>{{ $user->adminRole?->name ?? '—' }}</td>
-                            <td>{{ $user->organization?->name ?? '—' }}</td>
-                            <td>
+                            <td class="lei-users-td--role">{{ $user->adminRole?->name ?? '—' }}</td>
+                            <td class="lei-users-td--org">{{ $user->organization?->name ?? '—' }}</td>
+                            <td class="lei-users-td--status">
                                 <span class="lei-status-pill {{ $user->account_status }}">
                                     {{ strtoupper($user->account_status) }}
                                 </span>
                             </td>
-                            <td>
+                            <td class="lei-users-td--mfa">
                                 @if ($user->mfa_status === 'enabled')
                                     <span class="lei-mfa-icon ok" title="MFA Enabled">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -194,7 +195,7 @@
                                     </span>
                                 @endif
                             </td>
-                            <td>
+                            <td class="lei-users-td--actions">
                                 @include('admin.partials.icon-actions', [
                                     'viewUrl' => route('admin.users.show', $user),
                                     'editUrl' => route('admin.users.edit', $user),
@@ -225,5 +226,5 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/lei-users.js') }}"></script>
+<script src="{{ asset('js/lei-users.js') }}?v=3"></script>
 @endpush
