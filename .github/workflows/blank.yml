@@ -10,15 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
       - name: Deploy via Rsync
-        uses: Burnett01/rsync-deployments@7.0.0
-        with:
-          switches: "-avzr --omit-dir-times --no-perms --no-owner --no-group --checksum --exclude='.git*' --exclude='.github*' --exclude='.env' --exclude='node_modules'"
-          path: ./
-          remote_path: /home/${{ secrets.SERVER_USER }}/public_html/lei.developmentalphawizz.com/
-          remote_host: ${{ secrets.SERVER_IP }}
-          remote_user: ${{ secrets.SERVER_USER }}
-          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+  uses: Burnett01/rsync-deployments@7.0.0
+  with:
+    switches: >-
+      -avzr
+      --no-times
+      --omit-dir-times
+      --no-perms
+      --no-owner
+      --no-group
+      --checksum
+      --exclude='.git*'
+      --exclude='.github*'
+      --exclude='.env'
+      --exclude='node_modules'
+      --exclude='error_log'
+    path: ./
+    remote_path: /home/${{ secrets.SERVER_USER }}/public_html/lei.developmentalphawizz.com/
+    remote_host: ${{ secrets.SERVER_IP }}
+    remote_user: ${{ secrets.SERVER_USER }}
+    remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
