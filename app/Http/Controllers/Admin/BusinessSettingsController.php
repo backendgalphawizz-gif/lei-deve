@@ -44,6 +44,7 @@ class BusinessSettingsController extends Controller
             'dashboard_subtitle' => ['nullable', 'string', 'max:255'],
             'dashboard_period_label' => ['nullable', 'string', 'max:64'],
             'registry_authority' => ['nullable', 'string', 'max:150'],
+            'lou_prefix' => ['required', 'string', 'min:4', 'max:4', 'regex:/^[A-Z0-9]{4}$/i'],
             'primary_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'accent_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'sidebar_color' => ['required', 'regex:/^#[0-9A-Fa-f]{6}$/'],
@@ -71,6 +72,7 @@ class BusinessSettingsController extends Controller
             'sidebar_icon' => ['nullable', 'file', 'mimes:jpeg,png,jpg,webp,svg', 'max:1024'],
         ]);
 
+        $validated['lou_prefix'] = strtoupper($validated['lou_prefix'] ?? '5493');
         $validated['show_maintenance_banner'] = $request->boolean('show_maintenance_banner');
         $validated['header_show_logo'] = $request->boolean('header_show_logo');
         $validated['header_show_notifications'] = $request->boolean('header_show_notifications');

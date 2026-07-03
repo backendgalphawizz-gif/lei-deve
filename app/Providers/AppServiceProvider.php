@@ -82,7 +82,25 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('admin.layouts.app', function ($view) {
-            $view->with('menuItems', AdminMenuItem::where('is_active', true)->orderBy('sort_order')->get());
+            $user = auth()->user();
+            $items = AdminMenuItem::where('is_active', true)->orderBy('sort_order')->get();
+
+            if ($user && ! $user->isSuperAdmin()) {
+                $isCaOnly = $user->adminRole?->slug === 'certificate_authority';
+
+                $items = $items->filter(function ($item) use ($user, $isCaOnly) {
+                    if ($item->route_name === 'admin.certificates.index') {
+                        return $user->isCertificateAuthority();
+                    }
+                    if ($isCaOnly) {
+                        return in_array($item->route_name, ['admin.dashboard', 'admin.certificates.index'], true);
+                    }
+
+                    return true;
+                });
+            }
+
+            $view->with('menuItems', $items->values());
         });
 
         View::composer('admin.*', $shareBusiness);

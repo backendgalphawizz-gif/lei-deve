@@ -50,8 +50,8 @@
     document.querySelectorAll('[data-cmd]').forEach((btn) => {
         btn.addEventListener('click', async () => {
             const action = btn.dataset.cmd;
-            if (action === 'lockout' && !confirm('Activate emergency lockout?')) return;
-            if (action === 'rollback' && !confirm('Schedule manual rollback?')) return;
+            if (action === 'lockout' && !(await window.leiConfirm({ title: 'Emergency Lockout', message: 'Activate emergency lockout?', button: 'Activate', variant: 'warning' }))) return;
+            if (action === 'rollback' && !(await window.leiConfirm({ title: 'Manual Rollback', message: 'Schedule manual rollback?', button: 'Schedule', variant: 'warning' }))) return;
             try {
                 const data = await postJson(page.dataset.commandUrl, { action });
                 showToast(data.message);

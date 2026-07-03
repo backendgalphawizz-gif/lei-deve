@@ -16,6 +16,12 @@
             <span class="lei-pub-eyebrow">{{ $sections->get('hero')?->subtitle ?? 'THE GLOBAL STANDARD' }}</span>
             <h1>{{ $sections->get('hero')?->title ?? 'What is an LEI?' }}</h1>
             <p class="lei-pub-lead">{{ $hero['description'] ?? '' }}</p>
+
+            <div class="lei-reg-home-search" id="registry-search">
+                <h2 class="lei-reg-home-search-title"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Search LEI Registry</h2>
+                @include('public.registry.partials.search-form', ['query' => request('q', ''), 'type' => request('type', 'all'), 'compact' => true])
+            </div>
+
             <div class="lei-pub-mini-cards">
                 @foreach ($hero['cards'] ?? [] as $card)
                     <div class="lei-pub-mini-card">
@@ -73,6 +79,96 @@
     </div>
 </section>
 
+<section class="lei-pub-stats-band">
+    <div class="lei-pub-container lei-pub-stats-grid">
+        <div class="lei-pub-stat-item">
+            <strong>2,50,000+</strong>
+            <span>LEIs Issued</span>
+        </div>
+        <div class="lei-pub-stat-item">
+            <strong>180+</strong>
+            <span>Countries Served</span>
+        </div>
+        <div class="lei-pub-stat-item">
+            <strong>99.9%</strong>
+            <span>Accuracy Rate</span>
+        </div>
+        <div class="lei-pub-stat-item">
+            <strong>24×7</strong>
+            <span>Support Available</span>
+        </div>
+        <div class="lei-pub-stat-item">
+            <strong>ISO 17442</strong>
+            <span>Compliant</span>
+        </div>
+    </div>
+</section>
+
+<section class="lei-pub-section lei-pub-trust-section">
+    <div class="lei-pub-container">
+        <h2 class="lei-pub-center" style="margin-bottom:8px;">Why Choose Our Registry?</h2>
+        <p class="lei-pub-center lei-pub-lead" style="margin-bottom:32px;">We are a GLEIF-accredited Local Operating Unit serving regulated entities across India and global markets.</p>
+        <div class="lei-pub-trust-grid">
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-shield-halved"></i>
+                <strong>Secure Application</strong>
+                <span>SSL 256-bit encryption on all data</span>
+            </div>
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-certificate"></i>
+                <strong>ISO 27001</strong>
+                <span>Information Security certified</span>
+            </div>
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-user-shield"></i>
+                <strong>GDPR Compliant</strong>
+                <span>Full data privacy compliance</span>
+            </div>
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-headset"></i>
+                <strong>24×7 Support</strong>
+                <span>Dedicated compliance team</span>
+            </div>
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-globe"></i>
+                <strong>GLEIF Accredited</strong>
+                <span>Globally recognised LOU</span>
+            </div>
+            <div class="lei-pub-trust-badge">
+                <i class="fa-solid fa-file-invoice"></i>
+                <strong>GST Invoices</strong>
+                <span>Valid tax invoices on all payments</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="lei-pub-section">
+    <div class="lei-pub-container">
+        <div class="lei-pub-section-head">
+            <h2>Who Needs an LEI?</h2>
+            <p>RBI mandates LEI registration for organisations participating in regulated financial transactions in India.</p>
+        </div>
+        <div class="lei-pub-cards-3">
+            <article class="lei-pub-service-card">
+                <div class="lei-pub-service-icon"><i class="fa-solid fa-building"></i></div>
+                <h3>Corporate Borrowers</h3>
+                <p>Non-individual borrowers with aggregate credit exposure of ₹5 crore and above from banks must obtain an LEI.</p>
+            </article>
+            <article class="lei-pub-service-card">
+                <div class="lei-pub-service-icon"><i class="fa-solid fa-landmark"></i></div>
+                <h3>Financial Institutions</h3>
+                <p>Banks, NBFCs, mutual funds, insurance companies, and all regulated financial market participants.</p>
+            </article>
+            <article class="lei-pub-service-card">
+                <div class="lei-pub-service-icon"><i class="fa-solid fa-handshake"></i></div>
+                <h3>OTC Derivatives & NEFT/RTGS</h3>
+                <p>Entities executing OTC derivatives, large-value NEFT/RTGS transactions, and cross-border payments.</p>
+            </article>
+        </div>
+    </div>
+</section>
+
 <section class="lei-pub-section lei-pub-muted">
     <div class="lei-pub-container lei-pub-features-grid">
         <div class="lei-pub-feature-cards">
@@ -93,6 +189,18 @@
                 @endforeach
             </ul>
             <a href="{{ url($features['link_url'] ?? '/pricing') }}" class="lei-pub-link">{{ $features['link_text'] ?? 'Explore Enterprise Features' }} →</a>
+        </div>
+    </div>
+</section>
+<section class="lei-pub-cta-section">
+    <div class="lei-pub-container lei-pub-cta-inner">
+        <div>
+            <h2>Ready to Register Your LEI?</h2>
+            <p>Join over 2,50,000 entities. Fast issuance, fixed fees, GLEIF-compliant.</p>
+        </div>
+        <div class="lei-pub-cta-actions">
+            <a href="{{ route('register') }}" class="lei-pub-btn">Get Your LEI →</a>
+            <a href="{{ route('pricing') }}" class="lei-pub-btn lei-pub-btn--ghost">View Pricing</a>
         </div>
     </div>
 </section>

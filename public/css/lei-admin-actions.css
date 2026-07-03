@@ -1,0 +1,347 @@
+/* Icon action buttons (tables & toolbars) */
+.lei-icon-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.lei-icon-action-form {
+    display: inline-flex;
+    margin: 0;
+    padding: 0;
+}
+
+.lei-icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    color: #1a4a7a;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.lei-icon-btn:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+.lei-icon-btn:active {
+    transform: scale(0.96);
+}
+
+.lei-icon-btn--success {
+    color: #166534;
+    border-color: #bbf7d0;
+    background: #f0fdf4;
+}
+
+.lei-icon-btn--success:hover {
+    background: #dcfce7;
+    border-color: #86efac;
+}
+
+.lei-icon-btn--danger {
+    color: #b91c1c;
+    border-color: #fecaca;
+    background: #fef2f2;
+}
+
+.lei-icon-btn--danger:hover {
+    background: #fee2e2;
+    border-color: #fca5a5;
+}
+
+.lei-icon-btn--warning {
+    color: #92400e;
+    border-color: #fde68a;
+    background: #fffbeb;
+}
+
+.lei-icon-btn--warning:hover {
+    background: #fef3c7;
+    border-color: #fcd34d;
+}
+
+.lei-icon-btn--primary {
+    color: #1d4ed8;
+    border-color: #bfdbfe;
+    background: #eff6ff;
+}
+
+.lei-icon-btn--primary:hover {
+    background: #dbeafe;
+    border-color: #93c5fd;
+}
+
+.lei-icon-actions--lg .lei-icon-btn {
+    width: 38px;
+    height: 38px;
+    font-size: 15px;
+}
+
+/* Confirm modal */
+.lei-confirm-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10050;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.lei-confirm-modal[hidden] {
+    display: none !important;
+}
+
+.lei-confirm-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.lei-confirm-modal__dialog {
+    position: relative;
+    width: min(420px, 100%);
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 24px 48px rgba(15, 23, 42, 0.18);
+    padding: 28px 28px 22px;
+    text-align: center;
+    animation: leiConfirmIn 0.18s ease-out;
+}
+
+@keyframes leiConfirmIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.lei-confirm-modal__icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    font-size: 22px;
+}
+
+.lei-confirm-modal__icon--danger {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.lei-confirm-modal__icon--warning {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.lei-confirm-modal__icon--primary {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.lei-confirm-modal__title {
+    margin: 0 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.lei-confirm-modal__message {
+    margin: 0 0 22px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #64748b;
+}
+
+.lei-confirm-modal__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.lei-confirm-modal__btn {
+    min-width: 110px;
+    height: 40px;
+    padding: 0 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-family: inherit;
+}
+
+.lei-confirm-modal__btn--cancel {
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #475569;
+}
+
+.lei-confirm-modal__btn--cancel:hover {
+    background: #f1f5f9;
+}
+
+.lei-confirm-modal__btn--confirm {
+    color: #fff;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--danger {
+    background: #dc2626;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--danger:hover {
+    background: #b91c1c;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--warning {
+    background: #d97706;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--warning:hover {
+    background: #b45309;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--primary {
+    background: #2563eb;
+}
+
+.lei-confirm-modal__btn--confirm.lei-confirm-modal__btn--primary:hover {
+    background: #1d4ed8;
+}
+
+body.lei-modal-open {
+    overflow: hidden;
+}
+
+/* Toast notifications */
+.lei-toast-stack {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10100;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: min(380px, calc(100vw - 32px));
+    pointer-events: none;
+}
+
+.lei-toast {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 14px 14px 16px;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.14);
+    opacity: 0;
+    transform: translateX(16px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    pointer-events: auto;
+}
+
+.lei-toast.is-visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.lei-toast__icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+}
+
+.lei-toast--success .lei-toast__icon {
+    background: #ecfdf5;
+    color: #059669;
+}
+
+.lei-toast--error .lei-toast__icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.lei-toast--info .lei-toast__icon {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.lei-toast--warning .lei-toast__icon {
+    background: #fffbeb;
+    color: #d97706;
+}
+
+.lei-toast__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.lei-toast__title {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 2px;
+}
+
+.lei-toast__message {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.45;
+    color: #475569;
+}
+
+.lei-toast__close {
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 2px;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.lei-toast__close:hover {
+    color: #64748b;
+}
+
+.lei-toast--success {
+    border-color: #bbf7d0;
+}
+
+.lei-toast--error {
+    border-color: #fecaca;
+}
+
+.lei-toast--info {
+    border-color: #bfdbfe;
+}
+
+.lei-toast--warning {
+    border-color: #fde68a;
+}

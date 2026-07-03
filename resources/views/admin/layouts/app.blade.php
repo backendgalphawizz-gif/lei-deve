@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{{ asset('css/lei-users.css') }}?v=3">
     <link rel="stylesheet" href="{{ asset('css/lei-applications.css') }}?v=2">
     <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/lei-admin-actions.css') }}?v=2">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @stack('styles')
 </head>
@@ -71,15 +72,17 @@
             @hasSection('breadcrumbs')
                 <nav class="lei-breadcrumbs">@yield('breadcrumbs')</nav>
             @endif
-            @if (session('success'))
-                <div class="lei-flash-success">{{ session('success') }}</div>
-            @endif
             @yield('content')
         </main>
     </div>
 </div>
+@include('admin.partials.confirm-modal')
+@include('admin.partials.flash-toasts')
+<div id="leiToastStack" class="lei-toast-stack" aria-live="polite"></div>
 <script src="{{ asset('js/lei-global.js') }}?v=3"></script>
 <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
+<script src="{{ asset('js/lei-admin-toast.js') }}?v=1"></script>
+<script src="{{ asset('js/lei-admin-confirm.js') }}?v=2"></script>
 @stack('scripts')
 </body>
 </html>

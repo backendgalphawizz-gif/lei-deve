@@ -503,6 +503,32 @@ body.lei-applicant-portal.lei-pub-notify-open {
   object-fit: cover;
 }
 
+.lei-applicant-portal .lei-portal-profile-lei {
+  margin: 14px 0;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  text-align: left;
+}
+
+.lei-applicant-portal .lei-portal-profile-lei span {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: #047857;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.lei-applicant-portal .lei-portal-profile-lei strong {
+  font-size: 14px;
+  color: #065f46;
+  letter-spacing: 0.05em;
+  word-break: break-all;
+}
+
 /* —— Table —— */
 .lei-applicant-portal .lei-portal-table-wrap {
   overflow-x: auto;
@@ -896,6 +922,33 @@ body.lei-applicant-portal.lei-pub-notify-open {
   font-weight: 700;
 }
 
+.lei-applicant-portal .lei-portal-promo-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.lei-pub-secure-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.lei-pub-secure-bar span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.lei-pub-secure-bar i {
+  color: #16a34a;
+}
+
 .lei-applicant-portal .lei-portal-tag {
   display: inline-block;
   padding: 3px 8px;
@@ -1066,10 +1119,37 @@ body.lei-applicant-portal.lei-pub-notify-open {
   justify-content: space-between;
   gap: 16px;
   padding: 20px 22px;
-  margin-bottom: 24px;
+  margin-bottom: 0;
   border-radius: 16px;
   background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
   border: 1px solid #a7f3d0;
+}
+
+.lei-applicant-portal .lei-portal-lei-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.lei-applicant-portal .lei-portal-lei-banner-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.lei-applicant-portal .lei-portal-lei-banner--pending {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+  border-color: #fcd34d;
+}
+
+.lei-applicant-portal .lei-portal-lei-banner--pending .lei-portal-lei-code {
+  color: #92400e;
+}
+
+.lei-applicant-portal .lei-portal-lei-banner--pending .lei-portal-lei-expiry {
+  color: #b45309;
 }
 
 .lei-applicant-portal .lei-portal-lei-code {
@@ -2170,5 +2250,257 @@ body.lei-applicant-portal.lei-pub-notify-open {
 
   .lei-applicant-portal .lei-portal-doc-status {
     margin-left: 56px;
+  }
+}
+
+/* —— Drag & Drop zones —— */
+.lei-applicant-portal .lei-drop-zone {
+  transition: background 0.18s, border-color 0.18s, transform 0.12s;
+  cursor: pointer;
+}
+
+.lei-applicant-portal .lei-drop-zone--active {
+  background: #eff6ff !important;
+  border-color: #3b82f6 !important;
+  transform: scale(1.01);
+}
+
+.lei-applicant-portal .lei-drop-zone--active .fa-cloud-arrow-up,
+.lei-applicant-portal .lei-drop-zone--active .fa-file-lines {
+  color: #3b82f6;
+}
+
+/* —— Session timeout warning banner —— */
+.lei-session-warn {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: min(520px, calc(100vw - 32px));
+  animation: lei-slide-up 0.3s ease;
+}
+
+@keyframes lei-slide-up {
+  from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.lei-session-warn-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #0b162c;
+  color: #fff;
+  border: 1px solid #c9a227;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+
+.lei-session-warn-inner > i {
+  color: #c9a227;
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.lei-session-warn-inner > div {
+  flex: 1;
+}
+
+.lei-session-warn-inner strong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.lei-session-warn-inner p {
+  font-size: 13px;
+  color: rgba(255,255,255,.75);
+  margin: 0;
+}
+
+/* —— Inline validation error state —— */
+.lei-applicant-portal input.is-invalid,
+.lei-applicant-portal select.is-invalid,
+.lei-applicant-portal textarea.is-invalid {
+  border-color: #ef4444 !important;
+  background: #fff5f5;
+}
+
+.lei-applicant-portal .lei-portal-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.lei-applicant-portal .lei-portal-alert--error {
+  background: #fff5f5;
+  border: 1px solid #fca5a5;
+  color: #b91c1c;
+}
+
+.lei-applicant-portal .lei-portal-alert--error i {
+  color: #ef4444;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* —— Required field mark —— */
+.lei-applicant-portal .lei-field-required {
+  color: #ef4444;
+  margin-left: 2px;
+}
+
+/* —— Accessibility: visible focus indicators —— */
+.lei-applicant-portal a:focus-visible,
+.lei-applicant-portal button:focus-visible,
+.lei-applicant-portal input:focus-visible,
+.lei-applicant-portal select:focus-visible,
+.lei-applicant-portal textarea:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip to main content link */
+.lei-skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  background: #0b162c;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 0 0 8px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 9999;
+  text-decoration: none;
+  transition: top .2s;
+}
+
+.lei-skip-link:focus {
+  top: 0;
+}
+
+/* —— Renewal countdown badge —— */
+.lei-portal-renewal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #c2410c;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+}
+
+.lei-portal-renewal-badge i {
+  font-size: 10px;
+}
+
+.lei-portal-renewal-badge.urgent {
+  background: #fff5f5;
+  border-color: #fca5a5;
+  color: #b91c1c;
+}
+
+/* —— Dashboard quick-stats bar —— */
+.lei-portal-quick-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.lei-portal-quick-stat {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.lei-portal-quick-stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.lei-portal-quick-stat-icon--blue   { background: #eff6ff; color: #3b82f6; }
+.lei-portal-quick-stat-icon--green  { background: #f0fdf4; color: #16a34a; }
+.lei-portal-quick-stat-icon--orange { background: #fff7ed; color: #ea580c; }
+.lei-portal-quick-stat-icon--red    { background: #fff5f5; color: #dc2626; }
+
+.lei-portal-quick-stat strong {
+  display: block;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.lei-portal-quick-stat span {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* —— Profile completion bar —— */
+.lei-portal-profile-completion {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.lei-portal-profile-completion-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.lei-portal-profile-completion-head strong {
+  color: #0f172a;
+}
+
+.lei-portal-profile-completion-head span {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.lei-portal-completion-bar {
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.lei-portal-completion-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+@media (max-width: 768px) {
+  .lei-portal-quick-stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

@@ -98,12 +98,13 @@
                     </div>
                     <div class="lei-sp-td">{{ $item->updated_label }}</div>
                     <div class="lei-sp-td lei-sp-td--actions">
-                        <a href="{{ route('admin.static-pages.edit', $item) }}" class="lei-sp-action lei-sp-action--edit" title="Edit">Edit</a>
-                        <form method="POST" action="{{ route('admin.static-pages.destroy', $item) }}" class="lei-sp-delete-form" data-confirm="Delete “{{ $item->title }}”? This cannot be undone.">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="lei-sp-action lei-sp-action--delete">Delete</button>
-                        </form>
+                        @include('admin.partials.icon-actions', [
+                            'externalUrl' => route('pages.show', $item->slug),
+                            'editUrl' => route('admin.static-pages.edit', $item),
+                            'deleteUrl' => route('admin.static-pages.destroy', $item),
+                            'deleteConfirm' => 'Delete “'.$item->title.'”? This cannot be undone.',
+                            'deleteTitle' => 'Delete Page',
+                        ])
                     </div>
                 </div>
             @empty

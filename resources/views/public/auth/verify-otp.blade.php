@@ -8,6 +8,13 @@
         <div class="lei-pub-auth-icon"><i class="fa-solid fa-lock"></i></div>
         <h1>Verify Your Identity</h1>
         <p>A 6-digit verification code has been sent to your registered email/phone.</p>
+        @if (session('assigned_lei_number'))
+            <div class="lei-pub-lei-assigned">
+                <span>Your LEI Code</span>
+                <strong>{{ session('assigned_lei_number') }}</strong>
+                <small>Assigned when you created your account. Save this code for your records.</small>
+            </div>
+        @endif
         @if (session('otp_code_dev') && config('app.debug'))
             <p class="lei-pub-dev-otp">Dev OTP: <strong>{{ session('otp_code_dev') }}</strong></p>
         @endif

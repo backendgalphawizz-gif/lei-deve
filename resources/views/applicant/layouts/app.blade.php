@@ -15,18 +15,19 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=8">
     <link rel="stylesheet" href="{{ asset('css/lei-global.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/lei-applicant-portal.css') }}?v=8">
+    <link rel="stylesheet" href="{{ asset('css/lei-applicant-portal.css') }}?v=12">
     <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
     @stack('styles')
 </head>
 <body class="lei-body lei-applicant-portal">
+<a href="#lei-main-content" class="lei-skip-link">Skip to main content</a>
 <div class="lei-admin-wrap">
     @include('applicant.partials.sidebar')
 
     <div class="lei-main">
         @include('applicant.partials.topbar')
 
-        <main class="lei-content">
+        <main class="lei-content" id="lei-main-content" tabindex="-1">
             @if ($portalDraft ?? null)
                 <div class="lei-portal-resume-banner">
                     <div>
@@ -38,6 +39,18 @@
             @endif
             @yield('content')
         </main>
+    </div>
+</div>
+
+{{-- Session timeout warning banner --}}
+<div id="lei-session-warn" class="lei-session-warn" hidden role="alert" aria-live="polite">
+    <div class="lei-session-warn-inner">
+        <i class="fa-solid fa-clock"></i>
+        <div>
+            <strong>Your session is about to expire</strong>
+            <p>You will be logged out in <span data-countdown>2m</span>. Any unsaved changes may be lost.</p>
+        </div>
+        <button type="button" class="lei-btn-primary lei-portal-btn-sm" data-extend>Stay Logged In</button>
     </div>
 </div>
 
@@ -60,7 +73,7 @@
 @endif
 
 <script src="{{ asset('js/lei-global.js') }}?v=3"></script>
-<script src="{{ asset('js/lei-applicant-portal.js') }}?v=5"></script>
+<script src="{{ asset('js/lei-applicant-portal.js') }}?v=6"></script>
 <script src="{{ asset('js/lei-public-notify.js') }}?v=2"></script>
 <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
 @stack('scripts')

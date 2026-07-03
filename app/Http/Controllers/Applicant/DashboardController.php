@@ -32,6 +32,29 @@ class DashboardController extends ApplicantPortalController
             'pending_renewal' => $entities->filter(fn ($e) => $this->subscriptions->isEntityEligibleForRenewal($e) && $e->expiry_date?->isFuture())->count(),
         ];
 
+        $activeLeis = $entities
+            ->filter(fn ($e) => $e->lei_number)
+            ->values();
+
+        $accountLei = null;
+        if ($user->lei_number && $activeLeis->where('lei_number', $user->lei_number)->isEmpty()) {
+            $accountLei = [
+                'lei_number' => $user->lei_number,
+                'entity_name' => $user->organization_name ?: $user->name,
+                'status' => 'account',
+            ];
+        }
+
+        // Profile completion score (0–100)
+        $profileFields = ['name', 'email', 'phone', 'organization_name', 'lei_number', 'country_of_incorporation'];
+        $filled = collect($profileFields)->filter(fn ($f) => ! empty($user->$f))->count();
+        $profileCompletion = (int) round(($filled / count($profileFields)) * 100);
+
+        $hasSubmittedRegistration = $this->applications->hasSubmittedRegistration($user);
+        $submittedRegistration = $hasSubmittedRegistration
+            ? $this->applications->submittedRegistration($user)
+            : null;
+
         return view('applicant.dashboard.index', compact(
             'user',
             'entities',
@@ -39,6 +62,11 @@ class DashboardController extends ApplicantPortalController
             'stats',
             'renewalEligibleIds',
             'window',
+            'activeLeis',
+            'accountLei',
+            'profileCompletion',
+            'hasSubmittedRegistration',
+            'submittedRegistration',
         ));
     }
 }

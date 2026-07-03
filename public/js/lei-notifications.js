@@ -79,7 +79,7 @@
 
     document.querySelectorAll('.js-notif-delete').forEach((btn) => {
         btn.addEventListener('click', async () => {
-            if (!confirm('Delete this notification?')) return;
+            if (!(await window.leiConfirm({ title: 'Delete Notification', message: 'Delete this notification?', button: 'Delete', variant: 'danger' }))) return;
             const url = page.dataset.deleteUrl.replace('__ID__', btn.dataset.id);
             try {
                 const res = await fetch(url, {

@@ -27,13 +27,4 @@
             }
         });
     }
-
-    document.querySelectorAll('.lei-sp-delete-form').forEach(function (form) {
-        form.addEventListener('submit', function (e) {
-            var msg = form.getAttribute('data-confirm') || 'Delete this page?';
-            if (!window.confirm(msg)) {
-                e.preventDefault();
-            }
-        });
-    });
 })();

@@ -29,9 +29,12 @@
         @include('admin.subscriptions.plans.partials.form', ['plan' => $plan])
     </div>
 
-    <form method="POST" action="{{ route('admin.pricing-plans.destroy', $plan) }}" onsubmit="return confirm('Delete this pricing plan?')">
-        @csrf @method('DELETE')
-        <button type="submit" class="lei-wm-btn-danger">Delete Plan</button>
-    </form>
+    <div class="lei-wm-form-card" style="margin-top:16px;">
+        @include('admin.partials.icon-actions', [
+            'deleteUrl' => route('admin.pricing-plans.destroy', $plan),
+            'deleteConfirm' => 'Delete this pricing plan?',
+            'deleteTitle' => 'Delete Plan',
+        ])
+    </div>
 </div>
 @endsection

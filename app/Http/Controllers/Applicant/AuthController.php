@@ -7,6 +7,7 @@ use App\Models\LeiPricingPlan;
 use App\Models\User;
 use App\Services\ApplicantAuthService;
 use App\Services\ApplicantPortalRedirect;
+use App\Services\GleifRegistrationPrefillService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -19,6 +20,7 @@ class AuthController extends Controller
     public function __construct(
         protected ApplicantAuthService $authService,
         protected ApplicantPortalRedirect $portalRedirect,
+        protected GleifRegistrationPrefillService $registrationPrefill,
     ) {}
 
     public function showLogin()
@@ -101,7 +103,9 @@ class AuthController extends Controller
             ? LeiPricingPlan::find(session('intended_plan_id'))
             : null;
 
-        return view('public.auth.register', compact('selectedPlan'));
+        $registrationPrefill = $this->registrationPrefill->get();
+
+        return view('public.auth.register', compact('selectedPlan', 'registrationPrefill'));
     }
 
     public function register(Request $request)
@@ -139,19 +143,28 @@ class AuthController extends Controller
                 ]);
             }
 
+            $existing = $this->authService->assignLeiIfMissing($existing, $data['organization_name'] ?? null);
             $otp = $this->authService->generateOtp($existing);
-            session(['otp_user_id' => $existing->id, 'otp_code_dev' => $otp->code]);
+            session([
+                'otp_user_id' => $existing->id,
+                'otp_code_dev' => $otp->code,
+                'assigned_lei_number' => $existing->lei_number,
+            ]);
 
             return redirect()->route('applicant.verify-otp')
-                ->with('info', 'Your account is pending verification. Enter the code we just sent to continue.');
+                ->with('info', 'Your account is pending verification. Your LEI code is '.$existing->lei_number.'.');
         }
 
         $user = $this->authService->createApplicant($data);
         $otp = $this->authService->generateOtp($user);
-        session(['otp_user_id' => $user->id, 'otp_code_dev' => $otp->code]);
+        session([
+            'otp_user_id' => $user->id,
+            'otp_code_dev' => $otp->code,
+            'assigned_lei_number' => $user->lei_number,
+        ]);
 
         return redirect()->route('applicant.verify-otp')
-            ->with('success', 'Account created. Enter the verification code sent to your email.');
+            ->with('success', 'Account created. Your LEI code is '.$user->lei_number.'. Enter the verification code sent to your email.');
     }
 
     public function showVerifyOtp()
@@ -187,7 +200,21 @@ class AuthController extends Controller
             session(['intended_plan_id' => $planId]);
         }
 
-        return $this->redirectAfterApplicantAuth('Your identity has been verified. You can now complete your subscription.');
+        $message = $user->lei_number
+            ? 'Your identity has been verified. Your LEI code is '.$user->lei_number.'.'
+            : 'Your identity has been verified. You can now complete your subscription.';
+
+        return $this->redirectAfterApplicantAuth($message);
+    }
+
+    public function sessionExpired()
+    {
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+
+        return redirect()->route('applicant.login')
+            ->with('info', 'Your session expired due to inactivity. Please sign in again.');
     }
 
     public function showForgotPassword()

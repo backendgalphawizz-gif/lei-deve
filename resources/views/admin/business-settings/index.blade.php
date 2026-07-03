@@ -321,6 +321,39 @@
                 </section>
 
                 <section class="lei-bs-card">
+                    <h3>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        LEI Code Configuration
+                    </h3>
+                    <div class="lei-bs-grid lei-bs-grid--2">
+                        <label class="lei-bs-field">
+                            <span>LOU Prefix <em>*</em></span>
+                            <input type="text"
+                                   name="lou_prefix"
+                                   value="{{ old('lou_prefix', $settings->lou_prefix ?? '5493') }}"
+                                   maxlength="4"
+                                   placeholder="5493"
+                                   style="text-transform:uppercase;letter-spacing:0.12em;font-family:monospace;font-size:1.1em;"
+                                   required
+                                   data-rules="required|maxLen:4">
+                            <small class="lei-bs-field-hint">Exactly 4 uppercase alphanumeric characters. This is the first 4 chars of every LEI issued by your registry (e.g. <strong>5493</strong> for LEIL India).</small>
+                        </label>
+                        <div class="lei-bs-field">
+                            <span>LEI Format Preview</span>
+                            <div style="font-family:monospace;font-size:0.92em;background:#f1f5f9;border:1px solid #e2e8f0;border-radius:8px;padding:10px 14px;letter-spacing:0.06em;color:#0f172a;">
+                                <span id="leiBsLouPrefixPreview">{{ strtoupper($settings->lou_prefix ?? '5493') }}</span><span style="color:#64748b;">00</span><span style="color:#94a3b8;">XXXXXXXXXXXX</span><span style="color:#c9a227;">??</span>
+                            </div>
+                            <small class="lei-bs-field-hint">
+                                <strong style="color:#0f172a;">{{ strtoupper($settings->lou_prefix ?? '5493') }}</strong> (your prefix) +
+                                <strong style="color:#64748b;">00</strong> (reserved) +
+                                <strong style="color:#94a3b8;">12 chars</strong> (entity ID) +
+                                <strong style="color:#c9a227;">2 digits</strong> (ISO check digits) = 20 chars total
+                            </small>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="lei-bs-card">
                     <h3>Maintenance Banner</h3>
                     <label class="lei-bs-check">
                         <input type="checkbox" name="show_maintenance_banner" value="1" @checked(old('show_maintenance_banner', $settings->show_maintenance_banner))>
@@ -380,4 +413,16 @@
 
 @push('scripts')
 <script src="{{ asset('js/lei-business-settings.js') }}?v=2"></script>
+<script>
+(function () {
+    const input = document.querySelector('input[name="lou_prefix"]');
+    const preview = document.getElementById('leiBsLouPrefixPreview');
+    if (!input || !preview) return;
+    input.addEventListener('input', function () {
+        const val = (this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase() + '????').slice(0, 4);
+        preview.textContent = val;
+        this.value = this.value.replace(/[^A-Za-z0-9]/g, '').toUpperCase();
+    });
+})();
+</script>
 @endpush

@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Mail\ApplicationSubmittedMail;
+use Illuminate\Support\Facades\Mail;
+
 use App\Models\LeiApplication;
 use App\Models\LeiApplicationAuditEvent;
 use App\Models\LeiSubscription;
@@ -25,13 +28,45 @@ class ApplicantApplicationService
         return $query->orderByDesc('updated_at')->first();
     }
 
+    public function hasSubmittedRegistration(User $user): bool
+    {
+        return LeiApplication::query()
+            ->where('user_id', $user->id)
+            ->where('workflow_type', 'registration')
+            ->where('status', '!=', 'draft')
+            ->exists();
+    }
+
+    public function submittedRegistration(User $user): ?LeiApplication
+    {
+        return LeiApplication::query()
+            ->where('user_id', $user->id)
+            ->where('workflow_type', 'registration')
+            ->where('status', '!=', 'draft')
+            ->orderByDesc('submitted_on')
+            ->orderByDesc('created_at')
+            ->first();
+    }
+
     public function startRegistration(User $user, LeiSubscription $subscription): LeiApplication
     {
+        if ($this->hasSubmittedRegistration($user)) {
+            return $this->submittedRegistration($user);
+        }
+
         $existing = $this->activeDraft($user, 'registration');
 
         if ($existing) {
             if (! $existing->lei_subscription_id) {
                 $existing->update(['lei_subscription_id' => $subscription->id]);
+            }
+
+            if (! $existing->lei_number && $user->lei_number) {
+                $existing->update(['lei_number' => $user->lei_number]);
+            }
+
+            if ($user->organization_name && $existing->entity_name === $user->name) {
+                $existing->update(['entity_name' => $user->organization_name]);
             }
 
             return $existing->fresh();
@@ -41,8 +76,9 @@ class ApplicantApplicationService
             'user_id' => $user->id,
             'lei_subscription_id' => $subscription->id,
             'application_code' => $this->generateCode(),
-            'entity_name' => $user->name,
+            'entity_name' => $user->organization_name ?: $user->name,
             'country' => $user->country_of_incorporation ?: 'United Kingdom',
+            'lei_number' => $user->lei_number,
             'issuance_type' => 'Direct Issuance',
             'workflow_type' => 'registration',
             'workflow_step' => 1,
@@ -125,6 +161,43 @@ class ApplicantApplicationService
             ->get();
     }
 
+    public function applyRegistrationPrefill(LeiApplication $application): LeiApplication
+    {
+        $prefill = session(GleifRegistrationPrefillService::SESSION_KEY);
+        if (! is_array($prefill) || $prefill === []) {
+            return $application;
+        }
+
+        $application->loadMissing('user');
+
+        $draft = $application->draft_data ?? [];
+        $appUpdates = [];
+
+        foreach (['entity_name', 'registration_number', 'country', 'registered_address', 'registration_authority'] as $field) {
+            if (! empty($prefill[$field]) && empty($draft[$field])) {
+                $draft[$field] = $prefill[$field];
+            }
+        }
+
+        if (! empty($prefill['source_lei']) && empty($draft['reference_gleif_lei'])) {
+            $draft['reference_gleif_lei'] = $prefill['source_lei'];
+        }
+
+        if (! empty($prefill['entity_name']) && in_array($application->entity_name, ['', $application->user?->name], true)) {
+            $appUpdates['entity_name'] = $prefill['entity_name'];
+        }
+
+        if (! empty($prefill['country']) && empty($application->country)) {
+            $appUpdates['country'] = $prefill['country'];
+        }
+
+        if ($draft !== ($application->draft_data ?? []) || $appUpdates !== []) {
+            $application->update(array_merge($appUpdates, ['draft_data' => $draft]));
+        }
+
+        return $application->fresh();
+    }
+
     public function saveStep(LeiApplication $application, int $step, array $data): LeiApplication
     {
         $draft = array_merge($application->draft_data ?? [], $data);
@@ -153,15 +226,44 @@ class ApplicantApplicationService
 
     public function submitRegistration(LeiApplication $application): LeiApplication
     {
+        $application->loadMissing('user');
+
+        if ($application->user && LeiApplication::query()
+            ->where('user_id', $application->user_id)
+            ->where('workflow_type', 'registration')
+            ->where('id', '!=', $application->id)
+            ->where('status', '!=', 'draft')
+            ->exists()) {
+            throw new \RuntimeException('You have already submitted a LEI registration. Each account may register only once.');
+        }
+
+        $leiNumber = $application->lei_number ?: $application->user?->lei_number;
+
         $application->update([
             'status' => 'new',
             'workflow_step' => 4,
             'submitted_on' => now()->toDateString(),
+            'lei_number' => $leiNumber,
         ]);
 
-        $this->recordAuditEvent($application, 'Registration submitted by applicant for review.');
+        $description = $leiNumber
+            ? "Registration submitted. LEI code: {$leiNumber}."
+            : 'Registration submitted by applicant for review.';
 
-        return $application->fresh();
+        $this->recordAuditEvent($application, $description);
+
+        $application = $application->fresh();
+
+        // Send confirmation email to applicant
+        if ($application->user?->email) {
+            try {
+                Mail::to($application->user->email)->send(new ApplicationSubmittedMail($application));
+            } catch (\Throwable) {
+                // Non-fatal
+            }
+        }
+
+        return $application;
     }
 
     public function submitRenewal(LeiApplication $application): LeiApplication

@@ -3,17 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\ApplicationApprovedMail;
+use App\Mail\ApplicationStatusMail;
 use App\Models\LeiApplication;
 use App\Models\LeiApplicationAuditEvent;
 use App\Services\ApplicationStatsService;
+use App\Services\LeiCertificateService;
+use App\Services\LeiCodeGenerator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApplicationManagementController extends Controller
 {
+    public function __construct(private LeiCertificateService $certificates) {}
+
     public function index(Request $request)
     {
         $query = $this->filteredQuery($request);
@@ -40,7 +47,7 @@ class ApplicationManagementController extends Controller
 
     public function show(LeiApplication $application)
     {
-        $application->load(['auditEvents', 'user', 'subscription']);
+        $application->load(['auditEvents', 'user', 'subscription', 'certificate']);
 
         return response()->json([
             'application' => $this->applicationPayload($application),
@@ -51,7 +58,7 @@ class ApplicationManagementController extends Controller
 
     public function detail(LeiApplication $application)
     {
-        $application->load(['auditEvents', 'user', 'subscription']);
+        $application->load(['auditEvents', 'user', 'subscription', 'certificate']);
 
         return view('admin.applications.partials.detail', compact('application'));
     }
@@ -134,7 +141,38 @@ class ApplicationManagementController extends Controller
             ]);
         });
 
-        $application->refresh()->load(['auditEvents', 'user', 'subscription']);
+        $application->refresh()->load(['auditEvents', 'user', 'subscription', 'certificate']);
+
+        // Generate unsigned ISO 17442-2 certificate and queue for CA signing
+        if ($validated['action'] === 'approve' && $application->workflow_type === 'registration') {
+            try {
+                $this->certificates->generateUnsigned($application);
+                LeiApplicationAuditEvent::create([
+                    'lei_application_id' => $application->id,
+                    'occurred_at' => now(),
+                    'description' => 'Unsigned LEI certificate generated — forwarded to Certificate Authority for digital signing.',
+                    'actor' => $actor,
+                    'is_highlight' => false,
+                    'sort_order' => 1,
+                ]);
+            } catch (\Throwable $e) {
+                // Log but don't block approval
+            }
+        }
+
+        // Send notification emails (non-fatal)
+        if ($application->user?->email) {
+            try {
+                match ($validated['action']) {
+                    'approve'  => Mail::to($application->user->email)->send(new ApplicationApprovedMail($application)),
+                    'clarify'  => Mail::to($application->user->email)->send(new ApplicationStatusMail($application, 'clarification')),
+                    'reject'   => Mail::to($application->user->email)->send(new ApplicationStatusMail($application, 'rejected')),
+                    default    => null,
+                };
+            } catch (\Throwable) {
+                // Email failure must not break admin workflow
+            }
+        }
 
         return response()->json([
             'success' => true,
@@ -241,11 +279,7 @@ class ApplicationManagementController extends Controller
 
     private function generateLeiNumber(): string
     {
-        do {
-            $number = '549300' . strtoupper(Str::random(12));
-        } while (LeiApplication::where('lei_number', $number)->exists());
-
-        return $number;
+        return app(LeiCodeGenerator::class)->generate();
     }
 
     private function applicationPayload(LeiApplication $application): array

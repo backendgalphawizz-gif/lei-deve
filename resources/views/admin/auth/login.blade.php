@@ -9,7 +9,8 @@
     @endif
     <style>:root { {{ $businessSettings->cssVars() }} }</style>
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=4">
-    <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
+    <link rel="stylesheet" href="{{ asset('css/lei-admin-actions.css') }}?v=2">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body class="lei-login-page">
     <header class="lei-login-header">
@@ -28,10 +29,6 @@
             <div class="lei-alert-error">
                 {{ $errors->first() }}
             </div>
-        @endif
-
-        @if (session('error'))
-            <div class="lei-alert-error">{{ session('error') }}</div>
         @endif
 
         <form method="POST" action="{{ route('admin.login.submit') }}">
@@ -77,9 +74,22 @@
                 Secure Login
             </button>
         </form>
+
+        @if (app()->environment('local'))
+            <div class="lei-login-dev-hint" style="margin-top:20px;padding:14px;background:#f0f7ff;border:1px solid #c5daf5;border-radius:8px;font-size:12px;color:#334155;line-height:1.6;">
+                <strong style="display:block;margin-bottom:6px;color:#1a5fad;">Dev login accounts</strong>
+                Super Admin: <code>admin@gmail.com</code> / <code>12345678</code><br>
+                CA Officer: <code>ca@registry-ops.int</code> / <code>12345678</code>
+            </div>
+        @endif
     </div>
 
+    @if (session('error'))
+        <script>window.__leiFlashMessages = @json(['error' => session('error')]);</script>
+    @endif
+    <div id="leiToastStack" class="lei-toast-stack" aria-live="polite"></div>
     <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
+    <script src="{{ asset('js/lei-admin-toast.js') }}?v=1"></script>
     <script>
         document.getElementById('togglePassword')?.addEventListener('click', function () {
             const input = document.getElementById('password');

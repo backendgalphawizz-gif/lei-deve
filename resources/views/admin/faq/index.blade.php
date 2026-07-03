@@ -92,11 +92,12 @@
                         </div>
                         <div class="lei-wm-td">{{ $faq->updated_at->format('M j, Y') }}</div>
                         <div class="lei-wm-td lei-wm-td--actions">
-                            <a href="{{ route('admin.faq.edit', $faq) }}" class="lei-wm-action">Edit</a>
-                            <form method="POST" action="{{ route('admin.faq.destroy', $faq) }}" onsubmit="return confirm('Delete this FAQ permanently?')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="lei-wm-action lei-wm-action--delete">Delete</button>
-                            </form>
+                            @include('admin.partials.icon-actions', [
+                                'editUrl' => route('admin.faq.edit', $faq),
+                                'deleteUrl' => route('admin.faq.destroy', $faq),
+                                'deleteConfirm' => 'Delete this FAQ permanently?',
+                                'deleteTitle' => 'Delete FAQ',
+                            ])
                         </div>
                     </div>
                 @empty
@@ -139,11 +140,12 @@
                         <div class="lei-wm-td">{{ Str::limit($category->description, 80) ?: '—' }}</div>
                         <div class="lei-wm-td">{{ $category->faqs_count }}</div>
                         <div class="lei-wm-td lei-wm-td--actions">
-                            <a href="{{ route('admin.faq.index', ['tab' => 'faqs', 'category' => $category->id]) }}" class="lei-wm-action">View FAQs</a>
-                            <form method="POST" action="{{ route('admin.faq.categories.destroy', $category) }}" onsubmit="return confirm('Delete this category? FAQs will become uncategorized.')">
-                                @csrf @method('DELETE')
-                                <button type="submit" class="lei-wm-action lei-wm-action--delete">Delete</button>
-                            </form>
+                            @include('admin.partials.icon-actions', [
+                                'viewUrl' => route('admin.faq.index', ['tab' => 'faqs', 'category' => $category->id]),
+                                'deleteUrl' => route('admin.faq.categories.destroy', $category),
+                                'deleteConfirm' => 'Delete this category? FAQs will become uncategorized.',
+                                'deleteTitle' => 'Delete Category',
+                            ])
                         </div>
                     </div>
                 @empty

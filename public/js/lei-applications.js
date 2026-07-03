@@ -122,8 +122,25 @@
                     if (!team) return;
                 }
 
-                if (action === 'reject' && !window.confirm('Reject this application?')) return;
-                if (action === 'approve' && !window.confirm('Grant final approval?')) return;
+                if (action === 'reject') {
+                    const ok = await window.leiConfirm({
+                        title: 'Reject Application',
+                        message: 'Reject this application?',
+                        button: 'Reject',
+                        variant: 'danger',
+                    });
+                    if (!ok) return;
+                }
+                if (action === 'approve') {
+                    const ok = await window.leiConfirm({
+                        title: 'Approve Application',
+                        message: 'Grant final approval?',
+                        button: 'Approve',
+                        variant: 'primary',
+                        icon: 'fa-check',
+                    });
+                    if (!ok) return;
+                }
 
                 const leiInput = panel.querySelector('#lei_number_input');
                 const leiNumber = leiInput ? leiInput.value.trim() : null;
