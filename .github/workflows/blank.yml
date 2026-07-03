@@ -16,14 +16,10 @@ jobs:
       - name: Deploy via Rsync
         uses: Burnett01/rsync-deployments@7.0.0
         with:
-          switches: >-
+          switches: >
             -avzr
-            --no-times
-            --omit-dir-times
-            --no-perms
-            --no-owner
-            --no-group
             --checksum
+            --no-times
             --exclude='.git*'
             --exclude='.github*'
             --exclude='.env'
