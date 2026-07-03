@@ -16,7 +16,7 @@ jobs:
       - name: Deploy via Rsync
         uses: Burnett01/rsync-deployments@7.0.0
         with:
-          switches: "-avzr --checksum --exclude='.git*' --exclude='.github*' --exclude='.env' --exclude='node_modules'"
+          switches: "-avzr --omit-dir-times --no-perms --no-owner --no-group --checksum --exclude='.git*' --exclude='.github*' --exclude='.env' --exclude='node_modules'"
           path: ./
           remote_path: /home/${{ secrets.SERVER_USER }}/public_html/lei.developmentalphawizz.com/
           remote_host: ${{ secrets.SERVER_IP }}
