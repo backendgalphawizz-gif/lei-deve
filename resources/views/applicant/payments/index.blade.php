@@ -44,8 +44,13 @@
 @endif
 
 <div class="lei-portal-card" style="margin-bottom:24px;">
-    <h2>Registration Plans</h2>
-    <p class="muted" style="margin:0 0 16px;">Plans managed by admin — purchase to start a new LEI registration.</p>
+    <div class="lei-portal-plan-step-head">
+        <span class="lei-portal-plan-step-num">1</span>
+        <div>
+            <h2 style="margin:0;">Select a plan</h2>
+            <p class="muted" style="margin:6px 0 0;">Save money and avoid annual renewal hassle with multiyear plans.</p>
+        </div>
+    </div>
     @include('applicant.partials.plan-cards', [
         'plans' => $registrationPlans,
         'blocks' => $registrationBlocks,

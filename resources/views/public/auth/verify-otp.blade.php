@@ -25,6 +25,13 @@
             </label>
             <button type="submit" class="lei-pub-btn full">Verify & Continue →</button>
         </form>
+        <form method="POST" action="{{ route('applicant.verify-otp.resend') }}" class="lei-pub-otp-resend-form">
+            @csrf
+            <button type="submit" class="lei-pub-otp-resend-btn">
+                <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
+                Send code again
+            </button>
+        </form>
         @if (session('intended_plan_id'))
             <p class="lei-pub-auth-footer" style="margin-top:8px;">After verification you will continue to your selected plan checkout.</p>
         @endif

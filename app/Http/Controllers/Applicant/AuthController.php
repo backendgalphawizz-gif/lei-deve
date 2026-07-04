@@ -73,7 +73,11 @@ class AuthController extends Controller
 
         if (! $user->is_active) {
             $otp = $this->authService->generateOtp($user, 'registration');
-            session(['otp_user_id' => $user->id, 'otp_code_dev' => $otp->code]);
+            session([
+                'otp_user_id' => $user->id,
+                'otp_code_dev' => $otp->code,
+                'otp_last_sent_at' => now()->toIso8601String(),
+            ]);
 
             return redirect()->route('applicant.verify-otp')
                 ->with('info', 'Please verify your account. Check your email for the verification code.');
@@ -149,6 +153,7 @@ class AuthController extends Controller
                 'otp_user_id' => $existing->id,
                 'otp_code_dev' => $otp->code,
                 'assigned_lei_number' => $existing->lei_number,
+                'otp_last_sent_at' => now()->toIso8601String(),
             ]);
 
             return redirect()->route('applicant.verify-otp')
@@ -161,6 +166,7 @@ class AuthController extends Controller
             'otp_user_id' => $user->id,
             'otp_code_dev' => $otp->code,
             'assigned_lei_number' => $user->lei_number,
+            'otp_last_sent_at' => now()->toIso8601String(),
         ]);
 
         return redirect()->route('applicant.verify-otp')
@@ -205,6 +211,49 @@ class AuthController extends Controller
             : 'Your identity has been verified. You can now complete your subscription.';
 
         return $this->redirectAfterApplicantAuth($message);
+    }
+
+    public function resendOtp(Request $request)
+    {
+        $userId = session('otp_user_id');
+
+        if (! $userId) {
+            return redirect()->route('applicant.login');
+        }
+
+        $user = User::query()
+            ->where('id', $userId)
+            ->where('role', 'applicant')
+            ->first();
+
+        if (! $user || $user->is_active) {
+            session()->forget(['otp_user_id', 'otp_code_dev', 'otp_last_sent_at']);
+
+            return redirect()->route('applicant.login');
+        }
+
+        $cooldownSeconds = 60;
+        $lastSent = session('otp_last_sent_at');
+
+        if ($lastSent) {
+            $elapsed = now()->diffInSeconds(\Illuminate\Support\Carbon::parse($lastSent));
+
+            if ($elapsed < $cooldownSeconds) {
+                $wait = $cooldownSeconds - $elapsed;
+
+                return back()->with('error', 'Please wait '.$wait.' second'.($wait === 1 ? '' : 's').' before requesting another code.');
+            }
+        }
+
+        $otp = $this->authService->generateOtp($user, 'registration');
+
+        session([
+            'otp_code_dev' => $otp->code,
+            'otp_last_sent_at' => now()->toIso8601String(),
+            'assigned_lei_number' => $user->lei_number ?? session('assigned_lei_number'),
+        ]);
+
+        return back()->with('success', 'A new verification code has been sent to '.$user->email.'.');
     }
 
     public function sessionExpired()

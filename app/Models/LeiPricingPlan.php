@@ -37,9 +37,37 @@ class LeiPricingPlan extends Model
         return $this->hasMany(LeiSubscription::class, 'pricing_plan_id');
     }
 
+    /**
+     * Total one-time checkout amount stored in admin.
+     */
+    public function totalPrice(): float
+    {
+        return (float) $this->price;
+    }
+
+    /**
+     * Effective per-year rate (total ÷ duration).
+     */
+    public function yearlyPrice(): float
+    {
+        $years = max(1, (int) ($this->duration_years ?: 1));
+
+        return round($this->totalPrice() / $years, 2);
+    }
+
     public function formattedPrice(): string
     {
-        return CurrencyFormatter::format((float) $this->price, 0);
+        return $this->formattedTotalPrice();
+    }
+
+    public function formattedYearlyPrice(): string
+    {
+        return CurrencyFormatter::format($this->yearlyPrice(), 0);
+    }
+
+    public function formattedTotalPrice(): string
+    {
+        return CurrencyFormatter::format($this->totalPrice(), 0);
     }
 
     public function durationLabel(): string
@@ -47,5 +75,12 @@ class LeiPricingPlan extends Model
         $years = (int) ($this->duration_years ?? 1);
 
         return $years === 1 ? '1 Year' : $years . ' Years';
+    }
+
+    public function yearLabel(): string
+    {
+        $years = max(1, (int) ($this->duration_years ?: 1));
+
+        return $years === 1 ? '1 year' : $years . ' years';
     }
 }

@@ -15,7 +15,13 @@
 
 <section class="lei-pub-section">
     <div class="lei-pub-container">
-        <h2 class="lei-pub-divider-title">LEI Registration</h2>
+        <div class="lei-pub-plan-step-head">
+            <span class="lei-pub-plan-step-num">1</span>
+            <div>
+                <h2 class="lei-pub-divider-title" style="margin:0;border:0;padding:0;">Select a plan</h2>
+                <p class="lei-pub-plan-step-sub">Save money and avoid annual renewal hassle with multiyear plans.</p>
+            </div>
+        </div>
         @if ($activeRegistrationSubscription ?? null)
             <p class="lei-pub-pricing-active-note">
                 Your current plan: <strong>{{ $activeRegistrationSubscription->plan_name }}</strong>
@@ -24,29 +30,12 @@
                 @endif
             </p>
         @endif
-        <div class="lei-pub-pricing-grid">
-            @foreach ($registrationPlans as $plan)
-                @php $blocked = $purchaseBlocks[$plan->id] ?? null; @endphp
-                <article class="lei-pub-price-card {{ $plan->is_featured ? 'featured' : '' }} {{ $blocked ? 'unavailable' : '' }}">
-                    @if ($plan->is_featured)<span class="lei-pub-best-value">BEST VALUE</span>@endif
-                    @if ($plan->label)<small>{{ $plan->label }}</small>@endif
-                    <h3>{{ $plan->name }}</h3>
-                    <div class="lei-pub-price">{{ $plan->formattedPrice() }} <span>{{ $plan->price_suffix }}</span></div>
-                    @if ($plan->savings_label)<div class="lei-pub-savings">{{ $plan->savings_label }}</div>@endif
-                    <ul>
-                        @foreach ($plan->features ?? [] as $feature)
-                            <li class="{{ ($feature['included'] ?? true) ? 'yes' : 'no' }}">{{ $feature['text'] }}</li>
-                        @endforeach
-                    </ul>
-                    @if ($blocked)
-                        <span class="lei-pub-btn outline full disabled" title="{{ $blocked }}">Not Available</span>
-                        <p class="lei-pub-plan-block-note">{{ $blocked }}</p>
-                    @else
-                        <a href="{{ route('pricing.subscribe', $plan) }}" class="lei-pub-btn {{ $plan->button_style === 'solid' ? '' : 'outline' }} full">{{ $plan->button_text }}</a>
-                    @endif
-                </article>
-            @endforeach
-        </div>
+        @include('partials.pricing-plan-select-cards', [
+            'plans' => $registrationPlans,
+            'blocks' => $purchaseBlocks,
+            'section' => 'registration',
+            'variant' => 'public',
+        ])
     </div>
 </section>
 

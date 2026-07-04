@@ -12,19 +12,21 @@
             </div>
 
             <article class="lei-pub-price-card lei-pub-subscribe-plan {{ $plan->is_featured ? 'featured' : '' }}">
-                @if ($plan->is_featured)
-                    <span class="lei-pub-best-value">BEST VALUE</span>
-                @endif
                 @if ($plan->label)
-                    <small>{{ $plan->label }}</small>
+                    <span class="lei-pub-best-value">{{ $plan->label }}</span>
                 @endif
-                <h2>{{ $plan->name }}</h2>
-                <div class="lei-pub-price">{{ $plan->formattedPrice() }} <span>{{ $plan->price_suffix }}</span></div>
+                <h2>{{ $plan->yearLabel() }}</h2>
+                <div class="lei-pub-price">{{ $plan->formattedYearlyPrice() }} <span>/ year</span></div>
+                <p class="lei-plan-select-perk" style="margin:8px 0 16px;">+ Free LEI certificate</p>
                 @if ($plan->savings_label)
                     <div class="lei-pub-savings">{{ $plan->savings_label }}</div>
                 @endif
 
                 <dl class="lei-pub-subscribe-meta">
+                    <div>
+                        <dt>Total payable</dt>
+                        <dd>{{ $plan->formattedTotalPrice() }}</dd>
+                    </div>
                     <div>
                         <dt>Duration</dt>
                         <dd>{{ $plan->durationLabel() }}</dd>
@@ -34,14 +36,6 @@
                         <dd>One-time</dd>
                     </div>
                 </dl>
-
-                <ul>
-                    @foreach ($plan->features ?? [] as $feature)
-                        @if ($feature['included'] ?? true)
-                            <li class="yes">{{ $feature['text'] }}</li>
-                        @endif
-                    @endforeach
-                </ul>
             </article>
 
             <form method="POST" action="{{ route('pricing.subscribe.submit', $plan) }}">

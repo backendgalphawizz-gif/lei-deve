@@ -281,20 +281,20 @@ class WebsiteSeeder extends Seeder
     protected function seedPricing(): void
     {
         $registration = [
-            ['label' => 'STANDARD', 'name' => '1 Year Plan', 'price' => 89, 'duration_years' => 1, 'features' => [
+            ['label' => null, 'name' => '1 Year Plan', 'price' => 4350, 'duration_years' => 1, 'price_suffix' => '/ year', 'features' => [
+                ['text' => 'Free LEI certificate', 'included' => true],
                 ['text' => '24-hour priority processing', 'included' => true],
                 ['text' => 'GLEIF system integration', 'included' => true],
-                ['text' => 'Automated renewal notices', 'included' => false],
             ], 'is_featured' => false, 'sort_order' => 1],
-            ['label' => 'MOST POPULAR', 'name' => '3 Year Plan', 'price' => 219, 'duration_years' => 3, 'savings_label' => 'SAVE ₹48 TOTAL', 'features' => [
+            ['label' => 'Most popular', 'name' => '3 Year Plan', 'price' => 11970, 'duration_years' => 3, 'price_suffix' => '/ year', 'savings_label' => 'SAVE ₹1080 vs 1-year plan', 'features' => [
+                ['text' => 'Free LEI certificate', 'included' => true],
                 ['text' => 'Everything in 1 Year', 'included' => true],
                 ['text' => 'Dedicated account support', 'included' => true],
-                ['text' => 'Annual data validation', 'included' => true],
             ], 'is_featured' => true, 'button_style' => 'solid', 'sort_order' => 2],
-            ['label' => 'ENTERPRISE CHOICE', 'name' => '5 Year Plan', 'price' => 325, 'duration_years' => 5, 'savings_label' => 'SAVE ₹120 TOTAL', 'features' => [
+            ['label' => null, 'name' => '5 Year Plan', 'price' => 16900, 'duration_years' => 5, 'price_suffix' => '/ year', 'savings_label' => 'SAVE ₹4850 vs 1-year plan', 'features' => [
+                ['text' => 'Free LEI certificate', 'included' => true],
                 ['text' => 'Max multi-year savings', 'included' => true],
                 ['text' => 'API access for monitoring', 'included' => true],
-                ['text' => 'Transfer fees waived', 'included' => true],
             ], 'is_featured' => false, 'sort_order' => 3],
         ];
 

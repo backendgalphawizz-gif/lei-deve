@@ -19,11 +19,16 @@
 <div class="lei-portal-split">
     <div class="lei-portal-card lei-portal-plan-card featured" style="max-width:520px;">
         @if ($plan->label)<span class="lei-portal-plan-label">{{ $plan->label }}</span>@endif
-        <h2 style="margin:0 0 8px;font-size:22px;">{{ $plan->name }}</h2>
-        <div class="lei-portal-plan-price">{{ $plan->formattedPrice() }}<span>{{ $plan->price_suffix }}</span></div>
+        <h2 style="margin:0 0 8px;font-size:22px;">{{ $plan->yearLabel() }}</h2>
+        <div class="lei-portal-plan-price">{{ $plan->formattedYearlyPrice() }}<span>/ year</span></div>
+        <p class="lei-plan-select-perk" style="margin:8px 0 12px;">+ Free LEI certificate</p>
         @if ($plan->savings_label)<div class="lei-portal-plan-save">{{ $plan->savings_label }}</div>@endif
 
         <dl class="lei-portal-dl" style="margin:16px 0;">
+            <div class="lei-portal-dl-row">
+                <dt>Total payable</dt>
+                <dd>{{ $plan->formattedTotalPrice() }}</dd>
+            </div>
             <div class="lei-portal-dl-row">
                 <dt>Duration</dt>
                 <dd>{{ $plan->durationLabel() }}</dd>
@@ -57,7 +62,7 @@
         <h3>Order Summary</h3>
 
         @php
-            $basePrice = $plan->price ?? 0;
+            $basePrice = $plan->totalPrice();
             $gstRate   = 18;
             $gstAmount = round($basePrice * $gstRate / 100, 2);
             $total     = $basePrice + $gstAmount;
@@ -74,7 +79,7 @@
         <p id="lei-promo-msg" style="font-size:12px;color:#16a34a;margin:0 0 10px;display:none;"></p>
 
         <div class="lei-portal-summary-row">
-            <span>{{ $plan->name }}</span>
+            <span>{{ $plan->yearLabel() }} ({{ $plan->formattedYearlyPrice() }}/yr)</span>
             <span>{{ $currency }}{{ number_format($basePrice, 2) }}</span>
         </div>
         <div class="lei-portal-summary-row">

@@ -66,7 +66,7 @@
                             @if ($row->label)<small>{{ $row->label }}</small>@endif
                         </div>
                         <div class="lei-wm-td">{{ ucfirst($row->section) }}</div>
-                        <div class="lei-wm-td">{{ $row->formattedPrice() }}</div>
+                        <div class="lei-wm-td">{{ $row->formattedYearlyPrice() }}/yr · Total {{ $row->formattedTotalPrice() }}</div>
                         <div class="lei-wm-td">{{ $row->duration_years }} yr</div>
                         <div class="lei-wm-td">
                             <span class="lei-wm-badge {{ $row->is_active ? 'lei-wm-badge--active' : 'lei-wm-badge--pending' }}">

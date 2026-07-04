@@ -72,6 +72,7 @@ Route::get('/register', [ApplicantAuthController::class, 'showRegister'])->name(
 Route::post('/register', [ApplicantAuthController::class, 'register'])->name('register.submit');
 Route::get('/verify-otp', [ApplicantAuthController::class, 'showVerifyOtp'])->name('applicant.verify-otp');
 Route::post('/verify-otp', [ApplicantAuthController::class, 'verifyOtp'])->name('applicant.verify-otp.submit');
+Route::post('/verify-otp/resend', [ApplicantAuthController::class, 'resendOtp'])->name('applicant.verify-otp.resend');
 Route::get('/forgot-password', [ApplicantAuthController::class, 'showForgotPassword'])->name('applicant.forgot-password');
 Route::post('/forgot-password', [ApplicantAuthController::class, 'sendResetLink'])->name('applicant.forgot-password.submit');
 Route::get('/reset-password/{token}', [ApplicantAuthController::class, 'showResetPassword'])->name('applicant.reset-password');
