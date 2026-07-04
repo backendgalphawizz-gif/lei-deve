@@ -5,12 +5,44 @@ namespace App\Services;
 use App\Mail\OtpMail;
 use App\Mail\RegistrationWelcomeMail;
 use App\Models\LeiApplicantOtp;
+use App\Models\LeiNmConfig;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 
 class ApplicantAuthService
 {
     public function __construct(private LeiCodeGenerator $leiCodes) {}
+
+    public function otpConfig(): array
+    {
+        try {
+            $config = LeiNmConfig::query()->first();
+        } catch (\Throwable) {
+            $config = null;
+        }
+
+        return [
+            'length' => max(4, min(8, (int) ($config?->otp_length ?: 6))),
+            'expiry_minutes' => max(1, min(30, (int) ($config?->otp_expiry_min ?: 10))),
+            'retry_limit' => max(1, min(10, (int) ($config?->otp_retry_limit ?: 5))),
+        ];
+    }
+
+    public function normalizeOtpCode(?string $code): string
+    {
+        return preg_replace('/\D/', '', (string) $code) ?? '';
+    }
+
+    public function activeOtp(User $user, string $purpose = 'registration'): ?LeiApplicantOtp
+    {
+        return LeiApplicantOtp::query()
+            ->where('user_id', $user->id)
+            ->where('purpose', $purpose)
+            ->whereNull('verified_at')
+            ->latest('id')
+            ->first();
+    }
+
     public function generateOtp(User $user, string $purpose = 'registration'): LeiApplicantOtp
     {
         LeiApplicantOtp::query()
@@ -19,15 +51,8 @@ class ApplicantAuthService
             ->whereNull('verified_at')
             ->delete();
 
-        $length = 6;
-        try {
-            $config = \App\Models\LeiNmConfig::query()->first();
-            if ($config?->otp_length) {
-                $length = (int) $config->otp_length;
-            }
-        } catch (\Throwable) {
-            // use default
-        }
+        $config = $this->otpConfig();
+        $length = $config['length'];
 
         $code = str_pad((string) random_int(0, (10 ** $length) - 1), $length, '0', STR_PAD_LEFT);
 
@@ -35,7 +60,7 @@ class ApplicantAuthService
             'user_id' => $user->id,
             'code' => $code,
             'purpose' => $purpose,
-            'expires_at' => now()->addMinutes(10),
+            'expires_at' => now()->addMinutes($config['expiry_minutes']),
         ]);
 
         // Send OTP email
@@ -48,29 +73,44 @@ class ApplicantAuthService
         return $otp;
     }
 
-    public function verifyOtp(User $user, string $code, string $purpose = 'registration'): bool
+    /**
+     * @return array{ok: bool, reason?: string, remaining_attempts?: int}
+     */
+    public function verifyOtp(User $user, string $code, string $purpose = 'registration'): array
     {
-        $otp = LeiApplicantOtp::query()
-            ->where('user_id', $user->id)
-            ->where('purpose', $purpose)
-            ->whereNull('verified_at')
-            ->latest()
-            ->first();
+        $code = $this->normalizeOtpCode($code);
+        $config = $this->otpConfig();
 
-        if (! $otp || $otp->isExpired()) {
-            return false;
+        if (strlen($code) !== $config['length']) {
+            return ['ok' => false, 'reason' => 'invalid'];
+        }
+
+        $otp = $this->activeOtp($user, $purpose);
+
+        if (! $otp) {
+            return ['ok' => false, 'reason' => 'missing'];
+        }
+
+        if ($otp->isExpired()) {
+            return ['ok' => false, 'reason' => 'expired'];
+        }
+
+        if (hash_equals((string) $otp->code, $code)) {
+            $otp->update(['verified_at' => now()]);
+            $user->update(['is_active' => true, 'account_status' => 'active', 'email_verified_at' => now()]);
+
+            return ['ok' => true];
         }
 
         $otp->increment('attempts');
+        $attempts = (int) $otp->fresh()->attempts;
+        $remaining = max(0, $config['retry_limit'] - $attempts);
 
-        if (! hash_equals($otp->code, $code)) {
-            return false;
+        if ($attempts >= $config['retry_limit']) {
+            return ['ok' => false, 'reason' => 'max_attempts', 'remaining_attempts' => 0];
         }
 
-        $otp->update(['verified_at' => now()]);
-        $user->update(['is_active' => true, 'account_status' => 'active', 'email_verified_at' => now()]);
-
-        return true;
+        return ['ok' => false, 'reason' => 'invalid', 'remaining_attempts' => $remaining];
     }
 
     public function createApplicant(array $data): User

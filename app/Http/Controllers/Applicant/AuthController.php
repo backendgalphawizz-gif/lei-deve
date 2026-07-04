@@ -179,20 +179,43 @@ class AuthController extends Controller
             return redirect()->route('applicant.login');
         }
 
-        return view('public.auth.verify-otp');
+        $this->syncDevOtpSession();
+
+        return view('public.auth.verify-otp', [
+            'otpLength' => $this->authService->otpConfig()['length'],
+        ]);
     }
 
     public function verifyOtp(Request $request)
     {
-        $request->validate(['code' => ['required', 'string', 'size:6']]);
+        $otpLength = $this->authService->otpConfig()['length'];
+        $code = $this->authService->normalizeOtpCode($request->input('code'));
+
+        $request->merge(['code' => $code]);
+        $request->validate([
+            'code' => ['required', 'string', 'digits:'.$otpLength],
+        ]);
 
         $user = User::find(session('otp_user_id'));
         if (! $user) {
             return redirect()->route('applicant.login');
         }
 
-        if (! $this->authService->verifyOtp($user, $request->code)) {
-            throw ValidationException::withMessages(['code' => 'Invalid or expired verification code.']);
+        $result = $this->authService->verifyOtp($user, $code);
+
+        if (! $result['ok']) {
+            $this->syncDevOtpSession();
+
+            $message = match ($result['reason'] ?? 'invalid') {
+                'expired' => 'Your verification code has expired. Please request a new code.',
+                'missing' => 'No active verification code found. Please request a new code.',
+                'max_attempts' => 'Too many incorrect attempts. Please request a new verification code.',
+                default => isset($result['remaining_attempts'])
+                    ? 'Invalid verification code. '.$result['remaining_attempts'].' attempt'.($result['remaining_attempts'] === 1 ? '' : 's').' remaining.'
+                    : 'Invalid verification code.',
+            };
+
+            throw ValidationException::withMessages(['code' => $message]);
         }
 
         $user->refresh();
@@ -367,5 +390,24 @@ class AuthController extends Controller
         }
 
         return $this->portalRedirect->redirect(auth()->user(), $message ?? 'Welcome to the Applicant Portal.');
+    }
+
+    private function syncDevOtpSession(): void
+    {
+        if (! config('app.debug')) {
+            return;
+        }
+
+        $user = User::find(session('otp_user_id'));
+
+        if (! $user) {
+            return;
+        }
+
+        $otp = $this->authService->activeOtp($user);
+
+        if ($otp) {
+            session(['otp_code_dev' => $otp->code]);
+        }
     }
 }
