@@ -4,7 +4,7 @@
 @section('body_class', 'lei-page-certificates')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=3">
 @endpush
 
 @section('breadcrumbs')
@@ -34,6 +34,10 @@
 
     <div class="lei-ca-detail-layout">
         <div class="lei-ca-detail-main">
+            @include('admin.certificates.partials.application-review')
+
+            <div class="lei-ca-section-label">Certificate Data</div>
+
             <div class="lei-ca-card">
                 <h4>Certificate Data (Annex A)</h4>
                 <dl class="lei-ca-dl">

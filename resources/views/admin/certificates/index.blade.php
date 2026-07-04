@@ -4,7 +4,7 @@
 @section('body_class', 'lei-page-certificates')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=2">
+    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=3">
 @endpush
 
 @section('breadcrumbs')
@@ -71,6 +71,7 @@
                 <div class="lei-ca-th lei-ca-th--serial">Serial</div>
                 <div class="lei-ca-th lei-ca-th--entity">Entity</div>
                 <div class="lei-ca-th lei-ca-th--lei">LEI</div>
+                <div class="lei-ca-th lei-ca-th--pay">Payment</div>
                 <div class="lei-ca-th lei-ca-th--status">Status</div>
                 <div class="lei-ca-th lei-ca-th--date">Updated</div>
                 <div class="lei-ca-th lei-ca-th--action">Action</div>
@@ -86,6 +87,16 @@
                             @endif
                         </div>
                         <div class="lei-ca-td lei-ca-td--lei">{{ $cert->application->lei_number ?? '—' }}</div>
+                        <div class="lei-ca-td lei-ca-td--pay">
+                            @if ($cert->application->subscription)
+                                <span class="lei-ca-pay-pill lei-ca-pay-pill--{{ $cert->application->subscription->payment_status === 'paid' ? 'ok' : 'warn' }}">
+                                    {{ $cert->application->subscription->paymentStatusLabel() }}
+                                </span>
+                                <small>{{ $cert->application->subscription->formattedAmount() }}</small>
+                            @else
+                                —
+                            @endif
+                        </div>
                         <div class="lei-ca-td lei-ca-td--status">
                             <span class="lei-app-status lei-app-status--{{ $cert->statusTone() }}">
                                 <span class="dot"></span>{{ $cert->statusLabel() }}

@@ -21,7 +21,7 @@ class CertificateAuthorityController extends Controller
         $status = $request->string('status')->toString() ?: 'pending_ca';
 
         $query = LeiCertificate::query()
-            ->with(['application.user'])
+            ->with(['application.user', 'application.subscription'])
             ->orderByDesc('updated_at');
 
         if ($status === 'pending_ca') {
@@ -43,7 +43,11 @@ class CertificateAuthorityController extends Controller
 
     public function show(LeiCertificate $certificate)
     {
-        $certificate->load(['application.user', 'signer']);
+        $certificate->load([
+            'application.user',
+            'application.subscription.pricingPlan',
+            'signer',
+        ]);
 
         return view('admin.certificates.show', compact('certificate'));
     }

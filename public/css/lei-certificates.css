@@ -647,3 +647,208 @@ body.lei-page-certificates .lei-content {
 .lei-ca-sidebar .lei-ca-signature-card {
   margin-bottom: 16px;
 }
+
+/* Application review (CA detail) */
+.lei-ca-review {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.lei-ca-review-head h3 {
+  margin: 0 0 4px;
+  font-size: 18px;
+  color: #0f172a;
+}
+
+.lei-ca-review-head p {
+  margin: 0;
+  font-size: 13px;
+  color: #64748b;
+}
+
+.lei-ca-review-card h4 {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-ca-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin: 8px 0 12px;
+}
+
+.lei-ca-doc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lei-ca-doc-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #f8fafc;
+}
+
+.lei-ca-doc-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #dc2626;
+  flex-shrink: 0;
+}
+
+.lei-ca-doc-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.lei-ca-doc-meta strong {
+  display: block;
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.lei-ca-doc-meta span {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.lei-ca-doc-sub {
+  font-size: 11px !important;
+  color: #475569 !important;
+}
+
+.lei-ca-doc-link {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a5fad;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #c5daf5;
+  background: #eff6ff;
+}
+
+.lei-ca-doc-link:hover {
+  background: #1a5fad;
+  color: #fff;
+  border-color: #1a5fad;
+}
+
+.lei-ca-review-card--payment {
+  border-color: #bfdbfe;
+  background: linear-gradient(180deg, #f8fbff 0%, #fff 100%);
+}
+
+.lei-ca-payment-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.lei-ca-payment-head h4 {
+  margin: 0;
+}
+
+.lei-ca-pay-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.lei-ca-pay-badge--ok {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.lei-ca-pay-badge--warn {
+  background: #fff7ed;
+  color: #c2410c;
+  border: 1px solid #fed7aa;
+}
+
+.lei-ca-pay-badge--muted {
+  background: #f1f5f9;
+  color: #64748b;
+  border: 1px solid #e2e8f0;
+}
+
+.lei-ca-pay-pill {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.lei-ca-pay-pill--ok {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.lei-ca-pay-pill--warn {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.lei-ca-pay-pill--muted {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.lei-ca-td--pay {
+  flex: 0 0 120px;
+}
+
+.lei-ca-td--pay small {
+  display: block;
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+  font-weight: 400;
+}
+
+.lei-ca-hint--warn {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #c2410c;
+}
+
+@media (max-width: 1100px) {
+  .lei-ca-td--pay {
+    flex: 0 0 100px;
+  }
+}
