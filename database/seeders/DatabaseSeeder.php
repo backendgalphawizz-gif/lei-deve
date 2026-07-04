@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             StaticPageSeeder::class,
             BusinessSettingsSeeder::class,
             WebsiteSeeder::class,
+            HomeLeiContentSeeder::class,
         ]);
     }
 }

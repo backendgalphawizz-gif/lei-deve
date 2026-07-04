@@ -143,31 +143,7 @@
     </div>
 </section>
 
-<section class="lei-pub-section">
-    <div class="lei-pub-container">
-        <div class="lei-pub-section-head">
-            <h2>Who Needs an LEI?</h2>
-            <p>RBI mandates LEI registration for organisations participating in regulated financial transactions in India.</p>
-        </div>
-        <div class="lei-pub-cards-3">
-            <article class="lei-pub-service-card">
-                <div class="lei-pub-service-icon"><i class="fa-solid fa-building"></i></div>
-                <h3>Corporate Borrowers</h3>
-                <p>Non-individual borrowers with aggregate credit exposure of ₹5 crore and above from banks must obtain an LEI.</p>
-            </article>
-            <article class="lei-pub-service-card">
-                <div class="lei-pub-service-icon"><i class="fa-solid fa-landmark"></i></div>
-                <h3>Financial Institutions</h3>
-                <p>Banks, NBFCs, mutual funds, insurance companies, and all regulated financial market participants.</p>
-            </article>
-            <article class="lei-pub-service-card">
-                <div class="lei-pub-service-icon"><i class="fa-solid fa-handshake"></i></div>
-                <h3>OTC Derivatives & NEFT/RTGS</h3>
-                <p>Entities executing OTC derivatives, large-value NEFT/RTGS transactions, and cross-border payments.</p>
-            </article>
-        </div>
-    </div>
-</section>
+@include('public.home.partials.lei-guide', ['leiBlocks' => $leiBlocks ?? collect()])
 
 <section class="lei-pub-section lei-pub-muted">
     <div class="lei-pub-container lei-pub-features-grid">

@@ -7,6 +7,9 @@ use App\Models\LeiBusinessSetting;
 use App\Models\LeiCertificate;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use chillerlan\QRCode\Output\QRGdImagePNG;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -126,12 +129,11 @@ class LeiCertificateService
         ?User $caUser = null,
         ?string $signatureHash = null,
     ): string {
-        $view = $signed ? 'applicant.certificates.lei-signed' : 'applicant.certificates.lei-unsigned';
-
         $caSignatureDataUri = $signed && $caUser ? $caUser->caSignatureDataUri() : null;
 
-        $pdf = Pdf::loadView($view, compact(
-            'certificate', 'application', 'settings', 'caUser', 'signatureHash', 'caSignatureDataUri',
+        $pdf = Pdf::loadView('applicant.certificates.lei-official', array_merge(
+            $this->certificateViewData($certificate, $application, $settings),
+            compact('certificate', 'application', 'settings', 'signed', 'caUser', 'signatureHash', 'caSignatureDataUri'),
         ))
             ->setPaper('A4', 'portrait')
             ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => false]);
@@ -143,6 +145,62 @@ class LeiCertificateService
         Storage::disk('local')->put($path, $pdf->output());
 
         return $path;
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function certificateViewData(
+        LeiCertificate $certificate,
+        LeiApplication $application,
+        LeiBusinessSetting $settings,
+    ): array {
+        $draft = $application->draft_data ?? [];
+        $registeredAddress = $this->formatRegisteredAddress(
+            $draft['registered_address'] ?? null,
+            $application->country,
+        );
+        $renewalDate = $certificate->valid_until ?? $application->expiry_date;
+        $renewalWindowDays = (int) ($settings->renewal_window_days ?: 60);
+        $renewalWindowStart = $renewalDate
+            ? $renewalDate->copy()->subDays($renewalWindowDays)->format('Y-m-d')
+            : now()->format('Y-m-d');
+
+        $verifyUrl = route('registry.show', $application->lei_number);
+        $websiteUrl = $settings->website_url ?: config('app.url');
+        $renewUrl = route('pricing', ['lei' => $application->lei_number]).'#renewal';
+
+        return [
+            'registeredAddress' => $registeredAddress,
+            'renewalDate' => $renewalDate?->format('Y-m-d') ?? '—',
+            'renewalWindowStart' => $renewalWindowStart,
+            'verifyUrl' => $verifyUrl,
+            'websiteUrl' => $websiteUrl,
+            'renewUrl' => $renewUrl,
+            'qrDataUri' => $this->qrDataUri($verifyUrl),
+        ];
+    }
+
+    private function qrDataUri(string $url): ?string
+    {
+        try {
+            if (! extension_loaded('gd')) {
+                return null;
+            }
+
+            $options = new QROptions([
+                'outputInterface' => QRGdImagePNG::class,
+                'scale' => 4,
+                'outputBase64' => true,
+                'addQuietzone' => true,
+            ]);
+
+            $dataUri = (new QRCode($options))->render($url);
+
+            return is_string($dataUri) ? $dataUri : null;
+        } catch (\Throwable) {
+            return null;
+        }
     }
 
     private function generateX509Pem(
@@ -275,5 +333,25 @@ class LeiCertificateService
         $parts = array_map('trim', explode(',', $address));
 
         return $parts[0] ?: 'N/A';
+    }
+
+    private function formatRegisteredAddress(?string $address, ?string $country): ?string
+    {
+        $address = trim((string) $address);
+        $country = trim((string) $country);
+
+        if ($address === '' && $country === '') {
+            return null;
+        }
+
+        if ($address === '') {
+            return $country;
+        }
+
+        if ($country !== '' && ! str_contains(strtolower($address), strtolower($country))) {
+            return $address.' | '.$country;
+        }
+
+        return $address;
     }
 }

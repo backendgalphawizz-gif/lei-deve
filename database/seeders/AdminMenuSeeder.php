@@ -30,9 +30,10 @@ class AdminMenuSeeder extends Seeder
             ['Notifications', 'admin.notifications.index', 'notifications', 18],
             ['Static Pages', 'admin.static-pages.index', 'pages', 19],
             ['FAQ Management', 'admin.faq.index', 'pages', 20],
-            ['Contact Enquiries', 'admin.contact-enquiries.index', 'support', 21],
-            ['Subscription Management', 'admin.subscriptions.index', 'payments', 22],
-            ['Business Settings', 'admin.business-settings.index', 'settings', 23],
+            ['Homepage LEI Content', 'admin.home-content.index', 'pages', 21],
+            ['Contact Enquiries', 'admin.contact-enquiries.index', 'support', 22],
+            ['Subscription Management', 'admin.subscriptions.index', 'payments', 23],
+            ['Business Settings', 'admin.business-settings.index', 'settings', 24],
         ];
 
         AdminMenuItem::query()->where('label', 'Website Management')->delete();

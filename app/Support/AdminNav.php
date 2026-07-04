@@ -33,6 +33,7 @@ class AdminNav
             'admin.notifications.index' => 'admin.notifications.*',
             'admin.static-pages.index' => 'admin.static-pages.*',
             'admin.faq.index' => 'admin.faq.*',
+            'admin.home-content.index' => 'admin.home-content.*',
             'admin.contact-enquiries.index' => 'admin.contact-enquiries.*',
             'admin.subscriptions.index' => ['admin.subscriptions.*', 'admin.pricing-plans.*'],
             'admin.business-settings.index' => 'admin.business-settings.*',
