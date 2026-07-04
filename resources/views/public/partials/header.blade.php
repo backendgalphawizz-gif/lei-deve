@@ -31,7 +31,7 @@
                     <a href="{{ route('admin.dashboard') }}" class="lei-pub-btn">Admin</a>
                 @endif
             @else
-                <a href="{{ route('applicant.login') }}" class="lei-pub-btn">Login</a>
+                <a href="{{ route('register') }}" class="lei-pub-btn">Apply Now</a>
             @endauth
         </div>
     </div>

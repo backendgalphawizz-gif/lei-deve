@@ -1152,6 +1152,15 @@ body.lei-applicant-portal.lei-pub-notify-open {
   color: #b45309;
 }
 
+.lei-applicant-portal .lei-portal-lei-banner--assigned {
+  background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+  border-color: #93c5fd;
+}
+
+.lei-applicant-portal .lei-portal-lei-banner--new {
+  box-shadow: 0 0 0 2px #3b82f6, 0 8px 24px rgba(59, 130, 246, 0.12);
+}
+
 .lei-applicant-portal .lei-portal-lei-code {
   display: block;
   font-size: 22px;

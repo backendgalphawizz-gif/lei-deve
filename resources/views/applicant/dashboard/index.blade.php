@@ -24,6 +24,32 @@
     @endif
 </div>
 
+@if ($showAssignedLei ?? false)
+    <div class="lei-portal-lei-banner lei-portal-lei-banner--assigned {{ ($highlightAssignedLei ?? false) ? 'lei-portal-lei-banner--new' : '' }}" style="margin-bottom:24px;">
+        <div>
+            <span class="lei-portal-eyebrow">Your Unique LEI Code</span>
+            <strong class="lei-portal-lei-code" id="lei-code-primary">{{ $user->lei_number }}</strong>
+            <span class="lei-portal-lei-expiry">
+                @if ($highlightAssignedLei ?? false)
+                    Assigned to your account — save this code and complete your LEI application to activate it in the global registry.
+                @else
+                    Assigned to your account — complete your application to activate this LEI.
+                @endif
+            </span>
+        </div>
+        <div class="lei-portal-lei-banner-actions">
+            <button type="button" class="lei-btn-secondary lei-portal-btn-xs lei-copy-lei" data-target="lei-code-primary">
+                <i class="fa-regular fa-copy" aria-hidden="true"></i> Copy
+            </button>
+            @if ($registrationSubscription ?? null)
+                <a href="{{ route('applicant.registration.step', ['step' => 1]) }}" class="lei-btn-primary lei-portal-btn-xs">Continue Application</a>
+            @elseif (! ($hasSubmittedRegistration ?? false))
+                <a href="{{ route('applicant.payments.index') }}" class="lei-btn-primary lei-portal-btn-xs">Choose a Plan</a>
+            @endif
+        </div>
+    </div>
+@endif
+
 <div class="lei-portal-quick-stats">
     <div class="lei-portal-quick-stat">
         <div class="lei-portal-quick-stat-icon lei-portal-quick-stat-icon--blue"><i class="fa-solid fa-building"></i></div>
@@ -43,9 +69,9 @@
     </div>
 </div>
 
-@if ($activeLeis->isNotEmpty() || $accountLei)
+@if ($activeLeis->isNotEmpty() || ($accountLei && ! ($showAssignedLei ?? false)))
     <div class="lei-portal-lei-cards">
-        @if ($accountLei)
+        @if ($accountLei && ! ($showAssignedLei ?? false))
             <div class="lei-portal-lei-banner lei-portal-lei-banner--pending">
                 <div>
                     <span class="lei-portal-eyebrow">Your LEI — {{ $accountLei['entity_name'] }}</span>

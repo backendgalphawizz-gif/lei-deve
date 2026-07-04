@@ -157,7 +157,7 @@ class AuthController extends Controller
             ]);
 
             return redirect()->route('applicant.verify-otp')
-                ->with('info', 'Your account is pending verification. Your LEI code is '.$existing->lei_number.'.');
+                ->with('info', 'Your account is pending verification. Check your email for the code.');
         }
 
         $user = $this->authService->createApplicant($data);
@@ -170,7 +170,7 @@ class AuthController extends Controller
         ]);
 
         return redirect()->route('applicant.verify-otp')
-            ->with('success', 'Account created. Your LEI code is '.$user->lei_number.'. Enter the verification code sent to your email.');
+            ->with('info', 'Account created. Check your email for the verification code.');
     }
 
     public function showVerifyOtp()
@@ -198,7 +198,9 @@ class AuthController extends Controller
         $user->refresh();
         $planId = session('intended_plan_id');
 
-        session()->forget(['otp_user_id', 'otp_code_dev']);
+        session()->forget(['otp_user_id', 'otp_code_dev', 'otp_last_sent_at']);
+        session(['lei_show_on_dashboard' => true]);
+
         Auth::login($user);
         $request->session()->regenerate();
 
@@ -206,11 +208,7 @@ class AuthController extends Controller
             session(['intended_plan_id' => $planId]);
         }
 
-        $message = $user->lei_number
-            ? 'Your identity has been verified. Your LEI code is '.$user->lei_number.'.'
-            : 'Your identity has been verified. You can now complete your subscription.';
-
-        return $this->redirectAfterApplicantAuth($message);
+        return redirect()->route('applicant.dashboard');
     }
 
     public function resendOtp(Request $request)

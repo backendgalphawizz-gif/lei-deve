@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\LeiFinancialAuditLog;
-use App\Models\LeiFinancialTransaction;
-use App\Models\LeiRefundRequest;
-use App\Models\LeiTaxReport;
+use App\Models\LeiBusinessSetting;
+use App\Models\LeiSubscription;
+use App\Models\User;
 use App\Services\FinancialStatsService;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PaymentManagementController extends Controller
@@ -18,113 +17,73 @@ class PaymentManagementController extends Controller
     public function index(Request $request)
     {
         $stats = app(FinancialStatsService::class)->summaryCards();
-        $gateways = app(FinancialStatsService::class)->gatewayMetrics();
 
-        $transactions = $this->transactionQuery($request)
+        $subscriptions = $this->subscriptionQuery($request)
             ->paginate(10)
             ->withQueryString();
 
-        $refunds = LeiRefundRequest::where('status', 'pending')
-            ->orderByDesc('priority')
-            ->orderBy('created_at')
+        $invoices = LeiSubscription::query()
+            ->with('user')
+            ->where('payment_status', 'paid')
+            ->orderByDesc('starts_at')
+            ->limit(12)
+            ->get();
+
+        $pendingPayments = LeiSubscription::query()
+            ->with('user')
+            ->where('payment_status', 'pending')
+            ->orderByDesc('created_at')
             ->limit(5)
             ->get();
 
-        $taxReports = LeiTaxReport::orderByDesc('generated_at')->limit(6)->get();
-        $auditLogs = LeiFinancialAuditLog::orderByDesc('occurred_at')->limit(8)->get();
-
-        $gatewayOptions = LeiFinancialTransaction::query()
-            ->distinct()
-            ->orderBy('gateway')
-            ->pluck('gateway');
-
         return view('admin.payments.index', [
             'stats' => $stats,
-            'gateways' => $gateways,
-            'transactions' => $transactions,
-            'refunds' => $refunds,
-            'taxReports' => $taxReports,
-            'auditLogs' => $auditLogs,
-            'gatewayOptions' => $gatewayOptions,
-            'totalInDb' => LeiFinancialTransaction::count(),
+            'subscriptions' => $subscriptions,
+            'invoices' => $invoices,
+            'pendingPayments' => $pendingPayments,
+            'totalInDb' => LeiSubscription::count(),
         ]);
     }
 
-    public function refundAction(Request $request, LeiRefundRequest $refund)
+    public function invoice(LeiSubscription $subscription)
     {
-        $validated = $request->validate([
-            'action' => ['required', 'in:approve,reject'],
-        ]);
+        $subscription->load('user');
+        $user = $subscription->user ?? new User(['name' => 'Customer', 'email' => '']);
+        $businessSettings = LeiBusinessSetting::current();
 
-        $actor = auth()->user()->name ?? 'Admin';
+        $baseAmount = (float) ($subscription->amount ?? 0);
+        $gstAmount = round($baseAmount * 0.18, 2);
+        $totalAmount = $baseAmount + $gstAmount;
+        $currency = '₹';
 
-        DB::transaction(function () use ($validated, $refund, $actor) {
-            $refund->update([
-                'status' => $validated['action'] === 'approve' ? 'approved' : 'rejected',
-                'reviewed_by' => auth()->id(),
-                'reviewed_at' => now(),
-            ]);
+        $pdf = Pdf::loadView('applicant.payments.invoice', compact(
+            'subscription', 'user', 'businessSettings',
+            'baseAmount', 'gstAmount', 'totalAmount', 'currency',
+        ))
+            ->setPaper('A4', 'portrait')
+            ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => false]);
 
-            LeiFinancialAuditLog::create([
-                'actor_name' => $actor,
-                'description' => $validated['action'] === 'approve'
-                    ? "Approved refund {$refund->refund_code} ({$refund->formatted_amount}) for {$refund->entity_name}"
-                    : "Rejected refund {$refund->refund_code} for {$refund->entity_name}",
-                'occurred_at' => now(),
-            ]);
-        });
-
-        if ($request->expectsJson()) {
-            $stats = app(FinancialStatsService::class)->summaryCards();
-
-            return response()->json([
-                'ok' => true,
-                'message' => 'Refund '.($validated['action'] === 'approve' ? 'approved' : 'rejected').'.',
-                'stats' => $stats,
-            ]);
-        }
-
-        return back()->with('success', 'Refund updated.');
-    }
-
-    public function reconcile(Request $request)
-    {
-        $count = LeiFinancialTransaction::where('status', 'pending')->count();
-
-        LeiFinancialTransaction::where('status', 'pending')
-            ->where('transacted_at', '<', Carbon::now()->subHours(2))
-            ->update(['status' => 'success']);
-
-        LeiFinancialAuditLog::create([
-            'actor_name' => auth()->user()->name ?? 'System',
-            'description' => 'Reconciled '.max($count, 142).' daily transactions across all gateways',
-            'occurred_at' => now(),
-        ]);
-
-        if ($request->expectsJson()) {
-            return response()->json(['ok' => true, 'message' => 'Reconciliation complete.']);
-        }
-
-        return back()->with('success', 'All pending transactions reconciled.');
+        return $pdf->download('Invoice-'.$subscription->reference.'.pdf');
     }
 
     public function export(Request $request): StreamedResponse
     {
-        $filename = 'financial-transactions-'.now()->format('Y-m-d').'.csv';
+        $filename = 'subscriptions-'.now()->format('Y-m-d').'.csv';
 
         return response()->streamDownload(function () use ($request) {
             $handle = fopen('php://output', 'w');
-            fputcsv($handle, ['Transaction ID', 'Entity', 'Amount', 'Status', 'Gateway', 'Date']);
+            fputcsv($handle, ['Reference', 'Applicant', 'Plan', 'Amount', 'Payment Status', 'Subscription Status', 'Date']);
 
-            $this->transactionQuery($request)->orderByDesc('transacted_at')->chunk(200, function ($rows) use ($handle) {
+            $this->subscriptionQuery($request)->orderByDesc('starts_at')->chunk(200, function ($rows) use ($handle) {
                 foreach ($rows as $row) {
                     fputcsv($handle, [
-                        $row->transaction_code,
-                        $row->entity_name,
-                        $row->formatted_amount,
+                        $row->reference,
+                        $row->user?->name ?? '—',
+                        $row->plan_name,
+                        $row->formattedAmount(),
+                        $row->payment_status,
                         $row->status,
-                        $row->gateway,
-                        $row->transacted_at->format('Y-m-d H:i'),
+                        $row->starts_at?->format('Y-m-d H:i') ?? '',
                     ]);
                 }
             });
@@ -133,16 +92,24 @@ class PaymentManagementController extends Controller
         }, $filename, ['Content-Type' => 'text/csv']);
     }
 
-    private function transactionQuery(Request $request)
+    public function reconcile(Request $request)
     {
-        $query = LeiFinancialTransaction::query()->orderByDesc('transacted_at');
+        return back()->with('info', 'Reconciliation is not required — payments are recorded directly from applicant subscriptions.');
+    }
 
-        if ($gateway = $request->string('gateway')->toString()) {
-            $query->where('gateway', $gateway);
-        }
+    public function refundAction(Request $request, \App\Models\LeiRefundRequest $refund)
+    {
+        return back()->with('info', 'Refund workflow is managed through subscription status updates.');
+    }
+
+    private function subscriptionQuery(Request $request)
+    {
+        $query = LeiSubscription::query()
+            ->with(['user', 'pricingPlan'])
+            ->orderByDesc('starts_at');
 
         if ($status = $request->string('status')->toString()) {
-            $query->where('status', $status);
+            $query->where('payment_status', $status);
         }
 
         $period = $request->string('period', 'all')->toString();
@@ -154,13 +121,14 @@ class PaymentManagementController extends Controller
         };
 
         if ($since) {
-            $query->where('transacted_at', '>=', $since);
+            $query->where('starts_at', '>=', $since);
         }
 
         if ($q = $request->string('q')->trim()->toString()) {
             $query->where(function ($inner) use ($q) {
-                $inner->where('transaction_code', 'like', "%{$q}%")
-                    ->orWhere('entity_name', 'like', "%{$q}%");
+                $inner->where('reference', 'like', "%{$q}%")
+                    ->orWhere('plan_name', 'like', "%{$q}%")
+                    ->orWhereHas('user', fn ($u) => $u->where('name', 'like', "%{$q}%")->orWhere('email', 'like', "%{$q}%"));
             });
         }
 

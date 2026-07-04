@@ -55,6 +55,9 @@ class DashboardController extends ApplicantPortalController
             ? $this->applications->submittedRegistration($user)
             : null;
 
+        $showAssignedLei = (bool) $user->lei_number;
+        $highlightAssignedLei = session()->pull('lei_show_on_dashboard', false);
+
         return view('applicant.dashboard.index', compact(
             'user',
             'entities',
@@ -67,6 +70,8 @@ class DashboardController extends ApplicantPortalController
             'profileCompletion',
             'hasSubmittedRegistration',
             'submittedRegistration',
+            'showAssignedLei',
+            'highlightAssignedLei',
         ));
     }
 }

@@ -5,6 +5,8 @@
 @section('content')
     @php
         $totalApps = $snapshots->get('total_applications');
+        $monthlyApps = $snapshots->get('monthly_applications');
+        $renewals = $snapshots->get('renewals_this_month');
         $pending = $snapshots->get('pending_approvals');
         $activeUsers = $snapshots->get('active_users');
         $payments = $snapshots->get('payments_24h');
@@ -16,27 +18,8 @@
             <p>{{ $businessSettings->dashboard_subtitle ?? 'Real-time operational dashboard and registry status.' }}</p>
         </div>
         <div class="lei-header-actions">
-            <a href="{{ route('admin.reports.export', ['type' => 'csv']) }}" class="lei-btn-navy">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                    <polyline points="7 10 12 15 17 10" />
-                    <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Export Reports
-            </a>
-            <a href="{{ route('admin.reports.index') }}" class="lei-btn-outline lei-btn-dropdown">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <rect x="3" y="4" width="18" height="18" rx="2" />
-                    <line x1="16" y1="2" x2="16" y2="6" />
-                    <line x1="8" y1="2" x2="8" y2="6" />
-                    <line x1="3" y1="10" x2="21" y2="10" />
-                </svg>
-                {{ $businessSettings->dashboard_period_label ?? 'Last 24 Hours' }}
-                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    stroke-width="2">
-                    <polyline points="6 9 12 15 18 9" />
-                </svg>
-            </a>
+            <a href="{{ route('admin.applications.index') }}" class="lei-btn-navy">View Applications</a>
+            <a href="{{ route('admin.payments.index') }}" class="lei-btn-outline">Payments</a>
         </div>
     </div>
 
@@ -62,7 +45,7 @@
         </div>
     @endif
 
-    <div class="lei-stats-grid">
+    <div class="lei-stats-grid lei-stats-grid--6">
         @if ($totalApps)
             <div class="lei-stat-card lei-stat-card--chart">
                 <div class="lei-stat-top">
@@ -73,14 +56,45 @@
                             <span class="lei-trend-pill">{{ $totalApps->trend_label }}</span>
                         @endif
                     </div>
+                    @if (!empty($totalApps->meta['subtitle']))
+                        <div class="lei-stat-sub">{{ $totalApps->meta['subtitle'] }}</div>
+                    @endif
                 </div>
                 @if (!empty($totalApps->meta['sparkline']))
                     <div class="lei-sparkline">
                         @foreach ($totalApps->meta['sparkline'] as $h)
-                            <span style="height: {{ $h }}%"></span>
+                            <span style="height: {{ max(8, $h) }}%"></span>
                         @endforeach
                     </div>
                 @endif
+            </div>
+        @endif
+
+        @if ($monthlyApps)
+            <div class="lei-stat-card">
+                <div class="lei-stat-top">
+                    <span class="label">{{ $monthlyApps->label }}</span>
+                    <span class="value">{{ $monthlyApps->value_display }}</span>
+                    <div class="lei-stat-sub">{{ $monthlyApps->meta['subtitle'] ?? $monthlyApps->trend_label }}</div>
+                    @if (isset($monthlyApps->meta['last_month']))
+                        <div class="lei-stat-sub">Last month: {{ $monthlyApps->meta['last_month'] }}</div>
+                    @endif
+                </div>
+            </div>
+        @endif
+
+        @if ($renewals)
+            <div class="lei-stat-card">
+                <div class="lei-stat-top">
+                    <div class="lei-stat-head">
+                        <span class="label">{{ $renewals->label }}</span>
+                        @if ($renewals->badge)
+                            <span class="lei-badge-urgent">{{ $renewals->badge }}</span>
+                        @endif
+                    </div>
+                    <span class="value">{{ $renewals->value_display }}</span>
+                    <div class="lei-stat-sub">{{ $renewals->meta['subtitle'] ?? '' }}</div>
+                </div>
             </div>
         @endif
 
@@ -94,21 +108,8 @@
                         @endif
                     </div>
                     <span class="value">{{ $pending->value_display }}</span>
-                    @if (!empty($pending->meta['subtitle']))
-                        <div class="lei-stat-sub">{{ $pending->meta['subtitle'] }}</div>
-                    @endif
+                    <div class="lei-stat-sub">{{ $pending->meta['subtitle'] ?? '' }}</div>
                 </div>
-                @php $assignees = $pending->meta['assignees'] ?? []; @endphp
-                @if (!empty($assignees))
-                    <div class="lei-avatars">
-                        @foreach ($assignees as $person)
-                            <span style="background:{{ $person['color'] ?? '#5b7fa6' }}">{{ $person['initials'] }}</span>
-                        @endforeach
-                        @if (!empty($pending->meta['extra_count']))
-                            <span class="lei-avatar-more">+{{ $pending->meta['extra_count'] }}</span>
-                        @endif
-                    </div>
-                @endif
             </div>
         @endif
 
@@ -116,26 +117,8 @@
             <div class="lei-stat-card">
                 <div class="lei-stat-top">
                     <span class="label">{{ $activeUsers->label }}</span>
-                    <div class="value-row">
-                        <span class="value">{{ $activeUsers->value_display }}</span>
-                        <span class="lei-stat-icon-muted">
-                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                                <circle cx="9" cy="7" r="4" />
-                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                            </svg>
-                        </span>
-                    </div>
-                </div>
-                <div class="lei-progress-wrap">
-                    <div class="row">
-                        <span>{{ $activeUsers->meta['subtitle'] ?? 'Peak load' }}</span>
-                        <span>{{ $activeUsers->meta['progress'] ?? 84 }}%</span>
-                    </div>
-                    <div class="lei-progress-bar">
-                        <span style="width: {{ $activeUsers->meta['progress'] ?? 84 }}%"></span>
-                    </div>
+                    <span class="value">{{ $activeUsers->value_display }}</span>
+                    <div class="lei-stat-sub">{{ $activeUsers->meta['subtitle'] ?? '' }}</div>
                 </div>
             </div>
         @endif
@@ -144,18 +127,8 @@
             <div class="lei-stat-card">
                 <div class="lei-stat-top">
                     <span class="label">{{ $payments->label }}</span>
-                    <div class="value-row">
-                        <span class="value">{{ $payments->value_display }}</span>
-                        <span class="lei-stat-icon-green">
-                            <i class="fa-solid fa-money-bills"></i>
-                        </span>
-                    </div>
-                </div>
-                <div class="lei-payment-boxes">
-                    <span class="lei-pay-box rev">Revenue
-                        {{ $payments->meta['revenue'] ?? \App\Support\CurrencyFormatter::formatSignedCompact(8200) }}</span>
-                    <span class="lei-pay-box ref">Refunds
-                        {{ $payments->meta['refunds'] ?? \App\Support\CurrencyFormatter::formatSignedCompact(-1100) }}</span>
+                    <span class="value">{{ $payments->value_display }}</span>
+                    <div class="lei-stat-sub">{{ $payments->meta['subtitle'] ?? '' }}</div>
                 </div>
             </div>
         @endif
@@ -163,47 +136,59 @@
 
     <div class="lei-charts-row">
         <div class="lei-chart-card">
-            <h3>Application Trends Visualization</h3>
-            <div class="lei-chart-legend">
-                <span class="main">Main Registry</span>
-                <span class="partner">Partner API</span>
-            </div>
+            <h3>Application Trends (Last 12 Months)</h3>
+            <p style="margin:0 0 12px;font-size:13px;color:#64748b;">Applications received per month — live data from registry records.</p>
             <div class="lei-chart-canvas-wrap">
                 <canvas id="trendsChart" height="300"></canvas>
             </div>
         </div>
 
         <div class="lei-health-card">
-            <h3>System Health</h3>
-            <div class="lei-health-list">
-                @foreach ($services as $service)
-                    <div class="lei-health-item">
-                        <span class="lei-health-name">{{ $service->service_name }}</span>
-                        <span class="lei-health-status {{ $service->status === 'warning' ? 'warn' : 'ok' }}">
-                            @if ($service->status === 'warning')
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2L1 21h22L12 2zm0 4l7.53 13H4.47L12 6zm-1 5v4h2v-4h-2zm0 6v2h2v-2h-2z" />
-                                </svg>
-                            @else
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                                    <polyline points="20 6 9 17 4 12" />
-                                </svg>
-                            @endif
-                            {{ \App\Support\CurrencyFormatter::formatNumber($service->uptime_percent, 2) }}%
-                        </span>
-                    </div>
+            <h3>Renewals Due This Month</h3>
+            <p style="margin:0 0 12px;font-size:13px;color:#64748b;">Approved LEIs expiring in {{ now()->format('F Y') }}.</p>
+            @if ($renewalsDue->isNotEmpty())
+                <div class="lei-dash-renew-list">
+                    @foreach ($renewalsDue as $app)
+                        <div class="lei-dash-renew-item">
+                            <div>
+                                <strong>{{ $app->entity_name }}</strong>
+                                <span class="lei-dash-renew-lei">{{ $app->lei_number ?? '—' }}</span>
+                            </div>
+                            <span class="lei-dash-renew-date">{{ $app->expiry_date?->format('M j') }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p style="font-size:13px;color:#94a3b8;padding:24px 0;text-align:center;">No renewals due this month.</p>
+            @endif
+        </div>
+    </div>
+
+    <div class="lei-chart-card" style="margin-top:20px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <h3 style="margin:0;">Recent Applications</h3>
+            <a href="{{ route('admin.applications.index') }}" class="lei-btn-outline lei-btn-sm">View all</a>
+        </div>
+        @if ($recentApplications->isNotEmpty())
+            <div class="lei-dash-app-table">
+                <div class="lei-dash-app-head">
+                    <span>Entity</span>
+                    <span>Ref</span>
+                    <span>Status</span>
+                    <span>Submitted</span>
+                </div>
+                @foreach ($recentApplications as $app)
+                    <a href="{{ route('admin.applications.index') }}?q={{ urlencode($app->application_code) }}" class="lei-dash-app-row">
+                        <span><strong>{{ $app->entity_name }}</strong><small>{{ $app->user?->email }}</small></span>
+                        <span class="mono">{{ $app->application_code }}</span>
+                        <span><span class="lei-app-status lei-app-status--{{ $app->status_tone }}"><span class="dot"></span>{{ $app->status_label }}</span></span>
+                        <span>{{ $app->submitted_on?->format('M j, Y') ?? $app->created_at->format('M j, Y') }}</span>
+                    </a>
                 @endforeach
             </div>
-            <div class="lei-load-footer">
-                <div class="row">
-                    <span>Current Load Average</span>
-                    <span>Moderate ({{ $loadAverage }}%)</span>
-                </div>
-                <div class="lei-progress-bar">
-                    <span style="width: {{ $loadAverage }}%"></span>
-                </div>
-            </div>
-        </div>
+        @else
+            <p style="font-size:13px;color:#94a3b8;padding:24px 0;text-align:center;">No applications yet.</p>
+        @endif
     </div>
 @endsection
 
@@ -229,9 +214,9 @@
             const pad = { top: 24, right: 16, bottom: 44, left: 44 };
             const chartW = w - pad.left - pad.right;
             const chartH = h - pad.top - pad.bottom;
-            const maxVal = Math.max(...trendData.map(d => Math.max(d.main + d.partner, d.main))) * 1.15;
+            const maxVal = Math.max(1, ...trendData.map(d => d.main)) * 1.15;
             const groupW = chartW / trendData.length;
-            const barW = groupW * 0.38;
+            const barW = Math.min(groupW * 0.6, 36);
 
             ctx.clearRect(0, 0, w, h);
 
@@ -249,13 +234,7 @@
                 const cx = pad.left + i * groupW + groupW / 2;
                 const x = cx - barW / 2;
                 const baseY = pad.top + chartH;
-                const totalH = (d.main + d.partner) / maxVal * chartH;
-                const mainH = d.main / maxVal * chartH;
-
-                ctx.fillStyle = '#e4eaf2';
-                ctx.beginPath();
-                ctx.roundRect(x, baseY - totalH, barW, totalH, [4, 4, 0, 0]);
-                ctx.fill();
+                const mainH = (d.main / maxVal) * chartH;
 
                 ctx.fillStyle = '#0f3057';
                 ctx.beginPath();
@@ -277,4 +256,24 @@
             resizeTimer = setTimeout(drawChart, 150);
         });
     </script>
+@endpush
+
+@push('styles')
+<style>
+.lei-stats-grid--6 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1100px) { .lei-stats-grid--6 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .lei-stats-grid--6 { grid-template-columns: 1fr; } }
+.lei-dash-renew-list { display: flex; flex-direction: column; gap: 8px; max-height: 280px; overflow-y: auto; }
+.lei-dash-renew-item { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid #eef2f6; border-radius: 8px; font-size: 13px; }
+.lei-dash-renew-item strong { display: block; font-size: 13px; color: #0f172a; }
+.lei-dash-renew-lei { font-family: monospace; font-size: 11px; color: #64748b; }
+.lei-dash-renew-date { font-size: 12px; font-weight: 600; color: #d97706; white-space: nowrap; }
+.lei-dash-app-table { border: 1px solid #eef2f6; border-radius: 10px; overflow: hidden; }
+.lei-dash-app-head, .lei-dash-app-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; padding: 12px 16px; align-items: center; font-size: 13px; }
+.lei-dash-app-head { background: #f8fafc; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; color: #64748b; }
+.lei-dash-app-row { border-top: 1px solid #eef2f6; text-decoration: none; color: inherit; }
+.lei-dash-app-row:hover { background: #f8fafc; }
+.lei-dash-app-row small { display: block; font-size: 11px; color: #94a3b8; margin-top: 2px; }
+.lei-dash-app-row .mono { font-family: monospace; font-size: 12px; }
+</style>
 @endpush

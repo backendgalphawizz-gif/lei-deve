@@ -2,11 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\LeiSubscription;
 use App\Support\CurrencyFormatter;
-use App\Models\LeiFinancialTransaction;
-use App\Models\LeiPaymentGateway;
-use App\Models\LeiRefundRequest;
 use Carbon\Carbon;
+
 class FinancialStatsService
 {
     /**
@@ -14,23 +13,25 @@ class FinancialStatsService
      */
     public function summaryCards(): array
     {
-        $revenue = (float) LeiFinancialTransaction::where('status', 'success')->sum('amount');
-        $prevRevenue = (float) LeiFinancialTransaction::where('status', 'success')
-            ->where('transacted_at', '<', Carbon::now()->subDays(30))
-            ->where('transacted_at', '>=', Carbon::now()->subDays(60))
+        $revenue = (float) LeiSubscription::where('payment_status', 'paid')->sum('amount');
+        $prevRevenue = (float) LeiSubscription::where('payment_status', 'paid')
+            ->where('starts_at', '<', Carbon::now()->subDays(30))
+            ->where('starts_at', '>=', Carbon::now()->subDays(60))
             ->sum('amount');
         $trend = $prevRevenue > 0
             ? round((($revenue - $prevRevenue) / $prevRevenue) * 100, 1)
-            : 12.4;
+            : ($revenue > 0 ? 100.0 : 0.0);
 
-        $pendingRefunds = LeiRefundRequest::where('status', 'pending')->count();
-        $avgHours = (float) (LeiRefundRequest::where('status', 'pending')->avg('avg_response_hours') ?? 4.2);
+        $pendingPayments = LeiSubscription::where('payment_status', 'pending')->count();
+        $paidCount = LeiSubscription::where('payment_status', 'paid')->count();
+        $total = LeiSubscription::count();
+        $rate = $total > 0 ? round(($paidCount / $total) * 100, 1) : 0.0;
 
-        $total = LeiFinancialTransaction::count();
-        $success = LeiFinancialTransaction::where('status', 'success')->count();
-        $rate = $total > 0 ? round(($success / $total) * 100, 2) : 99.94;
+        $monthRevenue = (float) LeiSubscription::where('payment_status', 'paid')
+            ->where('starts_at', '>=', now()->startOfMonth())
+            ->sum('amount');
 
-        $taxLiability = round($revenue * 0.114, 2);
+        $gstEstimate = round($monthRevenue * 0.18, 2);
 
         return [
             (object) [
@@ -39,32 +40,32 @@ class FinancialStatsService
                 'value' => CurrencyFormatter::format($revenue),
                 'badge' => ($trend >= 0 ? '+' : '').$trend.'%',
                 'badge_tone' => $trend >= 0 ? 'green' : 'red',
-                'subtitle' => null,
+                'subtitle' => CurrencyFormatter::format($monthRevenue, 0).' this month',
             ],
             (object) [
                 'key' => 'refunds',
-                'label' => 'Pending Refunds Queue',
-                'value' => $pendingRefunds.' Requests',
-                'badge' => 'URGENT',
-                'badge_tone' => 'red',
-                'subtitle' => 'Avg. Response Time: '.CurrencyFormatter::formatNumber($avgHours, 1).'h',
+                'label' => 'Pending Payments',
+                'value' => $pendingPayments.' Pending',
+                'badge' => $pendingPayments > 0 ? 'ACTION' : null,
+                'badge_tone' => $pendingPayments > 0 ? 'red' : null,
+                'subtitle' => $paidCount.' paid subscriptions',
             ],
             (object) [
                 'key' => 'gateway',
-                'label' => 'Gateway Success Rate',
-                'value' => CurrencyFormatter::formatNumber($rate, 2).'%',
+                'label' => 'Payment Success Rate',
+                'value' => CurrencyFormatter::formatNumber($rate, 1).'%',
                 'badge' => 'LIVE',
                 'badge_tone' => 'green',
-                'subtitle' => null,
+                'subtitle' => $total.' total subscriptions',
                 'sparkline' => $this->sparkline(),
             ],
             (object) [
                 'key' => 'tax',
-                'label' => 'Estimated Tax Liability',
-                'value' => CurrencyFormatter::format($taxLiability),
+                'label' => 'GST Collected (Est.)',
+                'value' => CurrencyFormatter::format($gstEstimate),
                 'badge' => null,
                 'badge_tone' => null,
-                'subtitle' => 'Q3 2023 · Next filing due in 12 days',
+                'subtitle' => now()->format('F Y').' · 18% on paid plans',
             ],
         ];
     }
@@ -74,22 +75,22 @@ class FinancialStatsService
      */
     public function sparkline(): array
     {
-        $rows = LeiFinancialTransaction::query()
-            ->selectRaw("DATE(transacted_at) as day, SUM(CASE WHEN status = 'success' THEN 1 ELSE 0 END) as ok, COUNT(*) as total")
-            ->where('transacted_at', '>=', Carbon::now()->subDays(10))
+        $rows = LeiSubscription::query()
+            ->selectRaw("DATE(starts_at) as day, SUM(CASE WHEN payment_status = 'paid' THEN 1 ELSE 0 END) as ok, COUNT(*) as total")
+            ->where('starts_at', '>=', Carbon::now()->subDays(10))
             ->groupBy('day')
             ->orderBy('day')
             ->get();
 
         if ($rows->isEmpty()) {
-            return [88, 91, 90, 93, 95, 94, 96, 99, 98, 100];
+            return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         }
 
-        return $rows->map(fn ($r) => $r->total > 0 ? (int) round(($r->ok / $r->total) * 100) : 99)->values()->all();
+        return $rows->map(fn ($r) => $r->total > 0 ? (int) round(($r->ok / $r->total) * 100) : 0)->values()->all();
     }
 
     public function gatewayMetrics(): array
     {
-        return LeiPaymentGateway::orderBy('sort_order')->get()->all();
+        return [];
     }
 }

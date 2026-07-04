@@ -141,6 +141,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::delete('users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
         Route::get('users/roles/{role}/permissions', [UserManagementController::class, 'rolePermissions'])->name('users.role.permissions');
         Route::get('payments/export', [PaymentManagementController::class, 'export'])->name('payments.export');
+        Route::get('payments/{subscription}/invoice', [PaymentManagementController::class, 'invoice'])->name('payments.invoice');
         Route::post('payments/reconcile', [PaymentManagementController::class, 'reconcile'])->name('payments.reconcile');
         Route::get('payments', [PaymentManagementController::class, 'index'])->name('payments.index');
         Route::post('payments/refunds/{refund}/action', [PaymentManagementController::class, 'refundAction'])->name('payments.refund.action');
