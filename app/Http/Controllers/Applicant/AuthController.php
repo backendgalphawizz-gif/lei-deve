@@ -9,6 +9,7 @@ use App\Services\ApplicantAuthService;
 use App\Services\ApplicantPortalRedirect;
 use App\Services\GleifRegistrationPrefillService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -183,6 +184,7 @@ class AuthController extends Controller
 
         return view('public.auth.verify-otp', [
             'otpLength' => $this->authService->otpConfig()['length'],
+            'resendCooldownRemaining' => $this->otpResendCooldownRemaining(),
         ]);
     }
 
@@ -207,12 +209,12 @@ class AuthController extends Controller
             $this->syncDevOtpSession();
 
             $message = match ($result['reason'] ?? 'invalid') {
-                'expired' => 'Your verification code has expired. Please request a new code.',
-                'missing' => 'No active verification code found. Please request a new code.',
-                'max_attempts' => 'Too many incorrect attempts. Please request a new verification code.',
+                'expired' => 'Your verification code has expired. Use “Send code again” to receive a new one.',
+                'missing' => 'No active verification code found. Use “Send code again” to receive a new one.',
+                'max_attempts' => 'Too many incorrect attempts for this code. Use “Send code again” after the cooldown to get a new code.',
                 default => isset($result['remaining_attempts'])
-                    ? 'Invalid verification code. '.$result['remaining_attempts'].' attempt'.($result['remaining_attempts'] === 1 ? '' : 's').' remaining.'
-                    : 'Invalid verification code.',
+                    ? 'Incorrect code — your current code is still valid. '.$result['remaining_attempts'].' attempt'.($result['remaining_attempts'] === 1 ? '' : 's').' remaining.'
+                    : 'Incorrect verification code. Your current code is still valid — please try again.',
             };
 
             throw ValidationException::withMessages(['code' => $message]);
@@ -254,16 +256,10 @@ class AuthController extends Controller
         }
 
         $cooldownSeconds = 60;
-        $lastSent = session('otp_last_sent_at');
+        $wait = $this->otpResendCooldownRemaining($cooldownSeconds);
 
-        if ($lastSent) {
-            $elapsed = now()->diffInSeconds(\Illuminate\Support\Carbon::parse($lastSent));
-
-            if ($elapsed < $cooldownSeconds) {
-                $wait = $cooldownSeconds - $elapsed;
-
-                return back()->with('error', 'Please wait '.$wait.' second'.($wait === 1 ? '' : 's').' before requesting another code.');
-            }
+        if ($wait > 0) {
+            return back()->with('error', 'Please wait '.$wait.' second'.($wait === 1 ? '' : 's').' before requesting another code.');
         }
 
         $otp = $this->authService->generateOtp($user, 'registration');
@@ -409,5 +405,18 @@ class AuthController extends Controller
         if ($otp) {
             session(['otp_code_dev' => $otp->code]);
         }
+    }
+
+    private function otpResendCooldownRemaining(int $cooldownSeconds = 60): int
+    {
+        $lastSent = session('otp_last_sent_at');
+
+        if (! $lastSent) {
+            return 0;
+        }
+
+        $elapsed = max(0, now()->timestamp - Carbon::parse($lastSent)->timestamp);
+
+        return max(0, $cooldownSeconds - $elapsed);
     }
 }

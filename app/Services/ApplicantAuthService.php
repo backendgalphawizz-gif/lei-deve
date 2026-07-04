@@ -60,7 +60,7 @@ class ApplicantAuthService
             'user_id' => $user->id,
             'code' => $code,
             'purpose' => $purpose,
-            'expires_at' => now()->addMinutes($config['expiry_minutes']),
+            'expires_at' => now()->addSeconds(max(60, $config['expiry_minutes'] * 60)),
         ]);
 
         // Send OTP email

@@ -5,6 +5,12 @@
 @section('content')
 @php
     $otpLength = $otpLength ?? 6;
+    $lastSent = session('otp_last_sent_at');
+    $resendCooldownRemaining = (int) ($resendCooldownRemaining ?? 0);
+    if ($lastSent) {
+        $elapsed = max(0, now()->timestamp - \Illuminate\Support\Carbon::parse($lastSent)->timestamp);
+        $resendCooldownRemaining = max(0, 60 - $elapsed);
+    }
 @endphp
 <section class="lei-pub-auth-section">
     <div class="lei-pub-auth-card">
@@ -69,27 +75,21 @@
         });
     }
 
-    var cooldownSeconds = 60;
-    var lastSent = @json(session('otp_last_sent_at'));
+    var waitInitial = {{ $resendCooldownRemaining }};
     var btn = document.getElementById('leiOtpResendBtn');
     var note = document.getElementById('leiOtpResendNote');
     var timerId;
-
-    function remainingSeconds() {
-        if (!lastSent) return 0;
-        var elapsed = Math.floor((Date.now() - new Date(lastSent).getTime()) / 1000);
-        return Math.max(0, cooldownSeconds - elapsed);
-    }
+    var wait = waitInitial;
 
     function updateResendState() {
-        var wait = remainingSeconds();
         if (!btn) return;
         if (wait > 0) {
             btn.disabled = true;
             if (note) {
                 note.hidden = false;
-                note.textContent = 'You can request another code in ' + wait + 's.';
+                note.textContent = 'You can request another code in ' + wait + 's. Your current code remains valid until then.';
             }
+            wait -= 1;
             timerId = setTimeout(updateResendState, 1000);
         } else {
             btn.disabled = false;
