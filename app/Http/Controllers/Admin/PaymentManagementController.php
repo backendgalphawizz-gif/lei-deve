@@ -54,11 +54,10 @@ class PaymentManagementController extends Controller
         $baseAmount = (float) ($subscription->amount ?? 0);
         $gstAmount = round($baseAmount * 0.18, 2);
         $totalAmount = $baseAmount + $gstAmount;
-        $currency = '₹';
 
         $pdf = Pdf::loadView('applicant.payments.invoice', compact(
             'subscription', 'user', 'businessSettings',
-            'baseAmount', 'gstAmount', 'totalAmount', 'currency',
+            'baseAmount', 'gstAmount', 'totalAmount',
         ))
             ->setPaper('A4', 'portrait')
             ->setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => false]);

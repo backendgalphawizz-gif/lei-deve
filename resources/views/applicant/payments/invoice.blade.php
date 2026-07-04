@@ -4,6 +4,12 @@
 <meta charset="UTF-8">
 <title>GST Invoice — {{ $subscription->reference }}</title>
 <style>
+  @font-face {
+    font-family: 'Noto Sans';
+    font-style: normal;
+    font-weight: normal;
+    src: url('{{ \App\Support\CurrencyFormatter::pdfFontPath() }}') format('truetype');
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     font-family: 'DejaVu Sans', Arial, sans-serif;
@@ -11,6 +17,7 @@
     color: #1e293b;
     background: #fff;
   }
+  .inv-amount { font-family: 'Noto Sans', 'DejaVu Sans', sans-serif; letter-spacing: .01em; }
   .inv-page { width: 794px; min-height: 1123px; padding: 0; position: relative; }
   .inv-header { background: #0b162c; padding: 24px 40px; display: flex; justify-content: space-between; align-items: center; }
   .inv-brand { color: #fff; }
@@ -92,16 +99,16 @@
           <td>{{ $subscription->plan_name }}</td>
           <td>{{ ucfirst($subscription->subscription_type ?? 'registration') }}</td>
           <td>{{ $subscription->duration_years ?? 1 }} Year(s)</td>
-          <td>{{ $currency }}{{ number_format($baseAmount, 2) }}</td>
+          <td class="inv-amount">{{ \App\Support\CurrencyFormatter::formatPdf($baseAmount) }}</td>
         </tr>
       </tbody>
     </table>
 
     <div style="clear:both;height:16px;"></div>
     <div class="inv-totals">
-      <div class="inv-total-row"><dt>Subtotal</dt><dd>{{ $currency }}{{ number_format($baseAmount, 2) }}</dd></div>
-      <div class="inv-total-row"><dt>GST (18%)</dt><dd>{{ $currency }}{{ number_format($gstAmount, 2) }}</dd></div>
-      <div class="inv-total-row"><dt>Total Payable</dt><dd>{{ $currency }}{{ number_format($totalAmount, 2) }}</dd></div>
+      <div class="inv-total-row"><dt>Subtotal</dt><dd class="inv-amount">{{ \App\Support\CurrencyFormatter::formatPdf($baseAmount) }}</dd></div>
+      <div class="inv-total-row"><dt>GST (18%)</dt><dd class="inv-amount">{{ \App\Support\CurrencyFormatter::formatPdf($gstAmount) }}</dd></div>
+      <div class="inv-total-row"><dt>Total Payable</dt><dd class="inv-amount">{{ \App\Support\CurrencyFormatter::formatPdf($totalAmount) }}</dd></div>
     </div>
 
     <div class="inv-note" style="margin-top:80px;">

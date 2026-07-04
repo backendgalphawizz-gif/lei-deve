@@ -53,6 +53,20 @@ class CurrencyFormatter
         return static::symbol().static::formatNumber($amount, $decimals);
     }
 
+    /**
+     * Format amount for DomPDF invoices (DejaVu Sans lacks the ₹ glyph).
+     * Pair with Noto Sans via CurrencyFormatter::pdfFontPath() in the PDF view.
+     */
+    public static function pdfFontPath(): string
+    {
+        return public_path('fonts/NotoSans-Regular.ttf');
+    }
+
+    public static function formatPdf(float $amount, int $decimals = 2): string
+    {
+        return "\u{20B9}".number_format($amount, $decimals);
+    }
+
     public static function formatSignedCompact(float $amount): string
     {
         $sign = $amount < 0 ? '-' : '+';
