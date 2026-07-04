@@ -214,6 +214,7 @@ body.lei-pub-notify-open{overflow:hidden}
 .lei-pub-otp-resend-form{margin:0;text-align:center}
 .lei-pub-otp-resend-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;padding:10px 16px;border:1px solid #d1d5db;border-radius:8px;background:#fff;color:#374151;font:inherit;font-size:13px;font-weight:600;cursor:pointer;transition:border-color .15s,color .15s}
 .lei-pub-otp-resend-btn:hover{border-color:#9a7b4f;color:#9a7b4f}
+.lei-pub-otp-valid-note{margin:0 0 16px;padding:10px 12px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;font-size:13px;color:#1e40af;text-align:center}
 .lei-pub-otp-resend-note{margin:8px 0 0;font-size:12px;color:#64748b;text-align:center}
 .lei-pub-field-error{margin:8px 0 0;font-size:13px;color:#dc2626;text-align:center}
 .lei-pub-otp-input.is-invalid{border-color:#dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.12)}

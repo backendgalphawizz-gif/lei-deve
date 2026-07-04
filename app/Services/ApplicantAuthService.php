@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Mail;
 
 class ApplicantAuthService
 {
+    public const MIN_VALID_SECONDS = 60;
+
+    public const RESEND_COOLDOWN_SECONDS = 60;
+
     public function __construct(private LeiCodeGenerator $leiCodes) {}
 
     public function otpConfig(): array
@@ -21,10 +25,11 @@ class ApplicantAuthService
             $config = null;
         }
 
+        $expiryMinutes = max(1, min(30, (int) ($config?->otp_expiry_min ?: 10)));
+
         return [
             'length' => max(4, min(8, (int) ($config?->otp_length ?: 6))),
-            'expiry_minutes' => max(1, min(30, (int) ($config?->otp_expiry_min ?: 10))),
-            'retry_limit' => max(1, min(10, (int) ($config?->otp_retry_limit ?: 5))),
+            'expiry_seconds' => max(self::MIN_VALID_SECONDS, $expiryMinutes * 60),
         ];
     }
 
@@ -41,6 +46,34 @@ class ApplicantAuthService
             ->whereNull('verified_at')
             ->latest('id')
             ->first();
+    }
+
+    public function resendCooldownRemaining(?int $lastSentAt): int
+    {
+        if (! $lastSentAt) {
+            return 0;
+        }
+
+        $elapsed = max(0, now()->timestamp - $lastSentAt);
+
+        return max(0, self::RESEND_COOLDOWN_SECONDS - $elapsed);
+    }
+
+    public function parseLastSentAt(mixed $value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (is_numeric($value)) {
+            return (int) $value;
+        }
+
+        try {
+            return \Illuminate\Support\Carbon::parse($value)->timestamp;
+        } catch (\Throwable) {
+            return null;
+        }
     }
 
     public function generateOtp(User $user, string $purpose = 'registration'): LeiApplicantOtp
@@ -60,28 +93,28 @@ class ApplicantAuthService
             'user_id' => $user->id,
             'code' => $code,
             'purpose' => $purpose,
-            'expires_at' => now()->addSeconds(max(60, $config['expiry_minutes'] * 60)),
+            'expires_at' => now()->addSeconds($config['expiry_seconds']),
+            'attempts' => 0,
         ]);
 
-        // Send OTP email
         try {
             Mail::to($user->email)->send(new OtpMail($user->name, $code));
         } catch (\Throwable) {
-            // Non-fatal: OTP is still stored in session for dev display
+            // Non-fatal: OTP is still stored for verification
         }
 
         return $otp;
     }
 
     /**
-     * @return array{ok: bool, reason?: string, remaining_attempts?: int}
+     * @return array{ok: bool, reason?: string}
      */
     public function verifyOtp(User $user, string $code, string $purpose = 'registration'): array
     {
         $code = $this->normalizeOtpCode($code);
-        $config = $this->otpConfig();
+        $length = $this->otpConfig()['length'];
 
-        if (strlen($code) !== $config['length']) {
+        if (strlen($code) !== $length) {
             return ['ok' => false, 'reason' => 'invalid'];
         }
 
@@ -91,7 +124,7 @@ class ApplicantAuthService
             return ['ok' => false, 'reason' => 'missing'];
         }
 
-        if ($otp->isExpired()) {
+        if ($otp->isExpired(self::MIN_VALID_SECONDS)) {
             return ['ok' => false, 'reason' => 'expired'];
         }
 
@@ -103,14 +136,8 @@ class ApplicantAuthService
         }
 
         $otp->increment('attempts');
-        $attempts = (int) $otp->fresh()->attempts;
-        $remaining = max(0, $config['retry_limit'] - $attempts);
 
-        if ($attempts >= $config['retry_limit']) {
-            return ['ok' => false, 'reason' => 'max_attempts', 'remaining_attempts' => 0];
-        }
-
-        return ['ok' => false, 'reason' => 'invalid', 'remaining_attempts' => $remaining];
+        return ['ok' => false, 'reason' => 'invalid'];
     }
 
     public function createApplicant(array $data): User
@@ -131,7 +158,6 @@ class ApplicantAuthService
             'mfa_status' => 'pending',
         ]);
 
-        // Send welcome email with LEI code
         try {
             Mail::to($user->email)->send(new RegistrationWelcomeMail($user));
         } catch (\Throwable) {
