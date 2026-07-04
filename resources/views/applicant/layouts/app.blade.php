@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('css/lei-admin.css') }}?v=8">
     <link rel="stylesheet" href="{{ asset('css/lei-global.css') }}?v=3">
-    <link rel="stylesheet" href="{{ asset('css/lei-applicant-portal.css') }}?v=15">
+    <link rel="stylesheet" href="{{ asset('css/lei-applicant-portal.css') }}?v=16">
     <link rel="stylesheet" href="{{ asset('css/lei-admin-validation.css') }}?v=4">
     @stack('styles')
 </head>
@@ -73,7 +73,7 @@
 @endif
 
 <script src="{{ asset('js/lei-global.js') }}?v=3"></script>
-<script src="{{ asset('js/lei-applicant-portal.js') }}?v=8"></script>
+<script src="{{ asset('js/lei-applicant-portal.js') }}?v=9"></script>
 <script src="{{ asset('js/lei-public-notify.js') }}?v=2"></script>
 <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
 @stack('scripts')

@@ -20,7 +20,12 @@ document.querySelectorAll('[data-plan-select-grid]').forEach(function (grid) {
         }
 
         card.addEventListener('click', function (e) {
-            if (e.target.closest('a, button, select, input, label')) return;
+            if (e.target.closest('a, button, select, input, label')) {
+                if (e.target.closest('a.lei-plan-select-btn')) {
+                    selectCard();
+                }
+                return;
+            }
             selectCard();
         });
 

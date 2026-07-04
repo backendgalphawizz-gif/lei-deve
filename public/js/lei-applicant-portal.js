@@ -198,10 +198,15 @@
                 card.setAttribute('aria-pressed', 'true');
             }
 
-            card.addEventListener('click', function (e) {
-                if (e.target.closest('a, button, select, input, label')) return;
-                selectCard();
-            });
+        card.addEventListener('click', function (e) {
+            if (e.target.closest('a, button, select, input, label')) {
+                if (e.target.closest('a.lei-plan-select-btn')) {
+                    selectCard();
+                }
+                return;
+            }
+            selectCard();
+        });
 
             card.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
