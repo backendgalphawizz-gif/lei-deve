@@ -4,7 +4,7 @@
 @section('body_class', 'lei-page-certificates')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=3">
+    <link rel="stylesheet" href="{{ asset('css/lei-certificates.css') }}?v=4">
 @endpush
 
 @section('breadcrumbs')
@@ -39,7 +39,25 @@
             </div>
             <div>
                 <strong>{{ $stats['signed'] }}</strong>
-                <span>Signed</span>
+                <span>Signed (all time)</span>
+            </div>
+        </div>
+        <div class="lei-ca-metric">
+            <div class="lei-ca-metric-icon lei-ca-metric-icon--month">
+                <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+            </div>
+            <div>
+                <strong>{{ $stats['signed_this_month'] }}</strong>
+                <span>Signed this month</span>
+            </div>
+        </div>
+        <div class="lei-ca-metric">
+            <div class="lei-ca-metric-icon lei-ca-metric-icon--today">
+                <i class="fa-solid fa-clock" aria-hidden="true"></i>
+            </div>
+            <div>
+                <strong>{{ $stats['signed_today'] }}</strong>
+                <span>Signed today</span>
             </div>
         </div>
         <div class="lei-ca-metric">
@@ -50,6 +68,47 @@
                 <strong>{{ $stats['rejected'] }}</strong>
                 <span>Rejected</span>
             </div>
+        </div>
+    </div>
+
+    <div class="lei-ca-insights-row">
+        <div class="lei-ca-insight-card">
+            <h3>Signing Activity (6 months)</h3>
+            <p class="lei-ca-insight-sub">Certificates digitally signed per month — live registry data.</p>
+            @php $maxTrend = max(1, ...array_column($signingTrend, 'count')); @endphp
+            <div class="lei-ca-trend-bars">
+                @foreach ($signingTrend as $point)
+                    <div class="lei-ca-trend-bar-wrap" title="{{ $point['label'] }}: {{ $point['count'] }} signed">
+                        <div class="lei-ca-trend-bar" style="height: {{ max(4, round(($point['count'] / $maxTrend) * 100)) }}%;"></div>
+                        <span>{{ $point['label'] }}</span>
+                    </div>
+                @endforeach
+            </div>
+            @if ($stats['avg_signing_days'] !== null)
+                <p class="lei-ca-insight-foot">Average time to sign: <strong>{{ $stats['avg_signing_days'] }} days</strong></p>
+            @else
+                <p class="lei-ca-insight-foot">Average time to sign will appear after your first signed certificate.</p>
+            @endif
+        </div>
+
+        <div class="lei-ca-insight-card">
+            <h3>Recently Signed</h3>
+            <p class="lei-ca-insight-sub">Latest certificates released to applicants.</p>
+            @if ($recentSigned->isNotEmpty())
+                <ul class="lei-ca-recent-list">
+                    @foreach ($recentSigned as $recent)
+                        <li>
+                            <div>
+                                <strong>{{ $recent->application->entity_name }}</strong>
+                                <span>{{ $recent->application->lei_number ?? '—' }} · {{ $recent->signed_at?->format('M j, Y') }}</span>
+                            </div>
+                            <a href="{{ route('admin.certificates.show', $recent) }}" class="lei-ca-recent-link">View</a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="lei-ca-insight-empty">No signed certificates yet.</p>
+            @endif
         </div>
     </div>
 

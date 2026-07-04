@@ -46,7 +46,7 @@
 @if (! empty($publicFlashMessages))
     <script type="application/json" id="lei-pub-flash-data">@json($publicFlashMessages)</script>
 @endif
-<script src="{{ asset('js/lei-public.js') }}?v=1"></script>
+<script src="{{ asset('js/lei-public.js') }}?v=2"></script>
 <script src="{{ asset('js/lei-public-notify.js') }}?v=1"></script>
 <script src="{{ asset('js/lei-admin-validation.js') }}?v=4"></script>
 @stack('scripts')

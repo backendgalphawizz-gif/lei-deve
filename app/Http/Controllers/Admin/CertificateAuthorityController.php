@@ -7,6 +7,7 @@ use App\Mail\CertificateSignedMail;
 use App\Models\LeiApplicationAuditEvent;
 use App\Models\LeiCertificate;
 use App\Services\LeiCertificateService;
+use App\Services\CaDashboardStatsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -16,7 +17,7 @@ class CertificateAuthorityController extends Controller
 {
     public function __construct(private LeiCertificateService $certificates) {}
 
-    public function index(Request $request)
+    public function index(Request $request, CaDashboardStatsService $caStats)
     {
         $status = $request->string('status')->toString() ?: 'pending_ca';
 
@@ -31,14 +32,17 @@ class CertificateAuthorityController extends Controller
         }
 
         $certificates = $query->paginate(15)->withQueryString();
+        $stats = $caStats->summary();
+        $recentSigned = $caStats->recentSigned(5);
+        $signingTrend = $caStats->signingTrend(6);
 
-        $stats = [
-            'pending' => LeiCertificate::whereIn('status', ['unsigned', 'pending_ca'])->count(),
-            'signed' => LeiCertificate::where('status', 'signed')->count(),
-            'rejected' => LeiCertificate::where('status', 'rejected')->count(),
-        ];
-
-        return view('admin.certificates.index', compact('certificates', 'stats', 'status'));
+        return view('admin.certificates.index', compact(
+            'certificates',
+            'stats',
+            'status',
+            'recentSigned',
+            'signingTrend',
+        ));
     }
 
     public function show(LeiCertificate $certificate)

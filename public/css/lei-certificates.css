@@ -83,6 +83,138 @@ body.lei-page-certificates .lei-content {
   color: #dc2626;
 }
 
+.lei-ca-metric-icon--month {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.lei-ca-metric-icon--today {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.lei-ca-insights-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 16px;
+}
+
+.lei-ca-insight-card {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  padding: 18px 20px;
+  box-shadow: 0 1px 3px rgba(0, 21, 41, 0.04);
+}
+
+.lei-ca-insight-card h3 {
+  margin: 0 0 4px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.lei-ca-insight-sub {
+  margin: 0 0 16px;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.lei-ca-trend-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  min-height: 120px;
+  padding-top: 8px;
+}
+
+.lei-ca-trend-bar-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.lei-ca-trend-bar {
+  width: 100%;
+  max-width: 36px;
+  background: linear-gradient(180deg, #1a5fad 0%, #3b82f6 100%);
+  border-radius: 4px 4px 0 0;
+  min-height: 4px;
+}
+
+.lei-ca-trend-bar-wrap span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.lei-ca-insight-foot {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.lei-ca-recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lei-ca-recent-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.lei-ca-recent-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.lei-ca-recent-list strong {
+  display: block;
+  font-size: 13px;
+  color: #0f172a;
+}
+
+.lei-ca-recent-list span {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.lei-ca-recent-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: #1a5fad;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.lei-ca-recent-link:hover {
+  text-decoration: underline;
+}
+
+.lei-ca-insight-empty {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+  padding: 24px 0;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .lei-ca-insights-row {
+    grid-template-columns: 1fr;
+  }
+}
+
 .lei-ca-metric strong {
   display: block;
   font-size: 28px;

@@ -10,9 +10,10 @@
 @php
     $gridClass = $variant === 'public' ? 'lei-pub-plan-select-grid' : 'lei-portal-plan-select-grid';
     $cardClass = $variant === 'public' ? 'lei-pub-plan-select-card' : 'lei-portal-plan-select-card';
+    $defaultSelectedId = $selectedPlanId ?? $plans->firstWhere('is_featured', true)?->id ?? $plans->first()?->id;
 @endphp
 
-<div class="{{ $gridClass }}">
+<div class="{{ $gridClass }}" data-plan-select-grid>
     @foreach ($plans as $plan)
         @php
             $blocked = $blocks[$plan->id] ?? null;
@@ -20,9 +21,12 @@
             $subscribeUrl = $variant === 'public'
                 ? route('pricing.subscribe', $plan) . ($lei ? '?lei=' . urlencode($lei) : '')
                 : route('applicant.plans.subscribe', $plan) . ($lei ? '?lei=' . urlencode($lei) : '');
-            $isSelected = (int) $selectedPlanId === (int) $plan->id || ($plan->is_featured && ! $selectedPlanId);
+            $isSelected = (int) $defaultSelectedId === (int) $plan->id;
         @endphp
-        <article class="{{ $cardClass }} {{ $plan->is_featured ? 'featured' : '' }} {{ $isSelected ? 'selected' : '' }} {{ $blocked ? 'blocked' : '' }}">
+        <article class="{{ $cardClass }} {{ $plan->is_featured ? 'featured' : '' }} {{ $isSelected ? 'selected' : '' }} {{ $blocked ? 'blocked' : '' }}"
+                 data-plan-card
+                 data-plan-id="{{ $plan->id }}"
+                 @if (! $blocked) tabindex="0" role="button" @endif>
             @if ($plan->label)
                 <span class="lei-plan-select-badge">{{ $plan->label }}</span>
             @endif

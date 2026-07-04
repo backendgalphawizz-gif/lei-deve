@@ -177,27 +177,34 @@ body.lei-applicant-portal.lei-pub-notify-open {
 
 /* —— Topbar —— */
 .lei-applicant-portal .lei-portal-topbar {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 16px;
-  padding: 0 28px;
+  padding: 0 24px 0 20px;
+  min-height: 72px;
   background: var(--lei-portal-surface);
   border-bottom: 1px solid var(--lei-portal-border);
   box-shadow: 0 1px 0 rgba(15, 23, 42, 0.04);
 }
 
+.lei-applicant-portal .lei-portal-menu-btn {
+  flex: 0 0 auto;
+}
+
 .lei-applicant-portal .lei-portal-search-wrap {
+  flex: 1 1 auto;
   display: flex;
   justify-content: center;
-  max-width: 560px;
-  width: 100%;
-  margin: 0 auto;
+  min-width: 0;
+  max-width: none;
+  margin: 0;
 }
 
 .lei-applicant-portal .lei-portal-search-form {
   position: relative;
   width: 100%;
+  max-width: 520px;
   display: flex;
   align-items: center;
 }
@@ -232,8 +239,13 @@ body.lei-applicant-portal.lei-pub-notify-open {
   box-shadow: 0 0 0 3px rgba(26, 95, 173, 0.12);
 }
 
-.lei-applicant-portal .lei-portal-topbar .lei-topbar-actions {
-  margin-left: 0;
+.lei-applicant-portal .lei-portal-topbar .lei-topbar-actions,
+.lei-applicant-portal .lei-portal-topbar-actions {
+  flex: 0 0 auto;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   gap: 12px;
 }
 
@@ -248,26 +260,38 @@ body.lei-applicant-portal.lei-pub-notify-open {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 5px 10px 5px 5px;
+  padding: 5px 12px 5px 5px;
   border: 1px solid var(--lei-portal-border);
-  border-radius: 12px;
-  background: #fff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff 0%, #f8fafc 100%);
   cursor: pointer;
   font-family: inherit;
   min-width: 0;
+  max-width: 260px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
 }
 
 .lei-applicant-portal .lei-portal-profile-trigger:hover {
-  background: #f8fafc;
+  background: #fff;
+  border-color: #cbd5e1;
+}
+
+.lei-applicant-portal .lei-portal-profile-trigger .lei-profile-trigger-img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .lei-applicant-portal .lei-portal-profile-text {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: flex-end;
   line-height: 1.25;
-  text-align: left;
+  text-align: right;
   min-width: 0;
+  flex: 1;
 }
 
 .lei-applicant-portal .lei-portal-profile-text strong {
@@ -277,7 +301,7 @@ body.lei-applicant-portal.lei-pub-notify-open {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 140px;
+  max-width: 160px;
 }
 
 .lei-applicant-portal .lei-portal-profile-text span {
@@ -286,13 +310,19 @@ body.lei-applicant-portal.lei-pub-notify-open {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 140px;
+  max-width: 160px;
 }
 
 .lei-applicant-portal .lei-portal-chevron {
   font-size: 10px;
   color: var(--lei-portal-muted);
-  margin-left: 2px;
+  margin-left: 0;
+  flex-shrink: 0;
+}
+
+.lei-applicant-portal .lei-portal-profile-menu .lei-profile-dropdown {
+  right: 0;
+  left: auto;
 }
 
 /* —— Resume banner —— */
@@ -1431,7 +1461,7 @@ body.lei-applicant-portal.lei-pub-notify-open {
 
 @media (max-width: 900px) {
   .lei-applicant-portal .lei-portal-topbar {
-    grid-template-columns: auto 1fr auto;
+    flex-direction: row;
     align-items: center;
     min-height: 72px;
     padding: 12px 16px;
@@ -1757,9 +1787,21 @@ body.lei-applicant-portal.lei-pub-notify-open {
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-.lei-applicant-portal .lei-portal-plan-select-card.featured,
+.lei-applicant-portal .lei-portal-plan-select-card:not(.blocked) {
+  cursor: pointer;
+}
+
+.lei-applicant-portal .lei-portal-plan-select-card:not(.blocked):hover {
+  border-color: #fdba74;
+}
+
+.lei-applicant-portal .lei-portal-plan-select-card.featured {
+  border-color: #fed7aa;
+}
+
 .lei-applicant-portal .lei-portal-plan-select-card.selected {
   border-color: #f97316;
   box-shadow: 0 0 0 1px #f97316, 0 8px 24px rgba(249, 115, 22, 0.08);
@@ -1801,12 +1843,10 @@ body.lei-applicant-portal.lei-pub-notify-open {
   position: relative;
 }
 
-.lei-applicant-portal .lei-portal-plan-select-card.featured .lei-plan-select-radio,
 .lei-applicant-portal .lei-portal-plan-select-card.selected .lei-plan-select-radio {
   border-color: #f97316;
 }
 
-.lei-applicant-portal .lei-portal-plan-select-card.featured .lei-plan-select-radio::after,
 .lei-applicant-portal .lei-portal-plan-select-card.selected .lei-plan-select-radio::after {
   content: '';
   position: absolute;

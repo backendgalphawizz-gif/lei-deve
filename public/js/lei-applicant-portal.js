@@ -60,10 +60,13 @@
         var input = zone.querySelector('input[type="file"]');
         if (!input) return;
 
-        zone.addEventListener('click', function (e) {
-            if (e.target === input) return;
-            input.click();
-        });
+        /* Label elements already activate hidden file inputs — avoid opening the picker twice */
+        if (zone.tagName !== 'LABEL') {
+            zone.addEventListener('click', function (e) {
+                if (e.target === input) return;
+                input.click();
+            });
+        }
 
         input.addEventListener('change', function () {
             if (!input.files || !input.files.length) return;
@@ -79,10 +82,12 @@
         var input = btn.querySelector('input[type="file"]');
         if (!input) return;
 
-        btn.addEventListener('click', function (e) {
-            if (e.target === input) return;
-            input.click();
-        });
+        if (btn.tagName !== 'LABEL') {
+            btn.addEventListener('click', function (e) {
+                if (e.target === input) return;
+                input.click();
+            });
+        }
 
         input.addEventListener('change', function () {
             if (!input.files || !input.files.length) return;
@@ -180,6 +185,36 @@
     }
 
     refreshUploadSidebar();
+
+    /* —— Plan card selection —— */
+    document.querySelectorAll('[data-plan-select-grid]').forEach(function (grid) {
+        grid.querySelectorAll('[data-plan-card]:not(.blocked)').forEach(function (card) {
+            function selectCard() {
+                grid.querySelectorAll('[data-plan-card]').forEach(function (c) {
+                    c.classList.remove('selected');
+                    c.setAttribute('aria-pressed', 'false');
+                });
+                card.classList.add('selected');
+                card.setAttribute('aria-pressed', 'true');
+            }
+
+            card.addEventListener('click', function (e) {
+                if (e.target.closest('a, button, select, input, label')) return;
+                selectCard();
+            });
+
+            card.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectCard();
+                }
+            });
+
+            if (card.classList.contains('selected')) {
+                card.setAttribute('aria-pressed', 'true');
+            }
+        });
+    });
 
     /* —— Drag & drop on upload zones —— */
     document.querySelectorAll('.lei-drop-zone[data-drop]').forEach(function (zone) {

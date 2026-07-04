@@ -10,17 +10,17 @@
         </form>
     </div>
 
-    <div class="lei-topbar-actions">
+    <div class="lei-topbar-actions lei-portal-topbar-actions">
         <a href="{{ route('applicant.notifications.index') }}" class="lei-icon-btn lei-icon-btn--link" aria-label="Notifications" title="Notifications">
             <i class="fa-regular fa-bell"></i>
         </a>
 
-        <div class="lei-profile-menu" id="leiProfileMenu">
+        <div class="lei-profile-menu lei-portal-profile-menu" id="leiProfileMenu">
             <button type="button" class="lei-profile-trigger lei-portal-profile-trigger" id="leiProfileTrigger" aria-expanded="false" aria-haspopup="true">
                 <img src="{{ auth()->user()->profileImageUrl() }}" alt="{{ auth()->user()->name }}" class="lei-profile-trigger-img">
                 <div class="lei-portal-profile-text">
                     <strong>{{ auth()->user()->name }}</strong>
-                    <span>{{ auth()->user()->organization?->name ?? 'Applicant Account' }}</span>
+                    <span>{{ auth()->user()->organization_name ?: (auth()->user()->organization?->name ?? 'Applicant Account') }}</span>
                 </div>
                 <i class="fa-solid fa-chevron-down lei-portal-chevron" aria-hidden="true"></i>
             </button>

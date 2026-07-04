@@ -7,11 +7,18 @@ use App\Models\DashboardSnapshot;
 use App\Models\LeiBusinessSetting;
 use App\Models\SystemAlert;
 use App\Services\DashboardStatsService;
+use App\Services\CaDashboardStatsService;
 
 class DashboardController extends Controller
 {
-    public function index(DashboardStatsService $dashboardStats)
+    public function index(DashboardStatsService $dashboardStats, CaDashboardStatsService $caStats)
     {
+        $user = auth()->user();
+
+        if ($user && $user->adminRole?->slug === 'certificate_authority' && ! $user->isSuperAdmin()) {
+            return app(CertificateAuthorityController::class)->index(request(), $caStats);
+        }
+
         $dashboardStats->syncLiveSnapshots();
 
         $alerts = SystemAlert::active()->orderByDesc('created_at')->limit(5)->get();
