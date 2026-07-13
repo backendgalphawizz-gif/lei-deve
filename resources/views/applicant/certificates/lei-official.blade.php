@@ -4,9 +4,15 @@
 <meta charset="UTF-8">
 <title>LEI Certificate — {{ $application->lei_number }}</title>
 <style>
-  @page { margin: 22px 28px 20px; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { margin: 36px 46px 34px; }
+  div, p, table, td, tr, th, ol, ul, li, h1, h2, h3, h4, img {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
   body {
+    margin: 0;
+    padding: 0;
     font-family: DejaVu Sans, Arial, Helvetica, sans-serif;
     font-size: 10.5px;
     color: #111;
@@ -94,7 +100,7 @@
     font-size: 9.5px;
     color: #333;
     line-height: 1.5;
-    text-align: justify;
+    text-align: left;
   }
   .footer-rule {
     border-top: 1px solid #d4d4d4;
@@ -103,8 +109,8 @@
   .verify-text, .disclaimer {
     font-size: 8.5px;
     color: #444;
-    line-height: 1.5;
-    text-align: justify;
+    line-height: 1.55;
+    text-align: left;
     margin-bottom: 8px;
   }
   .brand-table { width: 100%; border-collapse: collapse; margin-top: 6px; }
