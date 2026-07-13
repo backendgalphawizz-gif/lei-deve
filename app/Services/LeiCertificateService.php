@@ -172,14 +172,6 @@ class LeiCertificateService
         $countryCode = $this->countryCode($application->country);
         $showIndiaFlag = $countryCode === 'IN';
 
-        $officeParts = array_filter([
-            $settings->address_line,
-            $settings->city,
-            $settings->state,
-            $settings->postal_code,
-            $settings->country,
-        ]);
-
         return [
             'registeredAddress' => $registeredAddress,
             'renewalDate' => $renewalDate?->format('Y-m-d') ?? '—',
@@ -193,12 +185,18 @@ class LeiCertificateService
             'flagDataUri' => $showIndiaFlag
                 ? $this->localImageDataUri(public_path('images/certificates/india-flag.png'))
                 : null,
-            'officeAddress' => $officeParts !== [] ? implode(', ', $officeParts) : null,
             'brandName' => $settings->company_name ?: 'LEI Registry',
             'legalName' => $settings->legal_name,
             'registryAuthority' => $settings->registry_authority,
             'supportEmail' => $settings->support_email,
             'supportPhone' => $settings->support_phone,
+            'cin' => $settings->cin,
+            'gstin' => $settings->gstin,
+            'registrarLei' => $settings->registrar_lei_number,
+            'ubisecureLei' => $settings->ubisecure_lei,
+            'nasdaqLei' => $settings->nasdaq_lei,
+            'registeredOfficeAddress' => $settings->registered_office_address,
+            'officeLocationAddress' => $settings->office_location_address,
         ];
     }
 

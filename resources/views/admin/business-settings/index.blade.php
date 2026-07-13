@@ -322,6 +322,44 @@
 
                 <section class="lei-bs-card">
                     <h3>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+                        Certificate Legal Details
+                    </h3>
+                    <p class="lei-bs-field-hint" style="margin-bottom:12px;">These appear on the printed/PDF LEI certificate footer (registrar legal identifiers &amp; office addresses).</p>
+                    <div class="lei-bs-grid lei-bs-grid--2">
+                        <label class="lei-bs-field">
+                            <span>CIN</span>
+                            <input type="text" name="cin" value="{{ old('cin', $settings->cin) }}" placeholder="U74999PN2019FTC184211">
+                        </label>
+                        <label class="lei-bs-field">
+                            <span>GSTIN</span>
+                            <input type="text" name="gstin" value="{{ old('gstin', $settings->gstin) }}" placeholder="19AADCL9323M1Z0">
+                        </label>
+                        <label class="lei-bs-field">
+                            <span>Registrar's own LEI</span>
+                            <input type="text" name="registrar_lei_number" value="{{ old('registrar_lei_number', $settings->registrar_lei_number) }}">
+                        </label>
+                        <label class="lei-bs-field">
+                            <span>Ubisecure (RapidLEI) LEI</span>
+                            <input type="text" name="ubisecure_lei" value="{{ old('ubisecure_lei', $settings->ubisecure_lei) }}">
+                        </label>
+                        <label class="lei-bs-field lei-bs-field--full">
+                            <span>Nasdaq CSD (Nasdaq LEI) LEI</span>
+                            <input type="text" name="nasdaq_lei" value="{{ old('nasdaq_lei', $settings->nasdaq_lei) }}">
+                        </label>
+                        <label class="lei-bs-field lei-bs-field--full">
+                            <span>Registered Office Address</span>
+                            <textarea name="registered_office_address" rows="2">{{ old('registered_office_address', $settings->registered_office_address) }}</textarea>
+                        </label>
+                        <label class="lei-bs-field lei-bs-field--full">
+                            <span>Office Location Address</span>
+                            <textarea name="office_location_address" rows="2">{{ old('office_location_address', $settings->office_location_address) }}</textarea>
+                        </label>
+                    </div>
+                </section>
+
+                <section class="lei-bs-card">
+                    <h3>
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
                         LEI Code Configuration
                     </h3>
