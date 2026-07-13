@@ -167,8 +167,18 @@ class LeiCertificateService
             : now()->format('Y-m-d');
 
         $verifyUrl = route('registry.show', $application->lei_number);
-        $websiteUrl = $settings->website_url ?: config('app.url');
+        $websiteUrl = rtrim((string) ($settings->website_url ?: config('app.url')), '/');
         $renewUrl = route('pricing', ['lei' => $application->lei_number]).'#renewal';
+        $countryCode = $this->countryCode($application->country);
+        $showIndiaFlag = $countryCode === 'IN';
+
+        $officeParts = array_filter([
+            $settings->address_line,
+            $settings->city,
+            $settings->state,
+            $settings->postal_code,
+            $settings->country,
+        ]);
 
         return [
             'registeredAddress' => $registeredAddress,
@@ -178,7 +188,46 @@ class LeiCertificateService
             'websiteUrl' => $websiteUrl,
             'renewUrl' => $renewUrl,
             'qrDataUri' => $this->qrDataUri($verifyUrl),
+            'renewQrDataUri' => $this->qrDataUri($renewUrl),
+            'sealDataUri' => $this->localImageDataUri(public_path('images/certificates/lei-certificate-seal.png')),
+            'flagDataUri' => $showIndiaFlag
+                ? $this->localImageDataUri(public_path('images/certificates/india-flag.png'))
+                : null,
+            'officeAddress' => $officeParts !== [] ? implode(', ', $officeParts) : null,
+            'brandName' => $settings->company_name ?: 'LEI Registry',
+            'legalName' => $settings->legal_name,
+            'registryAuthority' => $settings->registry_authority,
+            'supportEmail' => $settings->support_email,
+            'supportPhone' => $settings->support_phone,
         ];
+    }
+
+    private function localImageDataUri(string $path): ?string
+    {
+        if (! is_file($path)) {
+            return null;
+        }
+
+        $mime = match (strtolower(pathinfo($path, PATHINFO_EXTENSION))) {
+            'png' => 'image/png',
+            'jpg', 'jpeg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'webp' => 'image/webp',
+            'svg' => 'image/svg+xml',
+            default => null,
+        };
+
+        if (! $mime) {
+            return null;
+        }
+
+        $binary = @file_get_contents($path);
+
+        if ($binary === false || $binary === '') {
+            return null;
+        }
+
+        return 'data:'.$mime.';base64,'.base64_encode($binary);
     }
 
     private function qrDataUri(string $url): ?string
